@@ -71,3 +71,13 @@ Wilson 95% CIs added. The T7 prompt-revision gain (severe precision 75.4% → 82
 ### Prototype note (2026-11-01)
 With the quote-required extraction prompt (`RADIO_EXTRACT`), the Arabic call that earlier produced "nineteen" returned 10 people with source quote "عشرة" (n=1, anecdotal). Quote grounding is a cheap mitigation worth testing at scale.
 Run-to-run variance: re-surveying the same image gave different area-scan answers for one of four tiles. Variance needs measuring before publication.
+
+---
+## Round 5: Mission mode (2026-11-01 IST)
+Details and the full mission record: [MISSION_MODE.md](MISSION_MODE.md).
+- 12-frame RescueNet sortie surveyed end to end: 302 model calls, $1.90 at list prices, 8–76 s per frame with 12 parallel workers.
+- Muse Wonder as planner over structured outputs only: 3 runs, 10/12/11 tasks, **0 rejected** by the evidence validator; it cited radio IDs for every people claim and zone IDs for blocked access. Commander latency 45–91 s (9.5k–13.7k output tokens, mostly reasoning), so plans are drafted in the background, not per click.
+- Validator unit tests (tests/test_mission.py) confirm rejection of invented IDs, unsupported damage claims, people claims without radio, wrong counts, duplicate targets.
+- ASR turned "sector A2" (Spanish TTS through radio noise) into "sector a a dos"; a tolerant matcher recovers A2 but flags it inexact. Location words need the same read-back as counts.
+- Frame-level label check (n=12): severe frames 8/8 flagged; 3/4 non-severe frames also flagged (area-scan over-flagging).
+- Run-to-run variance seen again: F09-B01 was "A and B agree (major)" in the cached run and "A/B disagree → Wonder tie-break" live.

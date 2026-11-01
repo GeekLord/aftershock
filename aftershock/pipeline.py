@@ -21,15 +21,15 @@ def crop_ctx(img, box, margin=0.25):
 def grade_building(img, b, wonder_tiebreak=True):
     c = crop_ctx(img, b["box"])
     with cf.ThreadPoolExecutor(2) as ex:
-        fa = ex.submit(meta.chat_json, P.GRADE_A, [c], "muse-spark-1.3", 768)
-        fb = ex.submit(meta.chat_json, P.GRADE_B, [c], "muse-spark-1.3", 768)
+        fa = ex.submit(meta.chat_json, P.GRADE_A, [c], "muse-spark-1.3", 768, tag="spark_a:grade")
+        fb = ex.submit(meta.chat_json, P.GRADE_B, [c], "muse-spark-1.3", 768, tag="spark_b:grade")
         a, _ = fa.result(); bb, _ = fb.result()
     ga, gb = a.get("grade"), bb.get("grade")
     votes = [g for g in (ga, gb) if g in RANK]
     disagree = len(votes) == 2 and ((ga in SEVERE) != (gb in SEVERE))
     gw = None
     if disagree and wonder_tiebreak:
-        w, _ = meta.chat_json(P.GRADE_A, [c], "muse-wonder-1.0", 768); gw = w.get("grade")
+        w, _ = meta.chat_json(P.GRADE_A, [c], "muse-wonder-1.0", 768, tag="wonder:tiebreak"); gw = w.get("grade")
         if gw in RANK: votes.append(gw)
     severe_votes = sum(v in SEVERE for v in votes)
     grade = max(votes, key=lambda g: RANK[g]) if votes else "unknown"   # recall-oriented: worst plausible grade
@@ -38,21 +38,23 @@ def grade_building(img, b, wonder_tiebreak=True):
     w_px = b["box"][2] - b["box"][0]; h_px = b["box"][3] - b["box"][1]
     if min(w_px, h_px) < 80: reasons.append("building small in frame")
     if not votes: reasons.append("no valid assessment")
-    return dict(box=[round(v) for v in b["box"]], sam_conf=round(b["conf"], 3), grade=grade,
+    return dict(key=b.get("key"), box=[round(v) for v in b["box"]], sam_conf=round(b["conf"], 3), grade=grade,
                 grades={"spark_a": ga, "spark_b": gb, "wonder": gw}, severe_votes=f"{severe_votes}/{len(votes)}",
                 evidence=a.get("evidence") or bb.get("evidence") or "", review=bool(reasons), review_reasons=reasons)
 
-def survey(img, rows=2, cols=2, hazard="auto", progress=lambda *a: None):
+def survey(img, rows=2, cols=2, hazard="auto", progress=lambda *a: None, max_buildings=None):
+    """max_buildings caps how many SAM buildings per frame are graded (largest first, to bound API spend);
+    the rest are kept, shown, and flagged as not graded."""
     t0 = time.time(); img = img.convert("RGB"); cells = grid(img, rows, cols)
     calls = {"sam": 0, "spark": 0, "wonder": 0}
 
     def scan(cell):
         tile = img.crop(cell["box"])
         with cf.ThreadPoolExecutor(4) as ex:
-            fs = {"destroyed": ex.submit(meta.chat_json, P.TILE_DESTROYED, [tile]),
-                  "road": ex.submit(meta.chat_json, P.TILE_ROAD, [tile])}
-            if hazard in ("auto", "flood"): fs["flood"] = ex.submit(meta.chat_json, P.TILE_FLOOD, [tile])
-            fsam = ex.submit(meta.segment, tile, "building")
+            fs = {"destroyed": ex.submit(meta.chat_json, P.TILE_DESTROYED, [tile], tag="spark_scan:destroyed"),
+                  "road": ex.submit(meta.chat_json, P.TILE_ROAD, [tile], tag="spark_scan:road")}
+            if hazard in ("auto", "flood"): fs["flood"] = ex.submit(meta.chat_json, P.TILE_FLOOD, [tile], tag="spark_scan:flood")
+            fsam = ex.submit(meta.segment, tile, "building", tag="sam:tile")
             res = {k: f.result()[0] for k, f in fs.items()}; blds = fsam.result()
         x0, y0 = cell["box"][:2]
         for b in blds: b["box"] = [b["box"][0] + x0, b["box"][1] + y0, b["box"][2] + x0, b["box"][3] + y0]
@@ -60,7 +62,7 @@ def survey(img, rows=2, cols=2, hazard="auto", progress=lambda *a: None):
         progress("scanned", cell["r"], cell["c"])
         return cell
     with cf.ThreadPoolExecutor(6) as ex:
-        fwhole = ex.submit(meta.segment, img, "building")   # whole-frame pass keeps buildings that straddle tile edges intact
+        fwhole = ex.submit(meta.segment, img, "building", tag="sam:frame")   # whole-frame pass keeps buildings that straddle tile edges intact
         cells = list(ex.map(scan, cells)); whole = fwhole.result()
     calls["sam"] += len(cells) + 1; calls["spark"] += len(cells) * (3 if hazard in ("auto", "flood") else 2)
     # merge: whole-frame detections first, then tile detections not already covered (dedupe by overlap of the smaller box)
@@ -79,12 +81,21 @@ def survey(img, rows=2, cols=2, hazard="auto", progress=lambda *a: None):
             if x1 <= cx < x2 and y1 <= cy < y2: cell["_blds"].append(b); break
 
     jobs = [(cell, b) for cell in cells for b in cell["_blds"]]
+    for k, (_, b) in enumerate(jobs): b["key"] = k
+    order = sorted(jobs, key=lambda cb: -area(cb[1]["box"]))
+    todo, skipped = (order, []) if not max_buildings else (order[:max_buildings], order[max_buildings:])
+    def not_graded(b):
+        return dict(key=b["key"], box=[round(v) for v in b["box"]], sam_conf=round(b["conf"], 3), grade="unknown",
+                    grades={"spark_a": None, "spark_b": None, "wonder": None}, severe_votes="0/0", evidence="",
+                    review=True, review_reasons=["not graded (per-frame API budget cap); look at it"])
     with cf.ThreadPoolExecutor(12) as ex:
-        graded = list(ex.map(lambda cb: (cb[0], cb[1], grade_building(img, cb[1])), jobs))
+        graded = list(ex.map(lambda cb: (cb[0], cb[1], grade_building(img, cb[1])), todo))
+    graded += [(c, b, not_graded(b)) for c, b in skipped]
+    graded.sort(key=lambda t: t[1]["key"])
     masks = []
     for cell, b, g in graded:
         cell.setdefault("buildings", []).append(g); masks.append((b, g["grade"]))
-        calls["spark"] += 2; calls["wonder"] += g["grades"]["wonder"] is not None
+        calls["spark"] += 2 * (g["grades"]["spark_a"] is not None or g["grades"]["spark_b"] is not None); calls["wonder"] += g["grades"]["wonder"] is not None
     for cell in cells:
         cell.setdefault("buildings", []); s = cell["scan"]; bl = cell["buildings"]
         n_sev = sum(b["grade"] in SEVERE for b in bl); n_rev = sum(b["review"] for b in bl)
