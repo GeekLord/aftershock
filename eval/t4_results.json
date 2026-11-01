@@ -1,0 +1,1166 @@
+{
+ "A": [
+  {
+   "x": [
+    "10844",
+    2,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Bare slab with scattered roof fragments and collapsed debris pile"
+   }
+  },
+  {
+   "x": [
+    "12879",
+    0,
+    2,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Bare concrete slab remains, walls gone, house destroyed"
+   }
+  },
+  {
+   "x": [
+    "11686",
+    2,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "collapsed structure with scattered rubble and debris pile bottom right"
+   }
+  },
+  {
+   "x": [
+    "14786",
+    2,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "sandy area with tracks and downed palms, only standing roof edge"
+   }
+  },
+  {
+   "x": [
+    "13342",
+    0,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Collapsed building with debris pile and torn open roof"
+   }
+  },
+  {
+   "x": [
+    "11550",
+    0,
+    2,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Debris pile at left with exposed slab where house stood"
+   }
+  },
+  {
+   "x": [
+    "11627",
+    1,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Left edge shows collapsed structure flattened into debris pile"
+   }
+  },
+  {
+   "x": [
+    "10808",
+    2,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "collapsed structure reduced to debris pile on slab at right edge"
+   }
+  },
+  {
+   "x": [
+    "13727",
+    2,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Concrete block foundation remains, walls and roof gone."
+   }
+  },
+  {
+   "x": [
+    "13795",
+    1,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Empty slab with broken pilings and debris pile where house stood"
+   }
+  },
+  {
+   "x": [
+    "12460",
+    1,
+    2,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "empty slab with scattered debris where house stood"
+   }
+  },
+  {
+   "x": [
+    "10807",
+    1,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Large debris pile on concrete slab at bottom right from flattened house."
+   }
+  },
+  {
+   "x": [
+    "11548",
+    2,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Flattened house slab with scattered lumber debris pile"
+   }
+  },
+  {
+   "x": [
+    "12170",
+    1,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Building collapsed into debris pile on foundation slab"
+   }
+  },
+  {
+   "x": [
+    "11961",
+    2,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "collapsed houses flattened into scattered debris piles"
+   }
+  },
+  {
+   "x": [
+    "12460",
+    2,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "empty concrete slab with no walls roof surrounded by debris"
+   }
+  },
+  {
+   "x": [
+    "11965",
+    2,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Collapsed house debris pile in upper left corner"
+   }
+  },
+  {
+   "x": [
+    "10890",
+    1,
+    2,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Empty slab and widespread structural debris where house stood"
+   }
+  },
+  {
+   "x": [
+    "11965",
+    1,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Building flattened into scattered blue roof debris pile at top"
+   }
+  },
+  {
+   "x": [
+    "12185",
+    2,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "House collapsed into debris pile with scattered walls roof fragments"
+   }
+  },
+  {
+   "x": [
+    "14749",
+    2,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Only sand, tire tracks, and partial intact tiled surface visible."
+   }
+  },
+  {
+   "x": [
+    "11713",
+    2,
+    2,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "bare concrete slab with scattered debris and collapsed wooden framing nearby"
+   }
+  },
+  {
+   "x": [
+    "13342",
+    1,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Top-left concrete debris pile from collapsed structure"
+   }
+  },
+  {
+   "x": [
+    "11024",
+    1,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Collapsed walls, red tile debris pile, exposed slab where structure stood"
+   }
+  },
+  {
+   "x": [
+    "10890",
+    2,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "House flattened into scattered cinderblock wood debris pile"
+   }
+  },
+  {
+   "x": [
+    "12170",
+    2,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "flattened debris pile and empty concrete slab where house stood"
+   }
+  },
+  {
+   "x": [
+    "12388",
+    0,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Flattened debris pile top right and empty concrete slab bottom right"
+   }
+  },
+  {
+   "x": [
+    "13489",
+    2,
+    2,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Flattened slab with scattered walls, blocks, debris where house stood"
+   }
+  },
+  {
+   "x": [
+    "12445",
+    0,
+    1,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Bare concrete slab with pilings, house missing, debris scattered around"
+   }
+  },
+  {
+   "x": [
+    "12784",
+    2,
+    0,
+    true
+   ],
+   "truth": true,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "massive collapsed debris pile scattered across center"
+   }
+  },
+  {
+   "x": [
+    "11713",
+    1,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Large pile of collapsed wooden framing and debris where structure stood"
+   }
+  },
+  {
+   "x": [
+    "12796",
+    1,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Large pile of structural lumber and house debris on right side"
+   }
+  },
+  {
+   "x": [
+    "13770",
+    1,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing house with roof damage, debris scattered, no collapse"
+   }
+  },
+  {
+   "x": [
+    "15054",
+    1,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Collapsed structure debris pile with scattered lumber at top"
+   }
+  },
+  {
+   "x": [
+    "12879",
+    2,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Central house walls standing, only roof structure exposed and damaged"
+   }
+  },
+  {
+   "x": [
+    "16196",
+    1,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Two standing houses with minor roof damage, debris nearby but no collapse"
+   }
+  },
+  {
+   "x": [
+    "12981",
+    2,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing house with roof damage only, no collapse or slab visible"
+   }
+  },
+  {
+   "x": [
+    "12269",
+    0,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "All visible houses standing with intact metal roofs, only scattered debris"
+   }
+  },
+  {
+   "x": [
+    "15414",
+    2,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Two intact standing houses with complete roofs visible"
+   }
+  },
+  {
+   "x": [
+    "15189",
+    2,
+    1,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "House collapsed into debris pile with exposed framing"
+   }
+  },
+  {
+   "x": [
+    "12821",
+    2,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Octagonal house standing with shingle loss, no collapse"
+   }
+  },
+  {
+   "x": [
+    "11236",
+    2,
+    1,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Flattened debris pile with framing metal at bottom"
+   }
+  },
+  {
+   "x": [
+    "12811",
+    1,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Two metal-roof buildings standing intact, only scattered debris around"
+   }
+  },
+  {
+   "x": [
+    "11989",
+    2,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Large building with intact roof standing; debris is scattered not flattened building"
+   }
+  },
+  {
+   "x": [
+    "14154",
+    0,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing building with roof intact, open grass, scattered posts, no rubble pile"
+   }
+  },
+  {
+   "x": [
+    "11112",
+    0,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Large debris pile of lumber and household materials in upper right"
+   }
+  },
+  {
+   "x": [
+    "13575",
+    0,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Collapsed wooden structure flattened amid extensive debris pile"
+   }
+  },
+  {
+   "x": [
+    "15647",
+    2,
+    1,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "Scattered lumber framing debris pile on beach sand"
+   }
+  },
+  {
+   "x": [
+    "15871",
+    2,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing white structure with roof intact; only fallen trees and scattered debris nearby"
+   }
+  },
+  {
+   "x": [
+    "15542",
+    2,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing white house visible, no collapsed structure or slab"
+   }
+  },
+  {
+   "x": [
+    "13281",
+    2,
+    1,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Only sandy beach and intact building balcony visible"
+   }
+  },
+  {
+   "x": [
+    "13654",
+    0,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "collapsed wood-frame debris pile east of main building"
+   }
+  },
+  {
+   "x": [
+    "14932",
+    1,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing building with intact metal roof, scattered debris only"
+   }
+  },
+  {
+   "x": [
+    "13226",
+    2,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing metal roof building intact, no collapsed structure or slab foundation visible"
+   }
+  },
+  {
+   "x": [
+    "15221",
+    0,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Standing house with roof intact; debris is fallen trees, not collapsed building"
+   }
+  },
+  {
+   "x": [
+    "15418",
+    0,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Two standing houses left, open ground with scattered debris only"
+   }
+  },
+  {
+   "x": [
+    "11236",
+    0,
+    2,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "House collapsed into debris pile, walls overturned"
+   }
+  },
+  {
+   "x": [
+    "14882",
+    1,
+    1,
+    false
+   ],
+   "truth": false,
+   "pred": false,
+   "o": {
+    "destroyed_present": false,
+    "evidence": "Buildings standing with roof damage, scattered debris only"
+   }
+  },
+  {
+   "x": [
+    "13773",
+    1,
+    1,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "extensive lumber debris pile from collapsed structure east side"
+   }
+  },
+  {
+   "x": [
+    "14337",
+    1,
+    0,
+    false
+   ],
+   "truth": false,
+   "pred": true,
+   "o": {
+    "destroyed_present": true,
+    "evidence": "collapsed structure reduced to rubble and scattered concrete debris"
+   }
+  }
+ ],
+ "B": [
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "House driveway leads to debris-covered area, no pavement visible"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "No pavement visible; area buried under sand and wreckage debris"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "No pavement visible; area buried under sand and wreckage debris"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "East-west road buried under massive debris pile"
+   }
+  },
+  {
+   "truth": true,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Top and left roads visible and clear, vehicles present"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Roadway buried under sand and wreckage, no pavement visible."
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "No visible pavement, roads buried under sand and debris"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "road buried under sand debris, pavement not visible"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Fallen trees and debris block inferred road across image"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "No clear pavement, area buried under sand rubble and debris"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Widespread debris and fallen trees cover ground, no clear pavement visible"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "No pavement visible, entire area buried under sand and wreckage"
+   }
+  },
+  {
+   "truth": true,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Vertical road clear pavement with car driving through"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "No pavement visible; ground covered by floodwater, debris and wreckage"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "entire area covered in debris and sand, no pavement visible"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "both banks covered in wreckage, boats, fallen trees, no clear pavement"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Road buried under sand and debris along waterfront"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "fallen trees and debris cover middle ground, no pavement visible"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "North-south road buried under water, sand and fallen trees"
+   }
+  },
+  {
+   "truth": true,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Southbound road completely buried under sand, pavement invisible"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Curved road at top clear, pavement visible, no debris"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Road pavement fully visible and clear of debris trees water"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Cul-de-sac and street pavement fully visible and clear"
+   }
+  },
+  {
+   "truth": false,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Center buried under building wreckage and debris, pavement invisible"
+   }
+  },
+  {
+   "truth": false,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Vertical road north buried under debris, pavement not visible"
+   }
+  },
+  {
+   "truth": false,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "overturned vehicle blocks center roadway, fallen palms cover curb lane"
+   }
+  },
+  {
+   "truth": false,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "road buried under sand, pavement not visible, debris everywhere"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Main north-south road on right is clear, vehicle traveling on it"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Coastal road pavement visible clear, sand remains north of roadway"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Highway bridge deck and lower dirt road both visible and clear"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Main north-south road and east spur clear, no debris covering pavement"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Road on west side clear, visible, no debris blocking"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Paved road on right is fully visible and clear"
+   }
+  },
+  {
+   "truth": false,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Fallen trees and utility poles block horizontal road"
+   }
+  },
+  {
+   "truth": false,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "Entire area buried under sand, debris piles on right edge"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "western north-south road is fully visible and clear"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Left curved road pavement clear, visible, no debris cover"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Road pavement clearly visible, vehicle on road, debris only on shoulders"
+   }
+  },
+  {
+   "truth": false,
+   "pred": true,
+   "o": {
+    "blocked": true,
+    "evidence": "downed utility poles and fallen trees crossing dirt road"
+   }
+  },
+  {
+   "truth": false,
+   "pred": false,
+   "o": {
+    "blocked": false,
+    "evidence": "Roads clearly visible, no debris trees water blocking pavement"
+   }
+  }
+ ]
+}

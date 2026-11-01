@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aftershock: find the worst first</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2e;--line:#22304d;--ink:#e6ecf7;--mute:#8fa0bf;--red:#dc2626;--org:#f97316;--yel:#eab308;--grn:#22c55e;--acc:#38bdf8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+h1{font-size:20px;margin:0;letter-spacing:.3px}h1 b{color:var(--red)}.tag{color:var(--mute);font-size:13px}
+.bar{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,button,input[type=file]{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px}
+button{cursor:pointer}button.primary{background:var(--acc);color:#05202e;border:0;font-weight:600}
+main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(320px,1fr);gap:18px;padding:18px 22px}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+#view img{width:100%;border-radius:8px;display:block}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);margin-top:8px;flex-wrap:wrap}.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.cell{border-left:4px solid var(--line);padding:10px 12px;margin-bottom:10px;background:#0f1729;border-radius:8px}
+.cell h3{margin:0 0 4px;font-size:15px;display:flex;gap:8px;align-items:center}.score{margin-left:auto;font-size:12px;color:var(--mute)}
+.chip{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;margin:2px 4px 2px 0;border:1px solid var(--line)}
+.blocked{background:#3b0d0d;color:#fca5a5;border-color:#7f1d1d}.open{background:#06281a;color:#86efac;border-color:#14532d}
+.flag{color:#fde68a;font-size:13px}.ev{color:var(--mute);font-size:12.5px;font-style:italic}
+ul{margin:4px 0 0 18px;padding:0}li{margin:2px 0}
+.g-destroyed{background:var(--red)}.g-major{background:var(--org)}.g-minor{background:var(--yel);color:#111}.g-no_damage{background:var(--grn);color:#062}.g-unknown{background:#64748b}
+#status{font-size:13px;color:var(--acc)}.meta{font-size:12px;color:var(--mute);margin-top:6px}
+.voice .q{background:#0f1729;border-radius:6px;padding:6px 8px;font-size:13px;margin:4px 0}.voice .warn{color:#fde68a;font-size:13px}
+footer{padding:4px 22px 26px;color:var(--mute);font-size:12.5px}footer b{color:var(--ink)}
+</style></head><body>
+<header>
+  <div><h1>After<b>shock</b></h1><div class="tag">Find the worst first, with evidence. Built on Meta Muse Spark, SAM 3.1 and Voice Transcribe.</div></div>
+  <div class="bar">
+    <select id="sample"><option value="">Sample surveys…</option></select>
+    <input type="file" id="file" accept="image/*,video/*">
+    <select id="grid"><option value="2">2×2 grid</option><option value="3">3×3 grid</option></select>
+    <button class="primary" id="go">Survey</button>
+    <input type="file" id="audio" accept="audio/*">
+    <button id="vgo">Radio call</button>
+    <span id="status"></span>
+  </div>
+</header>
+<main>
+  <section class="card" id="view"><div class="tag">Pick a sample or upload a drone image or video.</div></section>
+  <section>
+    <div class="card" id="rank"><div class="tag">Ranked areas appear here.</div></div>
+    <div class="card voice" id="voice" style="margin-top:14px;display:none"></div>
+  </section>
+</main>
+<footer><b>What this is not.</b> A triage aid that ranks where to look first; not a structural assessment or a rescue decision. Measured zero-shot on held-out drone imagery: severe-damage recall 90% and precision 76% (RescueNet, n=200); exact four-class grade 66%, within one grade 95.5%. Flooded-road detection 88% recall, 100% precision (FloodNet, n=60). SAM misses flattened buildings, so area scans cover them. ⚑ marks anything a person must check: assessors disagree, the scan and grader conflict, or the scene is too dense. Every head-count from radio must be read back.</footer>
+<script>
+const $=s=>document.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let SAMPLES=[];
+fetch('/api/samples').then(r=>r.json()).then(d=>{SAMPLES=d;d.forEach((s,i)=>$('#sample').insertAdjacentHTML('beforeend',`<option value="${i}">${esc(s.name)}${s.kind==='voice'?' (radio)':''}</option>`))});
+$('#sample').onchange=e=>{const s=SAMPLES[e.target.value];if(!s)return;s.kind==='voice'?showVoice(s):showSurvey([s])};
+function color(score){return score>=5?'var(--red)':score>=3?'var(--org)':score>=1?'var(--yel)':'var(--grn)'}
+function showSurvey(list){
+  const r=list[0];
+  $('#view').innerHTML=list.map(x=>`${x.frame_time!=null?`<div class="tag">Frame at ${x.frame_time}s</div>`:''}<img src="${x.overlay}" alt="Survey overlay">`).join('')+
+   `<div class="legend"><span><i class="dot g-destroyed"></i>destroyed</span><span><i class="dot g-major"></i>major</span><span><i class="dot g-minor"></i>minor</span><span><i class="dot g-no_damage"></i>no damage</span><span>#n = priority rank</span><span>⚑ = human check</span></div>
+   <div class="meta">${r.seconds}s · SAM calls ${r.calls.sam} · Spark calls ${r.calls.spark} · Wonder tie-breaks ${r.calls.wonder} · prompts v${esc(r.prompts_version)}</div>`;
+  $('#rank').innerHTML='<div class="tag" style="margin-bottom:8px">Areas ranked by triage priority (a ranking aid, not a probability)</div>'+r.cells.map(c=>`
+   <div class="cell" style="border-left-color:${color(c.score)}">
+    <h3>#${c.rank} · row ${c.r+1}, col ${c.c+1} <span class="chip ${c.access}">road ${c.access}</span><span class="score">score ${c.score}</span></h3>
+    ${c.reasons.length?`<ul>${c.reasons.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'<div class="tag">No severe signal.</div>'}
+    ${c.review.map(x=>`<div class="flag">⚑ ${esc(x)}</div>`).join('')}
+    ${c.buildings.length?`<div style="margin-top:6px">${c.buildings.map(b=>`<span class="chip g-${b.grade}" title="${esc(b.evidence)} | votes ${esc(JSON.stringify(b.grades))}">${b.grade.replace('_',' ')}${b.review?' ⚑':''}</span>`).join('')}</div>`:''}
+    ${c.evidence.slice(0,2).map(e=>`<div class="ev">“${esc(e)}”</div>`).join('')}
+   </div>`).join('');
+}
+function showVoice(v){
+  const e=v.extracted||{};$('#voice').style.display='block';
+  $('#voice').innerHTML=`<h3 style="margin:0 0 6px">Radio call</h3>
+   <div class="tag">Transcript (original)</div><div class="q" dir="auto">${esc(v.transcript)}</div>
+   <div class="tag">English</div><div class="q">${esc(e.english)}</div>
+   <div><b>${e.people_trapped??'?'}</b> trapped <span class="ev">from “${esc(e.people_trapped_quote)}”</span></div>
+   <div><b>${e.injured??'?'}</b> injured <span class="ev">from “${esc(e.injured_quote)}”</span></div>
+   <div>Location: <b>${esc(e.location)}</b> · Need: <b>${esc(e.need)}</b></div>
+   ${(v.confirm||[]).map(x=>`<div class="warn">⚑ ${esc(x)}</div>`).join('')}`;
+}
+$('#go').onclick=async()=>{
+  const f=$('#file').files[0];if(!f)return alert('Choose an image or video first');
+  const fd=new FormData();fd.append('file',f);fd.append('rows',$('#grid').value);fd.append('cols',$('#grid').value);
+  $('#status').textContent='Uploading…';
+  const r=await fetch('/api/survey',{method:'POST',body:fd});if(!r.ok){$('#status').textContent=(await r.json()).detail||'Error';return}
+  const {job}=await r.json();
+  const poll=async()=>{const j=await (await fetch('/api/jobs/'+job)).json();
+    if(j.status==='done'){$('#status').textContent='';showSurvey(j.result)}
+    else if(j.status==='error'){$('#status').textContent='Error: '+j.error}
+    else{$('#status').textContent=j.status+'…';setTimeout(poll,1500)}};poll();
+};
+$('#vgo').onclick=async()=>{
+  const f=$('#audio').files[0];if(!f)return alert('Choose an audio file first');
+  const fd=new FormData();fd.append('file',f);$('#status').textContent='Transcribing…';
+  const r=await fetch('/api/voice',{method:'POST',body:fd});$('#status').textContent='';
+  if(!r.ok)return alert('Voice error');showVoice(await r.json());
+};
+</script></body></html>

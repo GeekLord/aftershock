@@ -1,0 +1,307 @@
+{
+ "size": [
+  4000,
+  3000
+ ],
+ "grid": [
+  2,
+  2
+ ],
+ "cells": [
+  {
+   "r": 1,
+   "c": 0,
+   "box": [
+    0,
+    1500,
+    2000,
+    3000
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": true,
+     "evidence": "Large collapsed debris pile with lumber roofing stairs waterfront"
+    },
+    "road": {
+     "blocked": true,
+     "evidence": "Top land completely covered by wreckage debris, pavement invisible"
+    },
+    "flood": {
+     "flooded_building": false,
+     "flooded_road": false,
+     "evidence": "Water appears as normal canal; boathouses over water, adjacent land dry, no roads visible."
+    }
+   },
+   "sam_n": 1,
+   "sam_capped": false,
+   "buildings": [
+    {
+     "box": [
+      878,
+      1925,
+      1488,
+      2180
+     ],
+     "sam_conf": 0.664,
+     "grade": "minor",
+     "grades": {
+      "spark_a": "minor",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Metal roof intact with scattered lumber debris on top, walls standing, structure sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      102,
+      2895,
+      930,
+      3000
+     ],
+     "sam_conf": 0.61,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "white metal roof fully intact with no missing panels or debris",
+     "review": false,
+     "review_reasons": []
+    }
+   ],
+   "score": 4,
+   "reasons": [
+    "destroyed structure seen in area scan",
+    "road likely impassable"
+   ],
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "access": "blocked",
+   "evidence": [
+    "Large collapsed debris pile with lumber roofing stairs waterfront",
+    "Top land completely covered by wreckage debris, pavement invisible",
+    "Water appears as normal canal; boathouses over water, adjacent land dry, no roads visible."
+   ],
+   "rank": 1
+  },
+  {
+   "r": 1,
+   "c": 1,
+   "box": [
+    2000,
+    1500,
+    4000,
+    3000
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": true,
+     "evidence": "Large pile of collapsed lumber and roofing debris covering house footprint"
+    },
+    "road": {
+     "blocked": true,
+     "evidence": "massive debris pile and collapsed tower cover roadway"
+    },
+    "flood": {
+     "flooded_building": false,
+     "flooded_road": false,
+     "evidence": "No standing water; ground dry, water only at dock in normal channel"
+    }
+   },
+   "sam_n": 0,
+   "sam_capped": false,
+   "buildings": [],
+   "score": 4,
+   "reasons": [
+    "destroyed structure seen in area scan",
+    "road likely impassable"
+   ],
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "access": "blocked",
+   "evidence": [
+    "Large pile of collapsed lumber and roofing debris covering house footprint",
+    "massive debris pile and collapsed tower cover roadway",
+    "No standing water; ground dry, water only at dock in normal channel"
+   ],
+   "rank": 2
+  },
+  {
+   "r": 0,
+   "c": 0,
+   "box": [
+    0,
+    0,
+    2000,
+    1500
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": false,
+     "evidence": "Two houses standing with roof damage, surrounding debris only"
+    },
+    "road": {
+     "blocked": true,
+     "evidence": "Top road area buried under wreckage debris and fallen palm trees"
+    },
+    "flood": {
+     "flooded_building": false,
+     "flooded_road": false,
+     "evidence": "No standing water visible, only debris and damaged roofs on dry ground"
+    }
+   },
+   "sam_n": 3,
+   "sam_capped": false,
+   "buildings": [
+    {
+     "box": [
+      0,
+      405,
+      525,
+      1330
+     ],
+     "sam_conf": 0.82,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Metal roof intact no missing panels, siding and windows sound, debris around but structure upright",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      842,
+      298,
+      1638,
+      1195
+     ],
+     "sam_conf": 0.867,
+     "grade": "major",
+     "grades": {
+      "spark_a": "major",
+      "spark_b": "minor",
+      "wonder": "major"
+     },
+     "severe_votes": "2/3",
+     "evidence": "scattered shingle loss, south wall framing exposed with decking torn, debris pile but roof largely intact",
+     "review": true,
+     "review_reasons": [
+      "assessors disagree on severity"
+     ]
+    },
+    {
+     "box": [
+      1734,
+      601,
+      1902,
+      839
+     ],
+     "sam_conf": 0.613,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Metal roof fully intact, walls upright and sound, no missing covering",
+     "review": false,
+     "review_reasons": []
+    }
+   ],
+   "score": 3,
+   "reasons": [
+    "1 building(s) graded major/destroyed",
+    "road likely impassable"
+   ],
+   "review": [
+    "1 building assessment(s) need a human look"
+   ],
+   "access": "blocked",
+   "evidence": [
+    "Two houses standing with roof damage, surrounding debris only",
+    "Top road area buried under wreckage debris and fallen palm trees",
+    "No standing water visible, only debris and damaged roofs on dry ground"
+   ],
+   "rank": 3
+  },
+  {
+   "r": 0,
+   "c": 1,
+   "box": [
+    2000,
+    0,
+    4000,
+    1500
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": false,
+     "evidence": "Standing house with severe roof loss, walls intact, scattered roof debris only"
+    },
+    "road": {
+     "blocked": false,
+     "evidence": "right edge road visible with vehicle, no blocking debris"
+    },
+    "flood": {
+     "flooded_building": false,
+     "flooded_road": false,
+     "evidence": "Dry ground with debris damage, no standing water visible"
+    }
+   },
+   "sam_n": 1,
+   "sam_capped": false,
+   "buildings": [
+    {
+     "box": [
+      1942,
+      498,
+      3275,
+      1815
+     ],
+     "sam_conf": 0.84,
+     "grade": "major",
+     "grades": {
+      "spark_a": "major",
+      "spark_b": "major",
+      "wonder": null
+     },
+     "severe_votes": "2/2",
+     "evidence": "Large roof covering stripped exposing plywood decking and rafters, tree on roof, debris scattered",
+     "review": false,
+     "review_reasons": []
+    }
+   ],
+   "score": 2,
+   "reasons": [
+    "1 building(s) graded major/destroyed"
+   ],
+   "review": [],
+   "access": "open",
+   "evidence": [
+    "Standing house with severe roof loss, walls intact, scattered roof debris only",
+    "right edge road visible with vehicle, no blocking debris",
+    "Dry ground with debris damage, no standing water visible"
+   ],
+   "rank": 4
+  }
+ ],
+ "calls": {
+  "sam": 5,
+  "spark": 24,
+  "wonder": 1
+ },
+ "seconds": 37.4,
+ "prompts_version": "2026-11-01"
+}

@@ -1,0 +1,290 @@
+[
+ {
+  "lang": "English",
+  "clean": {
+   "transcript": "Unit 4 to base. Three people trapped on the roof of the blue house on Maple Street, one elderly man injured, water rising fast, need a boat.",
+   "cer": 0.029,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Maple Street",
+   "english": "Unit 4 to base. Three people trapped on the roof of the blue house on Maple Street, one elderly man injured, water rising fast, need a boat."
+  },
+  "radio": {
+   "transcript": "Unit 4 to base. Three people trapped on the roof of the Blue House on Maple Street. One elderly man injured. Water rising fast. Need a boat.",
+   "cer": 0.029,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Maple Street",
+   "english": "Unit 4 to base. Three people trapped on the roof of the Blue House on Maple Street. One elderly man injured. Water rising fast. Need a boat."
+  },
+  "radio+bias": {
+   "transcript": "Unit four four to base. Three people trapped on the roof of the Blue House on Maple Street. One elderly man injured. Water rising fast. Need a boat.",
+   "cer": 0.036,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Maple Street",
+   "english": "Unit four four to base. Three people trapped on the roof of the Blue House on Maple Street. One elderly man injured. Water rising fast. Need a boat."
+  }
+ },
+ {
+  "lang": "Spanish",
+  "clean": {
+   "transcript": "Base, aquí equipo dos. Hay cinco personas atrapadas en la escuela de escuela de la calle Libertad, dos niños heridos, necesitamos un helicóptero.",
+   "cer": 0.085,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Libertad",
+   "english": "Base, this is team two. There are five people trapped in the school on Libertad Street, two injured children, we need a helicopter."
+  },
+  "radio": {
+   "transcript": "base, aquí equipo dos. Hay cinco personas atrapadas en la escuela de la calle Libertad, dos niños heridos, necesitamos un helicóptero. helicóptero.",
+   "cer": 0.093,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Libertad",
+   "english": "Base, here team two. There are five people trapped in the school on Libertad Street, two children injured, we need a helicopter."
+  },
+  "radio+bias": {
+   "transcript": "Base, aquí equipo dos. Hay cinco personas atrapadas en la escuela de la calle Libertad, dos niños heridos, necesitamos un helicóptero.",
+   "cer": 0.0,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "calle Libertad",
+   "english": "Base, this is team two. There are five people trapped in the school on Libertad street, two injured children, we need a helicopter."
+  }
+ },
+ {
+  "lang": "Hindi",
+  "clean": {
+   "transcript": "बेस, यह टीम तीन है। गांधी रोड पर मंदिर के पास चार लोग फंसे हैं, कोई घायल नहीं है, हमें नाव चाहिए।",
+   "cer": 0.0,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Gandhi Road",
+   "english": "Base, this is team three. Four people are trapped near the temple on Gandhi Road, no one is injured, we need a boat."
+  },
+  "radio": {
+   "transcript": "बेस यह टीम तीन है. गांधी रोड पर मंदिर के के पास चार लोग फंसे हैं कोई कोई घायल नहीं है. हमें नाव नाव चाहिए.",
+   "cer": 0.125,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Gandhi Road",
+   "english": "Base, this is team three. Four people are trapped near the temple on Gandhi Road. No one is injured. We need a boat."
+  },
+  "radio+bias": {
+   "transcript": "बेस यह टीम तीन है। गांधी रोड पर मंदिर के पास चार लोग फंसे हैं, कोई घायल नहीं है, हमें नाव चाहिए।",
+   "cer": 0.0,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Gandhi Road",
+   "english": "Base, this is team three. Four people are trapped near the temple on Gandhi Road, no one is injured, we need a boat."
+  }
+ },
+ {
+  "lang": "Tagalog",
+  "clean": {
+   "transcript": "Base ito ang ito ang Team Lima. May anim anim na tao na nanaipit sa bubong ng simbahan sa Rizal Street, isang isang buntis, kailangan namin ng bangka.",
+   "cer": 0.168,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Rizal Street",
+   "english": "Base, this is Team Lima. There are six people trapped on the roof of the church on Rizal Street, one pregnant, we need a boat."
+  },
+  "radio": {
+   "transcript": "Base, ito ang team lima. May anim na tao na naipit sa bubong ng simbahan sa Rizal Street, isang buntis, kailangan namin ng bangka.",
+   "cer": 0.0,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Rizal Street",
+   "english": "Base, this is team five. There are six people trapped on the church roof on Rizal Street, one pregnant woman, we need a boat."
+  },
+  "radio+bias": {
+   "transcript": "Base, ito ang team lima. May anim na tao na naipit sa bubong ng simbahan sa Rizal Street, isang buntis, kailangan namin ng bangka.",
+   "cer": 0.0,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Rizal Street",
+   "english": "Base, this is team five. There are six people trapped on the roof of the church on Rizal Street, one pregnant, we need a boat."
+  }
+ },
+ {
+  "lang": "Bengali",
+  "clean": {
+   "transcript": "বেস, এটা দল ছয়। স্টেশন রোডের হাসপাতালের পাশে দুইজন মানুষ আটকে আছে একজন আহত আমাদের অ্যাম্বুলেন্স দরকার।",
+   "cer": 0.0,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Station Road",
+   "english": "Base, this is team six. Two people are trapped next to the hospital on Station Road, one is injured, we need an ambulance."
+  },
+  "radio": {
+   "transcript": "বেস, এটা এটা দল ছয় স্টেশন রোডের হাসপাতালের পাশে দুইজন মানুষ আটকে আছে একজন আহত আমাদের অ্যাম্বুলেন্স দরকার",
+   "cer": 0.041,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Station Road",
+   "english": "Base, this is team six, two people are trapped beside the hospital on Station Road, one is injured, we need an ambulance"
+  },
+  "radio+bias": {
+   "transcript": "দেশ, এটা দল ছয়। স্টেশন রোডের হাসপাতালের পাশে দুইজন মানুষ আটকে আছে, একজন আহত, আমাদের অ্যাম্বুলেন্স দরকার।",
+   "cer": 0.027,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Station Road",
+   "english": "This is team six. Two people are trapped beside the hospital on Station Road, one is injured, we need an ambulance."
+  }
+ },
+ {
+  "lang": "Turkish",
+  "clean": {
+   "transcript": "Merkez,Merkez burası ekip yedi. Atatürk Caddesi'ndeki çöken binada yedi kişi enkaz altında, üç yaralı var, vinç lazım.",
+   "cer": 0.057,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Atatürk Caddesi",
+   "english": "Center, Center this is team seven. In the collapsed building on Atatürk Street, seven people are trapped under debris, there are three injured, a crane is needed."
+  },
+  "radio": {
+   "transcript": "HerkesMerkez burası ekip yedi. Atatürk Caddesi'ndeki çöken çöken binada yedi kişi enkaz altında üç yaralı var. Winch lazım.",
+   "cer": 0.142,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Atatürk Caddesi",
+   "english": "Center, this is team seven. In the collapsed building on Atatürk Caddesi, seven people are trapped under the rubble, three injured. Need a winch."
+  },
+  "radio+bias": {
+   "transcript": " Merkez burası ekip yedi. Atatürk Caddesi'ndeki çöken binada yedi kişi enkaz altında, üç yaralı var, vinç lazım.",
+   "cer": 0.0,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Atatürk Caddesi",
+   "english": "Center, this is team seven. Seven people are trapped under the rubble in the collapsed building on Atatürk Caddesi, there are three injured, a crane is needed."
+  }
+ },
+ {
+  "lang": "French",
+  "clean": {
+   "transcript": "Baze, ici équipe 8. Huit personnes bloquées dans le gymnase de la rue Victor Hugo pas de blessés, besoin d'eau potable.",
+   "cer": 0.043,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "rue Victor Hugo",
+   "english": "Base, this is team 8. Eight people trapped in the gymnasium on rue Victor Hugo, no injuries, need drinking water."
+  },
+  "radio": {
+   "transcript": "Base, ici équipe 8. Huit personnes bloquées dans le gymnase de la rue la rue Victor Hugo, pas de blessés, besoin d'eau potable.",
+   "cer": 0.094,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "rue Victor Hugo",
+   "english": "Base, this is team 8. Eight people trapped in the gymnasium on rue Victor Hugo, no injuries, need drinking water."
+  },
+  "radio+bias": {
+   "transcript": "base, ici équipe 8. Huit personnes bloquées dans le gymnase de la rue Victor Hugo, pas de blessés, blessés, besoin d'eau potable.",
+   "cer": 0.103,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "rue Victor Hugo",
+   "english": "Base, this is team 8. Eight people trapped in the gymnasium on rue Victor Hugo, no injuries, need drinking water."
+  }
+ },
+ {
+  "lang": "Arabic",
+  "clean": {
+   "transcript": "القاعدة هنا الفريق تسعة عشرة اشخاص محاصرون في المسجد في شارع النيل ثلاثة مصابين نحتاج الى سيارة اسعاف",
+   "cer": 0.03,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Nile Street",
+   "english": "Base here, Team Nine, ten people trapped in the mosque on Nile Street, three injured, we need an ambulance"
+  },
+  "radio": {
+   "transcript": "القاعدة هنا الفريق تسعة عشرة اشخاص محاصرون في المسجد في شارع النيل النيل ثلاثة مصابين نحتاج الى سيارة اسعاف",
+   "cer": 0.089,
+   "fields": {
+    "people": true,
+    "injured": true,
+    "need": true
+   },
+   "loc": "Nile Street",
+   "english": "Base, this is Team Nine, ten people are trapped in the mosque on Nile Street, three injured, we need an ambulance"
+  },
+  "radio+bias": {
+   "transcript": "القاعدةالقاعدة هنا الفريق تسعة عشرة اشخاص محاصرون في المسجد في شارع النيل ثلاثة مصابين نحتاج الى سيارة اسعاف",
+   "cer": 0.099,
+   "fields": {
+    "people": false,
+    "injured": true,
+    "need": true
+   },
+   "loc": "شارع النيل",
+   "english": "Base, base here team, nineteen people trapped in the mosque on Nile Street, three injured, we need an ambulance"
+  }
+ }
+]

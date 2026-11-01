@@ -1,0 +1,430 @@
+{
+ "out": {
+  "A_building": "image flooded-building: acc 49/60 recall 14/24 precision 14/15",
+  "A_road": "image flooded-road: acc 57/60 recall 22/25 precision 22/22",
+  "B_crops": "building crop flooded: acc 53/80 recall 16/40 precision 16/19",
+  "C_sam": "SAM building recall: flooded 86/90, dry 25/25, cap16 hits 7/12"
+ },
+ "A": [
+  {
+   "img": "fn/Flooded__10166",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Flooded__6279",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Flooded__6614",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Flooded__6618",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Flooded__6703",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__6706",
+   "gt_b": false,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__6707",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__6716",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7240",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7243",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7261",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7267",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Flooded__7298",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7317",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7321",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7325",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7331",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7362",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": false
+  },
+  {
+   "img": "fn/Flooded__7364",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Flooded__7405",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7418",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7428",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7434",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7463",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7466",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7485",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": true,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7524",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7556",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__7594",
+   "gt_b": true,
+   "gt_r": true,
+   "pb": false,
+   "pr": true
+  },
+  {
+   "img": "fn/Flooded__9003",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6338",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6359",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6368",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6430",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6454",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6464",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6540",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6555",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6656",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6839",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__6960",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7102",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7675",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7711",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7724",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7726",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7802",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7815",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7931",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__7973",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8051",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8101",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8119",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8342",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8387",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8422",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8472",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__8940",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__9069",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  },
+  {
+   "img": "fn/Non-Flooded__9351",
+   "gt_b": false,
+   "gt_r": false,
+   "pb": false,
+   "pr": false
+  }
+ ]
+}

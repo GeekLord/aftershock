@@ -1,0 +1,783 @@
+{
+ "size": [
+  4592,
+  3072
+ ],
+ "grid": [
+  2,
+  2
+ ],
+ "cells": [
+  {
+   "r": 0,
+   "c": 0,
+   "box": [
+    0,
+    0,
+    2296,
+    1536
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": false,
+     "evidence": "All houses upright with intact roofs, only floodwater around"
+    },
+    "road": {
+     "blocked": true,
+     "evidence": "Roadway between homes completely submerged in floodwater"
+    },
+    "flood": {
+     "flooded_building": true,
+     "flooded_road": true,
+     "evidence": "Flooded street between houses with water against homes and cars"
+    }
+   },
+   "sam_n": 7,
+   "sam_capped": false,
+   "buildings": [
+    {
+     "box": [
+      491,
+      838,
+      973,
+      1185
+     ],
+     "sam_conf": 0.926,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles uniform intact, no decking exposed, walls standing, chimney upright",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      1874,
+      0,
+      2322,
+      227
+     ],
+     "sam_conf": 0.844,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact with no missing shingles, walls standing, no collapse despite surrounding floodwater",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      1728,
+      1128,
+      2216,
+      1498
+     ],
+     "sam_conf": 0.89,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "hip shingle roof fully intact, no missing covering, structure sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      439,
+      479,
+      996,
+      818
+     ],
+     "sam_conf": 0.922,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Intact gray shingle roof, no missing sections, structure square, chimney upright",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      327,
+      1208,
+      927,
+      1564
+     ],
+     "sam_conf": 0.926,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles fully intact, no missing sections, walls upright, structure sound.",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      697,
+      77,
+      1050,
+      456
+     ],
+     "sam_conf": 0.91,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact with no missing shingles, walls upright, chimney standing",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      1765,
+      743,
+      2302,
+      1105
+     ],
+     "sam_conf": 0.922,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles intact, vents present, walls sound despite surrounding floodwater",
+     "review": false,
+     "review_reasons": []
+    }
+   ],
+   "score": 3,
+   "reasons": [
+    "building(s) in floodwater",
+    "road likely impassable",
+    "road under floodwater"
+   ],
+   "review": [],
+   "access": "blocked",
+   "evidence": [
+    "All houses upright with intact roofs, only floodwater around",
+    "Roadway between homes completely submerged in floodwater",
+    "Flooded street between houses with water against homes and cars"
+   ],
+   "rank": 1
+  },
+  {
+   "r": 0,
+   "c": 1,
+   "box": [
+    2296,
+    0,
+    4592,
+    1536
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": false,
+     "evidence": "All houses standing with intact roofs despite flooding"
+    },
+    "road": {
+     "blocked": true,
+     "evidence": "central street submerged under floodwater between houses"
+    },
+    "flood": {
+     "flooded_building": true,
+     "flooded_road": true,
+     "evidence": "Streets submerged, water reaching houses and driveways"
+    }
+   },
+   "sam_n": 9,
+   "sam_capped": false,
+   "buildings": [
+    {
+     "box": [
+      4101,
+      255,
+      4592,
+      608
+     ],
+     "sam_conf": 0.89,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact with uniform shingles, no exposure, walls aligned, structure sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2853,
+      0,
+      3300,
+      204
+     ],
+     "sam_conf": 0.887,
+     "grade": "minor",
+     "grades": {
+      "spark_a": "minor",
+      "spark_b": "minor",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "few small light patches of missing shingles, otherwise intact roof",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      4098,
+      0,
+      4486,
+      230
+     ],
+     "sam_conf": 0.89,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof covering intact, no missing shingles, walls upright and sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      4070,
+      999,
+      4592,
+      1352
+     ],
+     "sam_conf": 0.899,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Intact dark shingle roof, no missing covering, straight walls and eaves",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2859,
+      815,
+      3280,
+      1157
+     ],
+     "sam_conf": 0.914,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Intact hip shingle roof with no missing cover, walls upright, no debris",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2511,
+      1180,
+      2606,
+      1323
+     ],
+     "sam_conf": 0.531,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact gray covering, no missing areas, structure standing amid trees",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2655,
+      1188,
+      3240,
+      1547
+     ],
+     "sam_conf": 0.926,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles fully intact, ridges straight, no debris, structure sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      4075,
+      620,
+      4552,
+      961
+     ],
+     "sam_conf": 0.848,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Hip roof fully intact with no missing shingles, walls standing, structure sound from above",
+     "review": false,
+     "review_reasons": []
+    }
+   ],
+   "score": 3,
+   "reasons": [
+    "building(s) in floodwater",
+    "road likely impassable",
+    "road under floodwater"
+   ],
+   "review": [],
+   "access": "blocked",
+   "evidence": [
+    "All houses standing with intact roofs despite flooding",
+    "central street submerged under floodwater between houses",
+    "Streets submerged, water reaching houses and driveways"
+   ],
+   "rank": 2
+  },
+  {
+   "r": 1,
+   "c": 0,
+   "box": [
+    0,
+    1536,
+    2296,
+    3072
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": false,
+     "evidence": "All houses standing intact roofs, only street flooding visible"
+    },
+    "road": {
+     "blocked": true,
+     "evidence": "central street completely submerged under brown floodwater"
+    },
+    "flood": {
+     "flooded_building": true,
+     "flooded_road": true,
+     "evidence": "Brown murky water covers street and reaches houses driveways"
+    }
+   },
+   "sam_n": 9,
+   "sam_capped": false,
+   "buildings": [
+    {
+     "box": [
+      367,
+      2368,
+      761,
+      2738
+     ],
+     "sam_conf": 0.918,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Intact gray shingle roof, no missing covering, brick walls upright, structure sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      1670,
+      1914,
+      2101,
+      2296
+     ],
+     "sam_conf": 0.922,
+     "grade": "minor",
+     "grades": {
+      "spark_a": "minor",
+      "spark_b": "minor",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof largely intact shingles, small white tarp patch at south eave, structure sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      321,
+      1584,
+      887,
+      1949
+     ],
+     "sam_conf": 0.914,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof fully intact with no missing shingles, walls standing, structure sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      370,
+      1975,
+      870,
+      2322
+     ],
+     "sam_conf": 0.855,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles intact, no decking exposed, walls upright, no debris",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      149,
+      2793,
+      695,
+      3071
+     ],
+     "sam_conf": 0.883,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact, uniform shingles, no holes, chimney and walls standing sound.",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      1708,
+      1524,
+      2213,
+      1888
+     ],
+     "sam_conf": 0.922,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles fully intact, no exposed decking, walls standing, structure sound.",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      1891,
+      2729,
+      2468,
+      3071
+     ],
+     "sam_conf": 0.93,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact uniform gray, no missing covering, structure aligned, no debris visible",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      1814,
+      2328,
+      2431,
+      2712
+     ],
+     "sam_conf": 0.938,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles intact uniform, no exposed decking, structure aligned, no debris",
+     "review": false,
+     "review_reasons": []
+    }
+   ],
+   "score": 3,
+   "reasons": [
+    "building(s) in floodwater",
+    "road likely impassable",
+    "road under floodwater"
+   ],
+   "review": [],
+   "access": "blocked",
+   "evidence": [
+    "All houses standing intact roofs, only street flooding visible",
+    "central street completely submerged under brown floodwater",
+    "Brown murky water covers street and reaches houses driveways"
+   ],
+   "rank": 3
+  },
+  {
+   "r": 1,
+   "c": 1,
+   "box": [
+    2296,
+    1536,
+    4592,
+    3072
+   ],
+   "scan": {
+    "destroyed": {
+     "destroyed_present": false,
+     "evidence": "All houses standing with intact roofs, only street flooding visible"
+    },
+    "road": {
+     "blocked": true,
+     "evidence": "Street submerged under floodwater, pavement invisible"
+    },
+    "flood": {
+     "flooded_building": false,
+     "flooded_road": true,
+     "evidence": "Street completely submerged, houses adjacent but not touched"
+    }
+   },
+   "sam_n": 10,
+   "sam_capped": false,
+   "buildings": [
+    {
+     "box": [
+      4087,
+      1805,
+      4592,
+      2144
+     ],
+     "sam_conf": 0.91,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact with no missing covering, structure sound, walls standing",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      4064,
+      1375,
+      4517,
+      1733
+     ],
+     "sam_conf": 0.918,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Intact hip roof with uniform shingles, no decking exposed, walls standing",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2836,
+      2827,
+      3323,
+      3071
+     ],
+     "sam_conf": 0.867,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof covering intact, no missing shingles, walls and structure appear sound.",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      4196,
+      2933,
+      4592,
+      3071
+     ],
+     "sam_conf": 0.714,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact with uniform covering, walls standing, no debris visible.",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2643,
+      2428,
+      3166,
+      2856
+     ],
+     "sam_conf": 0.91,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof intact with no missing shingles, walls standing, structure sound.",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2758,
+      2018,
+      3191,
+      2379
+     ],
+     "sam_conf": 0.922,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles uniform and intact, no missing sections, structure appears sound",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      2902,
+      1604,
+      3246,
+      1954
+     ],
+     "sam_conf": 0.918,
+     "grade": "no_damage",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "no_damage",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "Roof shingles intact, no missing sections, ridges and edges sound, structure aligned.",
+     "review": false,
+     "review_reasons": []
+    },
+    {
+     "box": [
+      3996,
+      3003,
+      4209,
+      3071
+     ],
+     "sam_conf": 0.528,
+     "grade": "minor",
+     "grades": {
+      "spark_a": "no_damage",
+      "spark_b": "minor",
+      "wonder": null
+     },
+     "severe_votes": "0/2",
+     "evidence": "flat roof appears intact with no missing sections, structure standing, no collapse visible",
+     "review": true,
+     "review_reasons": [
+      "building small in frame"
+     ]
+    }
+   ],
+   "score": 1,
+   "reasons": [
+    "road likely impassable",
+    "road under floodwater"
+   ],
+   "review": [
+    "1 building assessment(s) need a human look"
+   ],
+   "access": "blocked",
+   "evidence": [
+    "All houses standing with intact roofs, only street flooding visible",
+    "Street submerged under floodwater, pavement invisible",
+    "Street completely submerged, houses adjacent but not touched"
+   ],
+   "rank": 4
+  }
+ ],
+ "calls": {
+  "sam": 5,
+  "spark": 74,
+  "wonder": 0
+ },
+ "seconds": 35.3,
+ "prompts_version": "2026-11-01"
+}

@@ -1,0 +1,590 @@
+{
+ "13076": {
+  "building": {
+   "n": 1,
+   "hits": [
+    [
+     3,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 0,
+   "hits": [
+    [
+     3,
+     false
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     3,
+     false
+    ]
+   ]
+  }
+ },
+ "13639": {
+  "building": {
+   "n": 4,
+   "hits": [
+    [
+     5,
+     true
+    ],
+    [
+     5,
+     true
+    ],
+    [
+     4,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 6,
+   "hits": [
+    [
+     5,
+     true
+    ],
+    [
+     5,
+     true
+    ],
+    [
+     4,
+     true
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 3,
+   "hits": [
+    [
+     5,
+     true
+    ],
+    [
+     5,
+     true
+    ],
+    [
+     4,
+     true
+    ]
+   ]
+  }
+ },
+ "15340": {
+  "building": {
+   "n": 1,
+   "hits": [
+    [
+     3,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 1,
+   "hits": [
+    [
+     3,
+     true
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     3,
+     false
+    ]
+   ]
+  }
+ },
+ "10844": {
+  "building": {
+   "n": 0,
+   "hits": [
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  },
+  "house": {
+   "n": 0,
+   "hits": [
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  }
+ },
+ "14749": {
+  "building": {
+   "n": 4,
+   "hits": [
+    [
+     6,
+     true
+    ],
+    [
+     6,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 4,
+   "hits": [
+    [
+     6,
+     true
+    ],
+    [
+     6,
+     true
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  }
+ },
+ "12708": {
+  "building": {
+   "n": 3,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 4,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     4,
+     false
+    ],
+    [
+     4,
+     false
+    ],
+    [
+     4,
+     false
+    ]
+   ]
+  }
+ },
+ "11121": {
+  "building": {
+   "n": 5,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 5,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ],
+    [
+     4,
+     true
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     4,
+     false
+    ],
+    [
+     4,
+     false
+    ],
+    [
+     4,
+     false
+    ]
+   ]
+  }
+ },
+ "14632": {
+  "building": {
+   "n": 2,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     3,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 2,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     3,
+     true
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     4,
+     false
+    ],
+    [
+     3,
+     false
+    ]
+   ]
+  }
+ },
+ "11627": {
+  "building": {
+   "n": 1,
+   "hits": [
+    [
+     6,
+     false
+    ],
+    [
+     5,
+     false
+    ],
+    [
+     5,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     true
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  },
+  "house": {
+   "n": 0,
+   "hits": [
+    [
+     6,
+     false
+    ],
+    [
+     5,
+     false
+    ],
+    [
+     5,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     6,
+     false
+    ],
+    [
+     5,
+     false
+    ],
+    [
+     5,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  }
+ },
+ "15197": {
+  "building": {
+   "n": 1,
+   "hits": [
+    [
+     3,
+     true
+    ]
+   ]
+  },
+  "house": {
+   "n": 1,
+   "hits": [
+    [
+     3,
+     true
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     3,
+     false
+    ]
+   ]
+  }
+ },
+ "12237": {
+  "building": {
+   "n": 1,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  },
+  "house": {
+   "n": 1,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     4,
+     false
+    ],
+    [
+     6,
+     false
+    ]
+   ]
+  }
+ },
+ "15279": {
+  "building": {
+   "n": 1,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     5,
+     false
+    ]
+   ]
+  },
+  "house": {
+   "n": 1,
+   "hits": [
+    [
+     4,
+     true
+    ],
+    [
+     5,
+     false
+    ]
+   ]
+  },
+  "damaged building": {
+   "n": 0,
+   "hits": [
+    [
+     4,
+     false
+    ],
+    [
+     5,
+     false
+    ]
+   ]
+  }
+ }
+}
