@@ -1,95 +1,383 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aftershock: find the worst first</title>
+<meta name="color-scheme" content="dark">
 <style>
-:root{--bg:#0b1020;--panel:#121a2e;--line:#22304d;--ink:#e6ecf7;--mute:#8fa0bf;--red:#dc2626;--org:#f97316;--yel:#eab308;--grn:#22c55e;--acc:#38bdf8}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-h1{font-size:20px;margin:0;letter-spacing:.3px}h1 b{color:var(--red)}.tag{color:var(--mute);font-size:13px}
-.bar{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-select,button,input[type=file]{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px}
-button{cursor:pointer}button.primary{background:var(--acc);color:#05202e;border:0;font-weight:600}
-main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(320px,1fr);gap:18px;padding:18px 22px}
-@media(max-width:900px){main{grid-template-columns:1fr}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
-#view img{width:100%;border-radius:8px;display:block}
-.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);margin-top:8px;flex-wrap:wrap}.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-.cell{border-left:4px solid var(--line);padding:10px 12px;margin-bottom:10px;background:#0f1729;border-radius:8px}
-.cell h3{margin:0 0 4px;font-size:15px;display:flex;gap:8px;align-items:center}.score{margin-left:auto;font-size:12px;color:var(--mute)}
-.chip{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;margin:2px 4px 2px 0;border:1px solid var(--line)}
-.blocked{background:#3b0d0d;color:#fca5a5;border-color:#7f1d1d}.open{background:#06281a;color:#86efac;border-color:#14532d}
-.flag{color:#fde68a;font-size:13px}.ev{color:var(--mute);font-size:12.5px;font-style:italic}
-ul{margin:4px 0 0 18px;padding:0}li{margin:2px 0}
-.g-destroyed{background:var(--red)}.g-major{background:var(--org)}.g-minor{background:var(--yel);color:#111}.g-no_damage{background:var(--grn);color:#062}.g-unknown{background:#64748b}
-#status{font-size:13px;color:var(--acc)}.meta{font-size:12px;color:var(--mute);margin-top:6px}
-.voice .q{background:#0f1729;border-radius:6px;padding:6px 8px;font-size:13px;margin:4px 0}.voice .warn{color:#fde68a;font-size:13px}
-footer{padding:4px 22px 26px;color:var(--mute);font-size:12.5px}footer b{color:var(--ink)}
+:root{
+  --bg:#0b1020;--panel:#121a2e;--raise:#18223a;--line:#22304d;--line-2:#2e3f63;
+  --ink:#e6ecf7;--mute:#9aaacb;--faint:#7385a8;
+  --red:#dc2626;--org:#f97316;--yel:#eab308;--grn:#22c55e;--gry:#64748b;--acc:#38bdf8;
+  --warn-bg:#2a2108;--warn-line:#6b5410;--warn-ink:#fde68a;
+  --err-bg:#2c0f12;--err-line:#7f1d1d;--err-ink:#fecaca;
+  --r-sm:6px;--r:10px;--r-lg:14px;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;
+}
+*{box-sizing:border-box}
+html{scrollbar-color:var(--line-2) var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+::selection{background:#38bdf855;color:#fff}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:var(--r-sm)}
+.num{font-variant-numeric:tabular-nums}
+svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Header */
+header{display:flex;align-items:baseline;gap:var(--s4);padding:var(--s4) var(--s5) var(--s3);flex-wrap:wrap}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}h1 b{color:var(--red)}
+.tag{color:var(--mute);font-size:13.5px}
+
+/* Intake band */
+.intake{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);padding:0 var(--s5) var(--s3)}
+.group{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s3) var(--s4) var(--s4);display:flex;flex-direction:column;gap:var(--s2);min-width:0}
+.group h2{font-size:14px;margin:0;display:flex;align-items:center;gap:var(--s2)}
+.group p{margin:0;color:var(--mute);font-size:13px}
+.row{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;margin-top:auto}
+select,button,.file{font:inherit;font-size:14px;color:var(--ink);background:var(--raise);border:1px solid var(--line-2);border-radius:var(--r);min-height:38px;padding:7px 12px}
+select{padding-right:8px;cursor:pointer}
+button,.file{cursor:pointer;display:inline-flex;align-items:center;gap:var(--s2);transition:background .15s ease-out,border-color .15s ease-out}
+button:hover:not(:disabled),.file:hover,select:hover{border-color:#47608f;background:#1d2945}
+button:disabled,button.primary:disabled{cursor:not-allowed;background:var(--raise);border-color:var(--line);color:var(--faint)}
+button.primary{background:var(--acc);border-color:var(--acc);color:#04202e;font-weight:650}
+button.primary:hover:not(:disabled){background:#7dd3fc;border-color:#7dd3fc}
+.file{max-width:100%;min-width:0;flex:1 1 100%}
+.file span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file.has{border-style:solid;border-color:#47608f}
+.file input{position:absolute;opacity:0;width:1px;height:1px}
+.file:focus-within{outline:2px solid var(--acc);outline-offset:2px}
+.field{display:flex;align-items:center;gap:var(--s2);font-size:13px;color:var(--mute)}
+.sample-sel{flex:1 1 200px;min-width:0}
+
+#status{margin:0 var(--s5) var(--s3);font-size:14px;border-radius:var(--r);display:none;align-items:flex-start;gap:var(--s2);padding:10px 14px}
+#status.show{display:flex}
+#status.info{background:#0d2233;border:1px solid #1e4a66;color:#bae6fd}
+#status.error{background:var(--err-bg);border:1px solid var(--err-line);color:var(--err-ink)}
+#status .spin{width:14px;height:14px;border:2px solid #38bdf855;border-top-color:var(--acc);border-radius:50%;animation:spin .8s linear infinite;flex:none;margin-top:3px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){#status .spin{animation:none}}
+
+/* Workspace */
+main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(340px,1fr);gap:var(--s4);padding:0 var(--s5) var(--s5);align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s4)}
+#viewWrap{position:sticky;top:var(--s3)}
+.empty{padding:var(--s5) var(--s4);color:var(--mute)}
+.empty h2{color:var(--ink);font-size:17px;margin:0 0 var(--s2)}
+.empty p{margin:0 0 var(--s4);max-width:62ch}
+
+.frames{display:flex;gap:var(--s2);margin-bottom:var(--s3);flex-wrap:wrap}
+.frames button[aria-pressed=true]{border-color:var(--acc);color:#bae6fd}
+.map{position:relative;border-radius:var(--r);overflow:hidden;line-height:0}
+.map img{width:100%;display:block}
+.hit{position:absolute;background:transparent;border:0;border-radius:0;padding:0;min-height:0;cursor:pointer;box-shadow:inset 0 0 0 0 transparent;transition:box-shadow .15s ease-out,background .15s ease-out}
+.map .hit:hover:not(:disabled){background:#ffffff14;border:0;box-shadow:inset 0 0 0 2px #ffffffaa}
+.map .hit.on,.map .hit.on:hover:not(:disabled){background:#38bdf81f;box-shadow:inset 0 0 0 3px var(--acc)}
+.hit:focus-visible{outline:none;box-shadow:inset 0 0 0 3px var(--acc)}
+.legend{display:flex;gap:var(--s2) var(--s4);font-size:13px;color:var(--mute);margin-top:var(--s3);flex-wrap:wrap;align-items:center}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:0}
+.d-destroyed{background:var(--red)}.d-major{background:var(--org)}.d-minor{background:var(--yel)}.d-no_damage{background:var(--grn)}.d-unknown{background:var(--gry)}
+details.run{margin-top:var(--s3);font-size:13px;color:var(--mute)}
+details summary{cursor:pointer;color:var(--mute);width:max-content;max-width:100%}
+details summary:hover{color:var(--ink)}
+
+/* Ranked list */
+.side{display:flex;flex-direction:column;gap:var(--s4);min-width:0}
+.list-head h2{font-size:17px;margin:0}
+.list-head .tag{margin-top:2px}
+.summary{display:flex;flex-wrap:wrap;gap:var(--s2);margin:var(--s3) 0 var(--s1)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--line-2);color:var(--ink);background:var(--raise)}
+.pill.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn-ink)}
+.pill.bad{background:var(--err-bg);border-color:var(--err-line);color:var(--err-ink)}
+.pill.ok{background:#082618;border-color:#14532d;color:#bbf7d0}
+ol.areas{list-style:none;margin:var(--s3) 0 0;padding:0}
+.area{border-top:1px solid var(--line);padding:var(--s3) var(--s2) var(--s4);margin:0 calc(var(--s2) * -1);border-radius:var(--r);transition:background .15s ease-out}
+.area.on{background:#16213b;box-shadow:inset 0 0 0 1px #2f4a75}
+.area-h{display:flex;align-items:center;gap:var(--s3);width:100%;background:none;border:0;padding:0;min-height:0;text-align:left;color:inherit}
+.area-h:hover:not(:disabled){background:none;border:0}
+.rank{flex:none;width:36px;height:36px;border-radius:var(--r);display:grid;place-items:center;font-weight:750;font-size:15px;color:#0b1020}
+.area-t{flex:1;min-width:0}
+.area-t b{display:block;font-size:15.5px}
+.area-t small{color:var(--mute);font-size:12.5px}
+.score{flex:none;text-align:right;font-size:12px;color:var(--mute);line-height:1.25}
+.score b{display:block;font-size:17px;color:var(--ink)}
+.area-b{padding-left:48px;margin-top:var(--s2)}
+.why{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:2px}
+.why li{position:relative;padding-left:14px}
+.why li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--mute)}
+.why.none{color:var(--mute)}
+.check{margin-top:var(--s2);background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r);padding:var(--s2) var(--s3);color:var(--warn-ink);font-size:14px}
+.check b{display:flex;align-items:center;gap:6px;margin-bottom:2px}
+.check ul{margin:0;padding-left:20px}
+.bld{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--s3);align-items:center}
+.bld .lbl{font-size:12.5px;color:var(--mute);margin-right:2px}
+.ev{margin-top:var(--s2);font-size:13.5px;color:var(--mute)}
+.ev q{display:block;margin-top:2px}
+.bdet{margin-top:var(--s2);font-size:13.5px}
+.bdet ul{list-style:none;margin:var(--s2) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--s2)}
+.bdet li{background:var(--bg);border-radius:var(--r-sm);padding:var(--s2) var(--s3)}
+.bdet .g{font-weight:650;display:flex;align-items:center;gap:6px}
+.bdet .v{color:var(--faint);font-size:12.5px}
+.bdet .f{color:var(--warn-ink);font-size:13px}
+
+/* Radio call */
+.voice-h{display:flex;align-items:flex-start;gap:var(--s2)}
+.voice-h h2{font-size:17px;margin:0;flex:1}
+.voice-h .tag{display:block;font-weight:400}
+.icon-btn{min-height:32px;padding:4px 8px;background:none;border-color:transparent;color:var(--mute)}
+.counts{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin:var(--s3) 0}
+.count{background:var(--raise);border-radius:var(--r);padding:var(--s2) var(--s3)}
+.count b{font-size:28px;line-height:1.1;display:block}
+.count span{font-size:14px}
+.count small{display:block;color:var(--mute);font-size:12.5px;margin-top:2px}
+dl.facts{display:grid;grid-template-columns:max-content 1fr;gap:4px var(--s3);margin:0 0 var(--s3);font-size:14.5px}
+dl.facts dt{color:var(--mute)}dl.facts dd{margin:0;font-weight:600}
+.tx{font-size:12.5px;color:var(--mute);margin:var(--s2) 0 2px}
+.q{background:var(--bg);border-radius:var(--r-sm);padding:var(--s2) var(--s3);font-size:14px}
+
+footer{padding:0 var(--s5) var(--s6);color:var(--mute);font-size:13.5px;max-width:110ch}
+footer p{margin:0 0 var(--s2)}footer b{color:var(--ink)}
+footer details p{margin:var(--s2) 0 0}
+
+@media (max-width:1100px){.intake{grid-template-columns:1fr 1fr}.intake .samples{grid-column:1 / -1;order:-1}}
+@media (max-width:900px){main{grid-template-columns:1fr}#viewWrap{position:static}}
+@media (max-width:640px){
+  header,.intake,main,footer{padding-left:var(--s3);padding-right:var(--s3)}#status{margin-left:var(--s3);margin-right:var(--s3)}
+  .intake{grid-template-columns:1fr}
+  .area-b{padding-left:0}
+  .counts{grid-template-columns:1fr 1fr}
+}
 </style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4"/><path d="M4 4h12l-2 4 2 4H4"/></symbol>
+  <symbol id="i-drone" viewBox="0 0 24 24"><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 9 6 6M15 9l3-3M9 15l-3 3M15 15l3 3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="13" rx="2"/><path d="M9 8 15 3"/><circle cx="12" cy="15" r="3"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></symbol>
+</svg>
+
 <header>
-  <div><h1>After<b>shock</b></h1><div class="tag">Find the worst first, with evidence. Built on Meta Muse Spark, SAM 3.1 and Voice Transcribe.</div></div>
-  <div class="bar">
-    <select id="sample"><option value="">Sample surveys…</option></select>
-    <input type="file" id="file" accept="image/*,video/*">
-    <select id="grid"><option value="2">2×2 grid</option><option value="3">3×3 grid</option></select>
-    <button class="primary" id="go">Survey</button>
-    <input type="file" id="audio" accept="audio/*">
-    <button id="vgo">Radio call</button>
-    <span id="status"></span>
-  </div>
+  <h1>After<b>shock</b></h1>
+  <div class="tag">Find the worst first, with evidence. Built on Meta Muse Spark, SAM 3.1 and Voice Transcribe.</div>
 </header>
+
+<section class="intake" aria-label="Start a survey">
+  <div class="group">
+    <h2><svg class="i"><use href="#i-drone"/></svg>Drone survey</h2>
+    <p>Upload a drone image or video. Aftershock grids it and ranks the areas.</p>
+    <div class="row">
+      <label class="file" id="fileLbl"><svg class="i"><use href="#i-file"/></svg><span>Choose image or video</span><input type="file" id="file" accept="image/*,video/*"></label>
+      <label class="field">Grid <select id="grid" aria-label="Grid size"><option value="2">2 × 2</option><option value="3">3 × 3</option></select></label>
+      <button class="primary" id="go" disabled>Run survey</button>
+    </div>
+  </div>
+  <div class="group">
+    <h2><svg class="i"><use href="#i-radio"/></svg>Radio call</h2>
+    <p>Upload a recorded call in any of 25 languages to pull out head-counts.</p>
+    <div class="row">
+      <label class="file" id="audioLbl"><svg class="i"><use href="#i-file"/></svg><span>Choose audio file</span><input type="file" id="audio" accept="audio/*"></label>
+      <button class="primary" id="vgo" disabled>Transcribe call</button>
+    </div>
+  </div>
+  <div class="group samples">
+    <h2><svg class="i"><use href="#i-box"/></svg>Samples</h2>
+    <p>Finished results from real datasets. No API key needed.</p>
+    <div class="row">
+      <select id="sample" class="sample-sel" aria-label="Load a sample"><option value="">Load a sample…</option></select>
+    </div>
+  </div>
+</section>
+
+<div id="status" role="status" aria-live="polite"></div>
+
 <main>
-  <section class="card" id="view"><div class="tag">Pick a sample or upload a drone image or video.</div></section>
-  <section>
-    <div class="card" id="rank"><div class="tag">Ranked areas appear here.</div></div>
-    <div class="card voice" id="voice" style="margin-top:14px;display:none"></div>
+  <section id="viewWrap" class="panel" aria-label="Survey map">
+    <div id="view"></div>
   </section>
+  <div class="side">
+    <section class="panel" id="voice" aria-label="Radio call" hidden></section>
+    <section class="panel" id="rank" aria-label="Areas ranked by priority"></section>
+  </div>
 </main>
-<footer><b>What this is not.</b> A triage aid that ranks where to look first; not a structural assessment or a rescue decision. Measured zero-shot on held-out drone imagery: severe-damage recall 90% and precision 76% (RescueNet, n=200); exact four-class grade 66%, within one grade 95.5%. Flooded-road detection 88% recall, 100% precision (FloodNet, n=60). SAM misses flattened buildings, so area scans cover them. ⚑ marks anything a person must check: assessors disagree, the scan and grader conflict, or the scene is too dense. Every head-count from radio must be read back.</footer>
+
+<footer>
+  <p><b>What this is not.</b> A triage aid that ranks where to look first; not a structural assessment or a rescue decision.</p>
+  <details><summary>Measured accuracy and limits</summary>
+    <p>Measured zero-shot on held-out drone imagery: severe-damage recall 90% and precision 76% (RescueNet, n=200); exact four-class grade 66%, within one grade 95.5%. Flooded-road detection 88% recall, 100% precision (FloodNet, n=60). SAM misses flattened buildings, so area scans cover them. The flag marks anything a person must check: assessors disagree, the scan and grader conflict, or the scene is too dense. Every head-count from radio must be read back.</p>
+  </details>
+</footer>
+
 <script>
-const $=s=>document.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let SAMPLES=[];
-fetch('/api/samples').then(r=>r.json()).then(d=>{SAMPLES=d;d.forEach((s,i)=>$('#sample').insertAdjacentHTML('beforeend',`<option value="${i}">${esc(s.name)}${s.kind==='voice'?' (radio)':''}</option>`))});
-$('#sample').onchange=e=>{const s=SAMPLES[e.target.value];if(!s)return;s.kind==='voice'?showVoice(s):showSurvey([s])};
-function color(score){return score>=5?'var(--red)':score>=3?'var(--org)':score>=1?'var(--yel)':'var(--grn)'}
-function showSurvey(list){
-  const r=list[0];
-  $('#view').innerHTML=list.map(x=>`${x.frame_time!=null?`<div class="tag">Frame at ${x.frame_time}s</div>`:''}<img src="${x.overlay}" alt="Survey overlay">`).join('')+
-   `<div class="legend"><span><i class="dot g-destroyed"></i>destroyed</span><span><i class="dot g-major"></i>major</span><span><i class="dot g-minor"></i>minor</span><span><i class="dot g-no_damage"></i>no damage</span><span>#n = priority rank</span><span>⚑ = human check</span></div>
-   <div class="meta">${r.seconds}s · SAM calls ${r.calls.sam} · Spark calls ${r.calls.spark} · Wonder tie-breaks ${r.calls.wonder} · prompts v${esc(r.prompts_version)}</div>`;
-  $('#rank').innerHTML='<div class="tag" style="margin-bottom:8px">Areas ranked by triage priority (a ranking aid, not a probability)</div>'+r.cells.map(c=>`
-   <div class="cell" style="border-left-color:${color(c.score)}">
-    <h3>#${c.rank} · row ${c.r+1}, col ${c.c+1} <span class="chip ${c.access}">road ${c.access}</span><span class="score">score ${c.score}</span></h3>
-    ${c.reasons.length?`<ul>${c.reasons.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'<div class="tag">No severe signal.</div>'}
-    ${c.review.map(x=>`<div class="flag">⚑ ${esc(x)}</div>`).join('')}
-    ${c.buildings.length?`<div style="margin-top:6px">${c.buildings.map(b=>`<span class="chip g-${b.grade}" title="${esc(b.evidence)} | votes ${esc(JSON.stringify(b.grades))}">${b.grade.replace('_',' ')}${b.review?' ⚑':''}</span>`).join('')}</div>`:''}
-    ${c.evidence.slice(0,2).map(e=>`<div class="ev">“${esc(e)}”</div>`).join('')}
-   </div>`).join('');
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const icon=(id,label)=>`<svg class="i"${label?` role="img" aria-label="${label}"`:' aria-hidden="true"'}><use href="#i-${id}"/></svg>`;
+const plural=(n,one,many)=>`${n} ${n===1?one:(many||one+'s')}`;
+const GRADES=['destroyed','major','minor','no_damage','unknown'];
+const GRADE_LABEL={destroyed:'destroyed',major:'major',minor:'minor',no_damage:'no damage',unknown:'unknown'};
+const SAMPLE_LABEL={
+  michael_11121:'Hurricane Michael: wind damage (RescueNet)',
+  harvey_7434:'Hurricane Harvey: flooding (FloodNet)',
+  radio_english:'Radio call in English',
+  radio_arabic:'Radio call in Arabic'
+};
+const sampleLabel=n=>SAMPLE_LABEL[n]||String(n).replace(/_/g,' ');
+let SAMPLES=[],FRAMES=[],FRAME=0,SEL=null;
+
+/* ---------- status ---------- */
+function status(kind,msg){
+  const s=$('#status');
+  if(!kind){s.className='';s.innerHTML='';return}
+  s.className='show '+kind;
+  s.innerHTML=(kind==='busy'?'<span class="spin" aria-hidden="true"></span>':kind==='error'?icon('alert'):'')+`<span>${msg}</span>`;
+  if(kind==='busy')s.classList.add('info');
 }
-function showVoice(v){
-  const e=v.extracted||{};$('#voice').style.display='block';
-  $('#voice').innerHTML=`<h3 style="margin:0 0 6px">Radio call</h3>
-   <div class="tag">Transcript (original)</div><div class="q" dir="auto">${esc(v.transcript)}</div>
-   <div class="tag">English</div><div class="q">${esc(e.english)}</div>
-   <div><b>${e.people_trapped??'?'}</b> trapped <span class="ev">from “${esc(e.people_trapped_quote)}”</span></div>
-   <div><b>${e.injured??'?'}</b> injured <span class="ev">from “${esc(e.injured_quote)}”</span></div>
-   <div>Location: <b>${esc(e.location)}</b> · Need: <b>${esc(e.need)}</b></div>
-   ${(v.confirm||[]).map(x=>`<div class="warn">⚑ ${esc(x)}</div>`).join('')}`;
+
+/* ---------- empty states ---------- */
+function emptyView(){
+  $('#view').innerHTML=`<div class="empty"><h2>No survey loaded</h2>
+   <p>Load a sample to see a finished survey, or upload your own drone image or video above. Aftershock splits the image into a grid, ranks each area by triage priority, and flags anything a person needs to check.</p>
+   <button class="primary" id="tryMichael">Load the Hurricane Michael sample</button></div>`;
+  $('#tryMichael').onclick=()=>{const i=SAMPLES.findIndex(s=>s.name==='michael_11121');const j=i>=0?i:SAMPLES.findIndex(s=>s.kind!=='voice');if(j>=0){$('#sample').value=j;loadSample(j)}};
+  $('#rank').innerHTML=`<div class="list-head"><h2>Where to look first</h2><div class="tag">Areas appear here once a survey loads, highest priority first.</div></div>`;
 }
+
+/* ---------- samples ---------- */
+fetch('/api/samples').then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{
+  SAMPLES=d;
+  const og=(label,kind)=>{const items=d.map((s,i)=>[s,i]).filter(([s])=>(s.kind==='voice')===(kind==='voice'));
+    return items.length?`<optgroup label="${label}">${items.map(([s,i])=>`<option value="${i}">${esc(sampleLabel(s.name))}</option>`).join('')}</optgroup>`:''};
+  $('#sample').insertAdjacentHTML('beforeend',og('Drone surveys','survey')+og('Radio calls','voice'));
+}).catch(()=>status('error','Samples could not be loaded. Check that the server is running, then reload the page.'));
+function loadSample(i){const s=SAMPLES[i];if(!s)return;status();s.kind==='voice'?showVoice(s,sampleLabel(s.name)):showSurvey([s])}
+$('#sample').onchange=e=>loadSample(e.target.value);
+
+/* ---------- survey ---------- */
+function tier(score){return score>=5?'var(--red)':score>=3?'var(--org)':score>=1?'var(--yel)':'var(--grn)'}
+function place(r,c,R,C){
+  const rows=R===2?['Top','Bottom']:R===3?['Top','Middle','Bottom']:null;
+  const cols=C===2?['left','right']:C===3?['left','center','right']:null;
+  if(R===1&&C===1)return 'Whole image';
+  if(rows&&cols){const a=rows[r],b=cols[c];return (a==='Middle'&&b==='center')?'Center':`${a}-${b}`}
+  return `Row ${r+1}, column ${c+1}`;
+}
+function showSurvey(list){FRAMES=list;FRAME=0;SEL=null;renderFrame()}
+function renderFrame(){
+  const r=FRAMES[FRAME];if(!r)return;
+  const [W,H]=r.size||[1,1];const [R,C]=r.grid||[1,1];
+  const cells=[...r.cells].sort((a,b)=>a.rank-b.rank);
+  const frameTabs=FRAMES.length>1?`<div class="frames" role="group" aria-label="Video frames">${FRAMES.map((f,i)=>`<button data-frame="${i}" aria-pressed="${i===FRAME}">Frame at ${esc(f.frame_time)}s</button>`).join('')}</div>`:'';
+  const hits=cells.map(c=>{const [x1,y1,x2,y2]=c.box;
+    return `<button class="hit" data-key="${c.r}-${c.c}" aria-label="Show area #${c.rank}, ${esc(place(c.r,c.c,R,C))}" style="left:${x1/W*100}%;top:${y1/H*100}%;width:${(x2-x1)/W*100}%;height:${(y2-y1)/H*100}%"></button>`}).join('');
+  $('#view').innerHTML=frameTabs+
+   `<div class="map"><img src="${r.overlay}" alt="Drone image with building masks colored by damage grade and grid areas numbered by priority">${hits}</div>
+    <div class="legend"><span><i class="dot d-destroyed"></i>destroyed</span><span><i class="dot d-major"></i>major</span><span><i class="dot d-minor"></i>minor</span><span><i class="dot d-no_damage"></i>no damage</span><span>#n = priority rank</span><span>⚑ = needs a human check</span><span>Select an area to see why it ranks there.</span></div>
+    <details class="run"><summary>Run details</summary><div class="num" style="margin-top:6px">${esc(r.seconds)}s · SAM calls ${esc(r.calls?.sam)} · Spark calls ${esc(r.calls?.spark)} · Wonder tie-breaks ${esc(r.calls?.wonder)} · prompts v${esc(r.prompts_version)}</div></details>`;
+  document.querySelectorAll('[data-frame]').forEach(b=>b.onclick=()=>{FRAME=+b.dataset.frame;SEL=null;renderFrame()});
+  document.querySelectorAll('.hit').forEach(b=>b.onclick=()=>select(b.dataset.key,true));
+
+  const nCheck=cells.filter(c=>c.review.length||c.buildings.some(b=>b.review)).length;
+  const nBlocked=cells.filter(c=>c.access==='blocked').length;
+  const top=cells[0];
+  $('#rank').innerHTML=`<div class="list-head"><h2>Where to look first</h2>
+     <div class="tag">${top?`Start with #1, ${esc(place(top.r,top.c,R,C).toLowerCase())}. `:''}Ranked by triage priority score; a ranking aid, not a probability.</div></div>
+   <div class="summary">
+     <span class="pill num">${plural(cells.length,'area')} ranked</span>
+     ${nCheck?`<span class="pill warn num">${icon('flag')}${nCheck} need${nCheck===1?'s':''} a human check</span>`:'<span class="pill ok">No human checks flagged</span>'}
+     ${nBlocked?`<span class="pill bad num">${nBlocked} with blocked roads</span>`:''}
+   </div>
+   <ol class="areas">${cells.map(c=>areaItem(c,R,C)).join('')}</ol>`;
+  document.querySelectorAll('.area-h').forEach(b=>b.onclick=()=>select(b.dataset.key,false));
+}
+function areaItem(c,R,C){
+  const key=`${c.r}-${c.c}`;
+  const counts={};c.buildings.forEach(b=>counts[b.grade]=(counts[b.grade]||0)+1);
+  const flagged=c.buildings.filter(b=>b.review).length;
+  const checks=[...c.review];
+  const bldSummary=c.buildings.length?`<div class="bld"><span class="lbl">${plural(c.buildings.length,'building')}:</span>${GRADES.filter(g=>counts[g]).map(g=>`<span class="pill num"><i class="dot d-${g}" style="margin:0"></i>${counts[g]} ${GRADE_LABEL[g]}</span>`).join('')}${flagged?`<span class="pill warn num">${icon('flag')}${flagged} flagged</span>`:''}</div>`
+    :`<div class="bld"><span class="lbl">No buildings segmented in this area.</span></div>`;
+  const vote=v=>v?GRADE_LABEL[v]||v:'not used';
+  const details=c.buildings.length?`<details class="bdet"><summary>Building details</summary><ul>${c.buildings.map((b,i)=>`<li>
+      <div class="g"><i class="dot d-${esc(b.grade)}" style="margin:0"></i>Building ${i+1}: ${esc(GRADE_LABEL[b.grade]||b.grade)}${b.review?` ${icon('flag','needs a human check')}`:''}</div>
+      ${b.evidence?`<div>“${esc(b.evidence)}”</div>`:''}
+      <div class="v">Spark A: ${esc(vote(b.grades?.spark_a))} · Spark B: ${esc(vote(b.grades?.spark_b))} · Wonder: ${esc(vote(b.grades?.wonder))}</div>
+      ${b.review_reasons?.length?`<div class="f">Check: ${b.review_reasons.map(esc).join('; ')}</div>`:''}
+    </li>`).join('')}</ul></details>`:'';
+  return `<li class="area" data-key="${key}">
+    <button class="area-h" data-key="${key}" aria-pressed="false">
+      <span class="rank num" style="background:${tier(c.score)}">#${c.rank}</span>
+      <span class="area-t"><b>${esc(place(c.r,c.c,R,C))}</b><small class="num">Row ${c.r+1}, column ${c.c+1} · road ${c.access==='blocked'?'blocked':'open'}</small></span>
+      <span class="score num"><b>${esc(c.score)}</b>score</span>
+    </button>
+    <div class="area-b">
+      ${c.reasons.length?`<ul class="why">${c.reasons.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'<p class="why none" style="margin:0">No severe signal.</p>'}
+      ${checks.length?`<div class="check"><b>${icon('flag')}Needs a human check</b><ul>${checks.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+      ${bldSummary}
+      ${c.evidence.length?`<div class="ev">Model evidence:${c.evidence.slice(0,2).map(e=>`<q>${esc(e)}</q>`).join('')}</div>`:''}
+      ${details}
+    </div></li>`;
+}
+function select(key,fromMap){
+  SEL=SEL===key&&!fromMap?null:key;
+  document.querySelectorAll('.hit').forEach(h=>h.classList.toggle('on',h.dataset.key===SEL));
+  document.querySelectorAll('.area').forEach(a=>{const on=a.dataset.key===SEL;a.classList.toggle('on',on);a.querySelector('.area-h').setAttribute('aria-pressed',on)});
+  if(fromMap&&SEL){const a=document.querySelector(`.area[data-key="${SEL}"]`);a&&a.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'})}
+}
+
+/* ---------- radio call ---------- */
+function showVoice(v,source){
+  const e=v.extracted||{};const box=$('#voice');box.hidden=false;
+  const confirm=[...new Set(v.confirm||[])];
+  const same=(e.english||'').trim()===(v.transcript||'').trim();
+  const cnt=(n,label,quote)=>`<div class="count"><b class="num">${n??'?'}</b><span>${label}</span><small>${n==null?'not stated in the call':`heard as “<span dir="auto">${esc(quote)}</span>”`}</small></div>`;
+  box.innerHTML=`<div class="voice-h"><h2>Radio call<span class="tag">${esc(source||'Uploaded call')}</span></h2>
+      <button class="icon-btn" id="vclose" aria-label="Close radio call">${icon('x')}</button></div>
+    ${confirm.length?`<div class="check"><b>${icon('flag')}Read back before dispatch</b><ul>${confirm.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+    <div class="counts">${cnt(e.people_trapped,'trapped',e.people_trapped_quote)}${cnt(e.injured,'injured',e.injured_quote)}</div>
+    <dl class="facts"><dt>Location</dt><dd>${esc(e.location||'not stated')}</dd><dt>Need</dt><dd>${esc(e.need||'not stated')}</dd></dl>
+    <div class="tx">${same?'Transcript':'Transcript (original)'}</div><div class="q" dir="auto">${esc(v.transcript)}</div>
+    ${same?'':`<div class="tx">English</div><div class="q">${esc(e.english)}</div>`}`;
+  $('#vclose').onclick=()=>{box.hidden=true;box.innerHTML=''};
+  box.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
+}
+
+/* ---------- uploads ---------- */
+function bindFile(input,label,btn,placeholder){
+  input.onchange=()=>{const f=input.files[0];label.classList.toggle('has',!!f);label.querySelector('span').textContent=f?f.name:placeholder;btn.disabled=!f};
+}
+bindFile($('#file'),$('#fileLbl'),$('#go'),'Choose image or video');
+bindFile($('#audio'),$('#audioLbl'),$('#vgo'),'Choose audio file');
+const KEY_MSG='Live analysis is off: the server has no MODEL_API_KEY set. Add the key and restart the server, or load a sample to explore finished results.';
+async function errText(r){if(r.status===503)return KEY_MSG;try{const j=await r.json();return esc(j.detail||r.statusText)}catch{return esc(r.statusText||'Unknown error')}}
+function busy(btn,on,label){btn.disabled=on;btn.textContent=on?label:btn.dataset.idle||btn.textContent;if(!on&&btn===$('#go'))btn.disabled=!$('#file').files[0];if(!on&&btn===$('#vgo'))btn.disabled=!$('#audio').files[0]}
+$('#go').dataset.idle='Run survey';$('#vgo').dataset.idle='Transcribe call';
+
 $('#go').onclick=async()=>{
-  const f=$('#file').files[0];if(!f)return alert('Choose an image or video first');
+  const f=$('#file').files[0];if(!f)return;
   const fd=new FormData();fd.append('file',f);fd.append('rows',$('#grid').value);fd.append('cols',$('#grid').value);
-  $('#status').textContent='Uploading…';
-  const r=await fetch('/api/survey',{method:'POST',body:fd});if(!r.ok){$('#status').textContent=(await r.json()).detail||'Error';return}
-  const {job}=await r.json();
-  const poll=async()=>{const j=await (await fetch('/api/jobs/'+job)).json();
-    if(j.status==='done'){$('#status').textContent='';showSurvey(j.result)}
-    else if(j.status==='error'){$('#status').textContent='Error: '+j.error}
-    else{$('#status').textContent=j.status+'…';setTimeout(poll,1500)}};poll();
+  busy($('#go'),true,'Surveying…');status('busy',`Uploading ${esc(f.name)}…`);
+  try{
+    const r=await fetch('/api/survey',{method:'POST',body:fd});
+    if(!r.ok){status('error',`Survey did not start. ${await errText(r)}`);busy($('#go'),false);return}
+    const {job}=await r.json();
+    const poll=async()=>{
+      try{
+        const j=await (await fetch('/api/jobs/'+job)).json();
+        if(j.status==='done'){status();busy($('#go'),false);$('#sample').value='';showSurvey(j.result)}
+        else if(j.status==='error'){status('error',`Survey failed while processing. ${esc(j.error)}`);busy($('#go'),false)}
+        else{status('busy',`${esc(j.status==='queued'?'Queued':j.status.charAt(0).toUpperCase()+j.status.slice(1))}…${j.progress?` <span class="num">${j.progress}</span> model calls done.`:''} Surveys usually take under a minute per frame.`);setTimeout(poll,1500)}
+      }catch{status('error','Lost contact with the server while the survey was running. Check the server, then run the survey again.');busy($('#go'),false)}
+    };poll();
+  }catch{status('error','Could not reach the server. Check that it is running, then try again.');busy($('#go'),false)}
 };
 $('#vgo').onclick=async()=>{
-  const f=$('#audio').files[0];if(!f)return alert('Choose an audio file first');
-  const fd=new FormData();fd.append('file',f);$('#status').textContent='Transcribing…';
-  const r=await fetch('/api/voice',{method:'POST',body:fd});$('#status').textContent='';
-  if(!r.ok)return alert('Voice error');showVoice(await r.json());
+  const f=$('#audio').files[0];if(!f)return;
+  const fd=new FormData();fd.append('file',f);
+  busy($('#vgo'),true,'Transcribing…');status('busy',`Transcribing ${esc(f.name)} and extracting head-counts…`);
+  try{
+    const r=await fetch('/api/voice',{method:'POST',body:fd});
+    if(!r.ok){status('error',`Radio call could not be processed. ${await errText(r)}`);return}
+    status();showVoice(await r.json(),f.name);
+  }catch{status('error','Could not reach the server. Check that it is running, then try again.')}
+  finally{busy($('#vgo'),false)}
 };
+emptyView();
 </script></body></html>
