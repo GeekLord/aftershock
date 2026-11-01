@@ -12,85 +12,85 @@
     "fid": "F01",
     "sector": "A1",
     "source": "RescueNet v1.0 test/11914.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11914.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11914_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11914.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11914_lab.png"
    },
    {
     "fid": "F02",
     "sector": "A2",
     "source": "RescueNet v1.0 test/11916.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11916.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11916_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11916.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11916_lab.png"
    },
    {
     "fid": "F03",
     "sector": "A3",
     "source": "RescueNet v1.0 test/11918.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11918.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11918_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11918.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11918_lab.png"
    },
    {
     "fid": "F04",
     "sector": "A4",
     "source": "RescueNet v1.0 test/11924.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11924.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11924_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11924.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11924_lab.png"
    },
    {
     "fid": "F05",
     "sector": "B1",
     "source": "RescueNet v1.0 test/11939.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11939.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11939_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11939.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11939_lab.png"
    },
    {
     "fid": "F06",
     "sector": "B2",
     "source": "RescueNet v1.0 test/11943.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11943.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11943_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11943.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11943_lab.png"
    },
    {
     "fid": "F07",
     "sector": "B3",
     "source": "RescueNet v1.0 test/11946.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11946.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11946_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11946.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11946_lab.png"
    },
    {
     "fid": "F08",
     "sector": "B4",
     "source": "RescueNet v1.0 test/11955.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11955.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11955_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11955.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11955_lab.png"
    },
    {
     "fid": "F09",
     "sector": "C1",
     "source": "RescueNet v1.0 test/11959.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11959.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11959_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11959.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11959_lab.png"
    },
    {
     "fid": "F10",
     "sector": "C2",
     "source": "RescueNet v1.0 test/11961.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11961.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11961_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11961.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11961_lab.png"
    },
    {
     "fid": "F11",
     "sector": "C3",
     "source": "RescueNet v1.0 test/11965.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11965.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11965_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11965.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11965_lab.png"
    },
    {
     "fid": "F12",
     "sector": "C4",
     "source": "RescueNet v1.0 test/11979.jpg",
-    "file": "/workspace/work/aftershock/rn/RescueNet__test__test-org-img__11979.jpg",
-    "label": "/workspace/work/aftershock/rn/RescueNet__test__test-label-img__11979_lab.png"
+    "file": "data/rescuenet/RescueNet__test__test-org-img__11979.jpg",
+    "label": "data/rescuenet/RescueNet__test__test-label-img__11979_lab.png"
    }
   ]
  },

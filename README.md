@@ -1,5 +1,7 @@
 # Aftershock
 
+**Live demo:** _link added at deployment_ · **Code:** https://github.com/GeekLord/aftershock · **Licence:** MIT (code only)
+
 **Find the worst first, with evidence.** Aftershock turns a post-disaster drone sortie and multilingual radio calls into **one mission-level priority queue** and a **draft team plan**, and it says plainly when a person needs to check.
 
 ![Mission mode](docs/screenshots/mission_overview.png)
@@ -52,6 +54,12 @@ python tools/build_mission.py assemble
 ```
 `RESCUENET_DIR` is the folder holding the RescueNet v1.0 test images and pixel labels, flat, named `RescueNet__test__test-org-img__<n>.jpg` and `RescueNet__test__test-label-img__<n>_lab.png`. It defaults to `data/rescuenet` inside the repo (`data/` is git-ignored); download the test split from the figshare collection below. Other build settings: `MISSION` (default `michael-sortie`), `AFTERSHOCK_BUDGET_USD` (default 5).
 
+### Deploy (Docker)
+The `Dockerfile` runs the console on port `8080` (override with `PORT`). The precomputed mission works with no key. With `MODEL_API_KEY` set, Run live and uploads make paid Meta API calls; the image defaults to `AFTERSHOCK_BUDGET_USD=3` and `AFTERSHOCK_MAX_LIVE=3` per process. Live runs keep state in memory, so run a **single instance**. Without the RescueNet originals in the image, Run live re-surveys the committed 1600 px frame.
+```bash
+docker build -t aftershock . && docker run -p 8080:8080 aftershock
+```
+
 Offline tests (no API key, no network): `python tests/test_mission.py`. pytest is not in `requirements.txt`; if you prefer it, `pip install pytest` and run `python -m pytest -q tests`.
 
 API: `GET /api/mission`, `POST /api/radio/{id}/confirm`, `POST /api/live {fid, replan_only}`, `GET /api/live/{job}/events` (SSE), `POST /api/validate {plan}`, `GET /api/cost`, plus the original `/api/survey` and `/api/voice`.
@@ -76,6 +84,9 @@ API: `GET /api/mission`, `POST /api/radio/{id}/confirm`, `POST /api/live {fid, r
   - R2 (Spanish) and R3 (Arabic, also `samples/radio_arabic.wav`): generated with ElevenLabs (eleven_multilingual_v2) on the free plan, for non-commercial use, with credit to elevenlabs.io.
   - Generation scripts are in `tools/synth/`.
   - The audio files (`missions/*/radio/*.wav`, `samples/*.wav`) are **not covered by the MIT licence**; they remain under their TTS providers' terms. See `missions/michael-sortie/radio/LABEL.md`.
+
+## Licence
+Code: MIT (see `LICENSE`). Datasets and synthetic audio keep their own terms, listed above.
 
 ## Limitations
 Aftershock is a triage aid. It is not a structural assessment and does not make rescue decisions. Numbers below are from [docs/RESULTS.md](docs/RESULTS.md); results are zero-shot on public datasets the models may have seen in training.
