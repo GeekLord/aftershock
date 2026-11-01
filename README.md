@@ -72,8 +72,9 @@ API: `GET /api/mission`, `POST /api/radio/{id}/confirm`, `POST /api/live {fid, r
 - **RescueNet v1.0** (Hurricane Michael, 2018): Rahnemoonfar, Chowdhury, Murphy, *RescueNet: a high resolution UAV semantic segmentation dataset for natural disaster damage assessment*, Scientific Data 10, 913 (2023). Figshare collection 6647354, https://doi.org/10.6084/m9.figshare.c.6647354, **CC0 1.0**. The CC BY-NC-ND notice in the RescueNet GitHub README does not apply to this figshare release, which is the copy used here. The demo mission uses 12 test-set frames (11914, 11916, 11918, 11924, 11939, 11943, 11946, 11955, 11959, 11961, 11965, 11979), resized. Their pixel labels are used only for an after-the-fact check and are never shown to a model.
 - **FloodNet** (Hurricane Harvey): Rahnemoonfar et al., IEEE Access 2021, BinaLab, **CDLA-Permissive-1.0**. Used in evaluation and one sample.
 - **Radio calls are synthetic.** Every radio call in this repo is text-to-speech generated from scripted, fictional text, then degraded to radio quality. None is a real emergency call, and the people, units and incidents in them are invented. They are labelled synthetic in the UI.
-  - R1 (English): generated with Sarvam Bulbul v3 (Sarvam AI), labelled as AI-generated per Sarvam's Terms of Service §10.2.
-  - R2 (Spanish) and R3 (Arabic): synthetic neural TTS.
+  - R1 (English) and `samples/radio_english.wav`: generated with Sarvam Bulbul v3 (Sarvam AI), labelled as AI-generated per Sarvam's Terms of Service §10.2.
+  - R2 (Spanish) and R3 (Arabic, also `samples/radio_arabic.wav`): generated with ElevenLabs (eleven_multilingual_v2) on the free plan, for non-commercial use, with credit to elevenlabs.io.
+  - Generation scripts are in `tools/synth/`.
   - The audio files (`missions/*/radio/*.wav`, `samples/*.wav`) are **not covered by the MIT licence**; they remain under their TTS providers' terms. See `missions/michael-sortie/radio/LABEL.md`.
 
 ## Limitations

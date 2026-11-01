@@ -1,6 +1,6 @@
 {
- "transcript": "القاعدة هنا الفريق تسعة عشرة اشخاص محاصرون في المسجد في شارع النيل ثلاثة مصابين نحتاج الى سيارة اسعاف",
- "duration_ms": 12000,
+ "transcript": "القاعدة هنا الفريق تسعة عشرة عشرة اشخاص محاصرون في المسجد في شارع النيل ثلاثة مصابين نحتاج نحتاج الى سيارة اسعاف",
+ "duration_ms": 10720,
  "extracted": {
   "people_trapped": 10,
   "people_trapped_quote": "عشرة",
@@ -8,7 +8,7 @@
   "injured_quote": "ثلاثة",
   "location": "the mosque in Nile Street",
   "need": "ambulance",
-  "english": "Base, this is Team Nine. Ten people trapped in the mosque in Nile Street. Three injured. We need an ambulance."
+  "english": "Base here, Team Nineteen, ten people trapped in the mosque in Nile Street, three injured, we need, we need an ambulance."
  },
  "confirm": [
   "adjacent numbers: confirm counts by read-back",
