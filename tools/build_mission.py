@@ -23,12 +23,12 @@ BUDGET = float(os.environ.get("AFTERSHOCK_BUDGET_USD", "5"))
 # One sortie: consecutive RescueNet test-set frame numbers (capture order). Sector names are demo labels in flight order,
 # NOT georeferenced positions.
 FRAMES = [11914, 11916, 11918, 11924, 11939, 11943, 11946, 11955, 11959, 11961, 11965, 11979]
-# TODO(audio): the committed R2/R3 audio (edge-tts) is being replaced; a decision on the R2/R3 TTS source is pending.
-#   R1 is Sarvam Bulbul v3. This radio() step still synthesises with edge-tts; update it when the R2/R3 source is decided.
-#   See missions/michael-sortie/radio/LABEL.md.
-RADIO = [  # synthetic demo calls (neural TTS + radio degradation) from scripted, fictional text; clearly labelled synthetic in the UI
-    ("R1", "en", "en-US-GuyNeural", "Base, this is Unit two at Sector C1. Two people trapped under a collapsed house, one of them injured. The street is covered in debris. We need a crane and medics."),
-    ("R2", "es", "es-MX-JorgeNeural", "Base, aquí el equipo cinco en el sector A2. Hay cuatro personas atrapadas en una casa derrumbada, dos heridos. Necesitamos una ambulancia."),
+# Radio audio is generated once by tools/synth/ (Sarvam Bulbul v3 for English, ElevenLabs for Spanish and Arabic) and
+# committed under missions/<id>/radio/. This step only transcribes and extracts it. See missions/michael-sortie/radio/LABEL.md.
+RADIO = [  # synthetic demo calls from scripted, fictional text; clearly labelled synthetic in the UI
+    ("R1", "en", "Base, this is Unit two at Sector C1. Two people trapped under a collapsed house, one of them injured. The street is covered in debris. We need a crane and medics."),
+    ("R2", "es", "Base, aquí el equipo cinco en el sector A2. Hay cuatro personas atrapadas en una casa derrumbada, dos heridos. Necesitamos una ambulancia."),
+    ("R3", "ar", "القاعدة، هنا الفريق تسعة. عشرة أشخاص محاصرون في المسجد في شارع النيل، ثلاثة مصابين. نحتاج إلى سيارة إسعاف."),
 ]
 
 def spent_so_far():
@@ -72,20 +72,12 @@ def frame(fids):
 
 def radio():
     out = []
-    for rid, lang, v, text in RADIO:
-        mp, clean, wav = f"{MD}/radio/{rid}.mp3", f"{MD}/radio/{rid}_clean.wav", f"{MD}/radio/{rid}.wav"
+    for rid, lang, text in RADIO:
+        wav = f"{MD}/radio/{rid}.wav"
         if not os.path.exists(wav):
-            subprocess.run([f"{os.path.dirname(sys.executable)}/edge-tts", "--voice", v, "--text", text, "--write-media", mp], check=True, capture_output=True)
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp, "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", clean], check=True)
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", clean, "-f", "lavfi", "-i", "anoisesrc=color=pink:amplitude=0.12:sample_rate=24000",
-                            "-filter_complex", "[0]highpass=f=300,lowpass=f=3000,volume=2.2,alimiter=limit=0.6[a];[a][1]amix=inputs=2:duration=first:weights=1 1[m]",
-                            "-map", "[m]", "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", wav], check=True)
-            os.remove(mp); os.remove(clean)
+            sys.exit(f"missing {wav}: generate it with tools/synth/ (see radio/LABEL.md)")
         n0 = len(meta.LEDGER); r = voice.intake(wav, [lang]); r["calls"] = meta.LEDGER[n0:]
         out.append(dict(id=rid, lang=lang, audio=f"radio/{rid}.wav", script=text, intake=r)); print(rid, json.dumps(r["extracted"], ensure_ascii=False))
-    # the earlier Arabic sample (no sector named) is reused from samples/ to show an unmatched card; no new API call
-    ar = json.load(open(f"{HERE}/samples/radio_arabic_voice.json")); shutil.copy(f"{HERE}/samples/radio_arabic.wav", f"{MD}/radio/R3.wav")
-    out.append(dict(id="R3", lang="ar", audio="radio/R3.wav", script="(samples/radio_arabic.wav)", intake=ar))
     json.dump(out, open(f"{MD}/radio/radio.json", "w"), indent=1, ensure_ascii=False)
 
 def load_parts():

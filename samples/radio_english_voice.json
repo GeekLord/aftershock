@@ -1,14 +1,14 @@
 {
- "transcript": "Unit four to base. Three people trapped on the roof of the blue house on Maple Street one elderly man injured water rising fast need a boat.",
- "duration_ms": 9760,
+ "transcript": "unit four to base. three people trapped on the the roof of the blue house on Maple Street. one elderly man injured injured water rising fast need a boat",
+ "duration_ms": 9440,
  "extracted": {
   "people_trapped": 3,
-  "people_trapped_quote": "Three",
+  "people_trapped_quote": "three",
   "injured": 1,
   "injured_quote": "one",
-  "location": "the roof of the blue house on Maple Street",
+  "location": "roof of the blue house on Maple Street",
   "need": "boat",
-  "english": "Unit four to base. Three people trapped on the roof of the blue house on Maple Street one elderly man injured water rising fast need a boat."
+  "english": "Unit four to base. Three people trapped on the roof of the blue house on Maple Street. One elderly man injured. Water rising fast. Need a boat."
  },
  "confirm": [
   "confirm all counts by read-back before dispatch"
