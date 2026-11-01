@@ -1,0 +1,270 @@
+{
+ "fid": "F01",
+ "sector": "A1",
+ "source": "RescueNet v1.0 test/11914.jpg",
+ "size": [
+  4000,
+  3000
+ ],
+ "display": [
+  1600,
+  1200
+ ],
+ "scale": 0.4,
+ "zones": [
+  {
+   "id": "F01-Z1",
+   "box": [
+    0,
+    0,
+    2000,
+    1500
+   ],
+   "destroyed_present": true,
+   "road_blocked": true,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Large collapsed wood debris piles top left and bottom",
+    "road": "north intersecting road buried under sand, pavement invisible",
+    "flood": "Dry road with car, debris piles, no standing water visible"
+   },
+   "sam_capped": false,
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "cell_score": 4
+  },
+  {
+   "id": "F01-Z2",
+   "box": [
+    2000,
+    0,
+    4000,
+    1500
+   ],
+   "destroyed_present": false,
+   "road_blocked": false,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Only road, sidewalk, scattered debris; no collapsed structure or foundation visible",
+    "road": "Paved road with center lines is clear and visible",
+    "flood": "No standing water visible; road dry and clear, no buildings shown."
+   },
+   "sam_capped": false,
+   "review": [],
+   "cell_score": 0
+  },
+  {
+   "id": "F01-Z3",
+   "box": [
+    0,
+    1500,
+    2000,
+    3000
+   ],
+   "destroyed_present": true,
+   "road_blocked": false,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Massive debris pile covering lot where building flattened",
+    "road": "West vertical road clear with trucks and van traveling",
+    "flood": "Dry ground, debris field, clear road no standing water visible"
+   },
+   "sam_capped": false,
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "cell_score": 3
+  },
+  {
+   "id": "F01-Z4",
+   "box": [
+    2000,
+    1500,
+    4000,
+    3000
+   ],
+   "destroyed_present": true,
+   "road_blocked": true,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Flattened structure reduced to scattered debris and exposed slab foundation",
+    "road": "Central roadway buried under sand and scattered structural debris",
+    "flood": "Dry ground with debris, no standing water visible"
+   },
+   "sam_capped": false,
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "cell_score": 4
+  }
+ ],
+ "buildings": [],
+ "seconds": 8.4,
+ "calls": [
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 2150,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 2210,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:frame",
+   "ms": 2595,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 2429,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 2605,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 3293,
+   "tokens_in": 1069,
+   "tokens_out": 423,
+   "usd": 0.003134,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 3333,
+   "tokens_in": 1069,
+   "tokens_out": 373,
+   "usd": 0.002922,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 3556,
+   "tokens_in": 1047,
+   "tokens_out": 465,
+   "usd": 0.003285,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 3560,
+   "tokens_in": 1047,
+   "tokens_out": 486,
+   "usd": 0.003374,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 3547,
+   "tokens_in": 1075,
+   "tokens_out": 505,
+   "usd": 0.00349,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 3834,
+   "tokens_in": 1047,
+   "tokens_out": 525,
+   "usd": 0.00354,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 4356,
+   "tokens_in": 1069,
+   "tokens_out": 548,
+   "usd": 0.003665,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 4413,
+   "tokens_in": 1069,
+   "tokens_out": 672,
+   "usd": 0.004192,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 4438,
+   "tokens_in": 1047,
+   "tokens_out": 461,
+   "usd": 0.003268,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 6301,
+   "tokens_in": 1075,
+   "tokens_out": 999,
+   "usd": 0.00559,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 6869,
+   "tokens_in": 1075,
+   "tokens_out": 1070,
+   "usd": 0.005891,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 7922,
+   "tokens_in": 1075,
+   "tokens_out": 1080,
+   "usd": 0.005934,
+   "ok": true
+  }
+ ],
+ "prompts_version": "2026-11-01",
+ "label_check": {
+  "severe_px_pct": 3.42,
+  "destroyed_px_pct": 3.42,
+  "building_px_pct": 3.42,
+  "severe_present": true
+ }
+}

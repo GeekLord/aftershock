@@ -1,0 +1,722 @@
+{
+ "source": "muse-wonder-1.0",
+ "plan": {
+  "assignments": [
+   {
+    "team": "T1",
+    "tasks": [
+     {
+      "target": "F02-B01",
+      "action": "search_rescue",
+      "why": "Verify flagged destroyed grade, search for reported trapped; road blocked F02-Z1, approach on foot.",
+      "evidence": [
+       "F02-B01",
+       "R2",
+       "F02-Z1"
+      ],
+      "status": "ok",
+      "problems": []
+     },
+     {
+      "target": "F09-B01",
+      "action": "search_rescue",
+      "why": "Search major building for reported trapped; coordinate reported crane need.",
+      "evidence": [
+       "F09-B01",
+       "R1"
+      ],
+      "status": "ok",
+      "problems": []
+     },
+     {
+      "target": "F11-B02",
+      "action": "search_rescue",
+      "why": "Verify flagged destroyed building and search structure; blocked F11-Z2, approach on foot.",
+      "evidence": [
+       "F11-B02",
+       "F11-Z2"
+      ],
+      "status": "ok",
+      "problems": []
+     }
+    ]
+   },
+   {
+    "team": "T2",
+    "tasks": [
+     {
+      "target": "F02-B02",
+      "action": "search_rescue",
+      "why": "Search major building for reported trapped; provide medical triage; blocked F02-Z2, approach on foot.",
+      "evidence": [
+       "F02-B02",
+       "R2",
+       "F02-Z2"
+      ],
+      "status": "ok",
+      "problems": []
+     },
+     {
+      "target": "F02-B03",
+      "action": "assess",
+      "why": "Verify flagged major grade, then search for reported trapped; blocked F02-Z2, approach on foot.",
+      "evidence": [
+       "F02-B03",
+       "R2",
+       "F02-Z2"
+      ],
+      "status": "ok",
+      "problems": []
+     },
+     {
+      "target": "F03-B01",
+      "action": "search_rescue",
+      "why": "Search major building, assess damage and mark follow-up needs.",
+      "evidence": [
+       "F03-B01"
+      ],
+      "status": "ok",
+      "problems": []
+     }
+    ]
+   },
+   {
+    "team": "T3",
+    "tasks": [
+     {
+      "target": "F02-Z3",
+      "action": "verify",
+      "why": "Verify flagged area-scan destroyed detection on foot; reported trapped sector, unconfirmed.",
+      "evidence": [
+       "F02-Z3",
+       "R2"
+      ],
+      "status": "ok",
+      "problems": []
+     },
+     {
+      "target": "F02-Z4",
+      "action": "verify",
+      "why": "Verify flagged area-scan destroyed detection on foot; reported trapped sector, unconfirmed.",
+      "evidence": [
+       "F02-Z4",
+       "R2"
+      ],
+      "status": "ok",
+      "problems": []
+     },
+     {
+      "target": "F09-Z3",
+      "action": "verify",
+      "why": "Verify flagged area-scan destroyed detection on foot; reported trapped sector, unconfirmed.",
+      "evidence": [
+       "F09-Z3",
+       "R1"
+      ],
+      "status": "ok",
+      "problems": []
+     },
+     {
+      "target": "F09-Z2",
+      "action": "clear_route",
+      "why": "Clear blocked F09-Z2, then verify flagged area-scan destroyed detection; reported trapped sector.",
+      "evidence": [
+       "F09-Z2",
+       "R1"
+      ],
+      "status": "ok",
+      "problems": []
+     }
+    ]
+   }
+  ],
+  "holds": [
+   {
+    "target": "F09-Z4",
+    "why": "Flagged area-scan detection and blocked access; verify after higher-priority open detections.",
+    "evidence": [
+     "F09-Z4"
+    ],
+    "status": "ok",
+    "problems": []
+   },
+   {
+    "target": "R3",
+    "why": "Sector not listed; verify location before any assignment.",
+    "evidence": [
+     "R3"
+    ],
+    "status": "ok",
+    "problems": []
+   }
+  ],
+  "summary": "Prioritize reported trapped in A2 and C1: T1 heavy rescue at destroyed and crane-need buildings, T2 search/medical at major buildings, T3 verifies flagged area-scan zones and clears blocked zone.",
+  "summary_evidence": [
+   "F02-B01",
+   "F09-B01",
+   "F11-B02",
+   "R1",
+   "R2",
+   "F09-Z2"
+  ]
+ },
+ "issues": [],
+ "input": {
+  "frames_in_flight_order": [
+   "F01=A1",
+   "F02=A2",
+   "F03=A3",
+   "F04=A4",
+   "F05=B1",
+   "F06=B2",
+   "F07=B3",
+   "F08=B4",
+   "F09=C1",
+   "F10=C2",
+   "F11=C3",
+   "F12=C4"
+  ],
+  "priority_queue": [
+   {
+    "rank": 1,
+    "id": "F02-B01",
+    "kind": "building",
+    "sector": "A2",
+    "grade": "destroyed",
+    "score": 10,
+    "access": "blocked",
+    "access_evidence": "F02-Z1",
+    "radio": [
+     "R2"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 2,
+    "id": "F02-B02",
+    "kind": "building",
+    "sector": "A2",
+    "grade": "major",
+    "score": 8,
+    "access": "blocked",
+    "access_evidence": "F02-Z2",
+    "radio": [
+     "R2"
+    ],
+    "review_flag": false
+   },
+   {
+    "rank": 3,
+    "id": "F02-B03",
+    "kind": "building",
+    "sector": "A2",
+    "grade": "major",
+    "score": 8,
+    "access": "blocked",
+    "access_evidence": "F02-Z2",
+    "radio": [
+     "R2"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 4,
+    "id": "F02-Z3",
+    "kind": "zone",
+    "sector": "A2",
+    "grade": "destroyed (area scan)",
+    "score": 8,
+    "access": "open",
+    "radio": [
+     "R2"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 5,
+    "id": "F02-Z4",
+    "kind": "zone",
+    "sector": "A2",
+    "grade": "destroyed (area scan)",
+    "score": 8,
+    "access": "open",
+    "radio": [
+     "R2"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 6,
+    "id": "F09-B01",
+    "kind": "building",
+    "sector": "C1",
+    "grade": "major",
+    "score": 8,
+    "access": "open",
+    "radio": [
+     "R1"
+    ],
+    "review_flag": false
+   },
+   {
+    "rank": 7,
+    "id": "F09-Z2",
+    "kind": "zone",
+    "sector": "C1",
+    "grade": "destroyed (area scan)",
+    "score": 8,
+    "access": "blocked",
+    "access_evidence": "F09-Z2",
+    "radio": [
+     "R1"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 8,
+    "id": "F09-Z3",
+    "kind": "zone",
+    "sector": "C1",
+    "grade": "destroyed (area scan)",
+    "score": 8,
+    "access": "open",
+    "radio": [
+     "R1"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 9,
+    "id": "F09-Z4",
+    "kind": "zone",
+    "sector": "C1",
+    "grade": "destroyed (area scan)",
+    "score": 8,
+    "access": "blocked",
+    "access_evidence": "F09-Z4",
+    "radio": [
+     "R1"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 10,
+    "id": "F11-B02",
+    "kind": "building",
+    "sector": "C3",
+    "grade": "destroyed",
+    "score": 7,
+    "access": "blocked",
+    "access_evidence": "F11-Z2",
+    "radio": [],
+    "review_flag": true
+   },
+   {
+    "rank": 11,
+    "id": "R1",
+    "kind": "radio",
+    "sector": "C1",
+    "grade": "radio report",
+    "score": 7,
+    "access": "unknown",
+    "radio": [
+     "R1"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 12,
+    "id": "R2",
+    "kind": "radio",
+    "sector": "A2",
+    "grade": "radio report",
+    "score": 7,
+    "access": "unknown",
+    "radio": [
+     "R2"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 13,
+    "id": "R3",
+    "kind": "radio",
+    "grade": "radio report",
+    "score": 7,
+    "access": "unknown",
+    "radio": [
+     "R3"
+    ],
+    "review_flag": true
+   },
+   {
+    "rank": 14,
+    "id": "F01-Z1",
+    "kind": "zone",
+    "sector": "A1",
+    "grade": "destroyed (area scan)",
+    "score": 5,
+    "access": "blocked",
+    "access_evidence": "F01-Z1",
+    "radio": [],
+    "review_flag": true
+   },
+   {
+    "rank": 15,
+    "id": "F01-Z3",
+    "kind": "zone",
+    "sector": "A1",
+    "grade": "destroyed (area scan)",
+    "score": 5,
+    "access": "open",
+    "radio": [],
+    "review_flag": true
+   },
+   {
+    "rank": 16,
+    "id": "F01-Z4",
+    "kind": "zone",
+    "sector": "A1",
+    "grade": "destroyed (area scan)",
+    "score": 5,
+    "access": "blocked",
+    "access_evidence": "F01-Z4",
+    "radio": [],
+    "review_flag": true
+   },
+   {
+    "rank": 17,
+    "id": "F03-B01",
+    "kind": "building",
+    "sector": "A3",
+    "grade": "major",
+    "score": 5,
+    "access": "open",
+    "radio": [],
+    "review_flag": false
+   },
+   {
+    "rank": 18,
+    "id": "F03-B02",
+    "kind": "building",
+    "sector": "A3",
+    "grade": "major",
+    "score": 5,
+    "access": "open",
+    "radio": [],
+    "review_flag": false
+   }
+  ],
+  "radio_reports": [
+   {
+    "id": "R1",
+    "sector": "C1",
+    "people_trapped_reported": 2,
+    "injured_reported": 1,
+    "need": "crane",
+    "confirmed": false,
+    "source_quote": "two"
+   },
+   {
+    "id": "R2",
+    "sector": "A2",
+    "people_trapped_reported": 4,
+    "injured_reported": 2,
+    "need": "ambulance",
+    "confirmed": false,
+    "source_quote": "cuatro personas atrapadas"
+   },
+   {
+    "id": "R3",
+    "sector": null,
+    "people_trapped_reported": 10,
+    "injured_reported": 3,
+    "need": "ambulance",
+    "confirmed": false,
+    "source_quote": "\u0639\u0634\u0631\u0629"
+   }
+  ],
+  "blocked_roads": [
+   {
+    "zone": "F01-Z1",
+    "road": "blocked"
+   },
+   {
+    "zone": "F01-Z4",
+    "road": "blocked"
+   },
+   {
+    "zone": "F02-Z1",
+    "road": "blocked"
+   },
+   {
+    "zone": "F02-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F03-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F03-Z4",
+    "road": "blocked"
+   },
+   {
+    "zone": "F04-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F05-Z1",
+    "road": "blocked"
+   },
+   {
+    "zone": "F05-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F05-Z3",
+    "road": "blocked"
+   },
+   {
+    "zone": "F06-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F06-Z3",
+    "road": "blocked"
+   },
+   {
+    "zone": "F06-Z4",
+    "road": "blocked"
+   },
+   {
+    "zone": "F07-Z1",
+    "road": "blocked"
+   },
+   {
+    "zone": "F08-Z3",
+    "road": "blocked"
+   },
+   {
+    "zone": "F08-Z4",
+    "road": "blocked"
+   },
+   {
+    "zone": "F09-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F09-Z4",
+    "road": "blocked"
+   },
+   {
+    "zone": "F10-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F10-Z4",
+    "road": "blocked"
+   },
+   {
+    "zone": "F11-Z1",
+    "road": "blocked"
+   },
+   {
+    "zone": "F11-Z2",
+    "road": "blocked"
+   },
+   {
+    "zone": "F11-Z4",
+    "road": "blocked"
+   },
+   {
+    "zone": "F12-Z1",
+    "road": "blocked"
+   },
+   {
+    "zone": "F12-Z3",
+    "road": "blocked"
+   }
+  ]
+ },
+ "raw": {
+  "assignments": [
+   {
+    "team": "T1",
+    "tasks": [
+     {
+      "target": "F02-B01",
+      "action": "search_rescue",
+      "why": "Verify flagged destroyed grade, search for reported trapped; road blocked F02-Z1, approach on foot.",
+      "evidence": [
+       "F02-B01",
+       "R2",
+       "F02-Z1"
+      ]
+     },
+     {
+      "target": "F09-B01",
+      "action": "search_rescue",
+      "why": "Search major building for reported trapped; coordinate reported crane need.",
+      "evidence": [
+       "F09-B01",
+       "R1"
+      ]
+     },
+     {
+      "target": "F11-B02",
+      "action": "search_rescue",
+      "why": "Verify flagged destroyed building and search structure; blocked F11-Z2, approach on foot.",
+      "evidence": [
+       "F11-B02",
+       "F11-Z2"
+      ]
+     }
+    ]
+   },
+   {
+    "team": "T2",
+    "tasks": [
+     {
+      "target": "F02-B02",
+      "action": "search_rescue",
+      "why": "Search major building for reported trapped; provide medical triage; blocked F02-Z2, approach on foot.",
+      "evidence": [
+       "F02-B02",
+       "R2",
+       "F02-Z2"
+      ]
+     },
+     {
+      "target": "F02-B03",
+      "action": "assess",
+      "why": "Verify flagged major grade, then search for reported trapped; blocked F02-Z2, approach on foot.",
+      "evidence": [
+       "F02-B03",
+       "R2",
+       "F02-Z2"
+      ]
+     },
+     {
+      "target": "F03-B01",
+      "action": "search_rescue",
+      "why": "Search major building, assess damage and mark follow-up needs.",
+      "evidence": [
+       "F03-B01"
+      ]
+     }
+    ]
+   },
+   {
+    "team": "T3",
+    "tasks": [
+     {
+      "target": "F02-Z3",
+      "action": "verify",
+      "why": "Verify flagged area-scan destroyed detection on foot; reported trapped sector, unconfirmed.",
+      "evidence": [
+       "F02-Z3",
+       "R2"
+      ]
+     },
+     {
+      "target": "F02-Z4",
+      "action": "verify",
+      "why": "Verify flagged area-scan destroyed detection on foot; reported trapped sector, unconfirmed.",
+      "evidence": [
+       "F02-Z4",
+       "R2"
+      ]
+     },
+     {
+      "target": "F09-Z3",
+      "action": "verify",
+      "why": "Verify flagged area-scan destroyed detection on foot; reported trapped sector, unconfirmed.",
+      "evidence": [
+       "F09-Z3",
+       "R1"
+      ]
+     },
+     {
+      "target": "F09-Z2",
+      "action": "clear_route",
+      "why": "Clear blocked F09-Z2, then verify flagged area-scan destroyed detection; reported trapped sector.",
+      "evidence": [
+       "F09-Z2",
+       "R1"
+      ]
+     }
+    ]
+   }
+  ],
+  "holds": [
+   {
+    "target": "F09-Z4",
+    "why": "Flagged area-scan detection and blocked access; verify after higher-priority open detections.",
+    "evidence": [
+     "F09-Z4"
+    ]
+   },
+   {
+    "target": "R3",
+    "why": "Sector not listed; verify location before any assignment.",
+    "evidence": [
+     "R3"
+    ]
+   }
+  ],
+  "summary": "Prioritize reported trapped in A2 and C1: T1 heavy rescue at destroyed and crane-need buildings, T2 search/medical at major buildings, T3 verifies flagged area-scan zones and clears blocked zone.",
+  "summary_evidence": [
+   "F02-B01",
+   "F09-B01",
+   "F11-B02",
+   "R1",
+   "R2",
+   "F09-Z2"
+  ]
+ },
+ "seconds": 73.8,
+ "usage": {
+  "completion_tokens": 13713,
+  "prompt_tokens": 1854,
+  "total_tokens": 15567,
+  "completion_tokens_details": {
+   "reasoning_tokens": 13110
+  },
+  "prompt_tokens_details": {
+   "cached_tokens": 1766
+  }
+ },
+ "tasks_ok": 10,
+ "tasks_rejected": 0,
+ "teams": [
+  {
+   "team": "T1",
+   "name": "Team 1 (heavy rescue / USAR)",
+   "can": "search collapsed structures, shoring, extrication, crane coordination"
+  },
+  {
+   "team": "T2",
+   "name": "Team 2 (search + medical)",
+   "can": "search damaged buildings, triage and treat casualties, light extrication"
+  },
+  {
+   "team": "T3",
+   "name": "Team 3 (route clearance + recon)",
+   "can": "clear or bypass blocked roads, verify area-scan detections on foot, mark buildings"
+  }
+ ],
+ "calls": [
+  {
+   "id": "1793499637.217059-281473138283712",
+   "model": "muse-wonder-1.0",
+   "tag": "wonder:commander",
+   "ms": 73818,
+   "tokens_in": 1854,
+   "tokens_out": 13713,
+   "usd": 0.281676,
+   "ok": true,
+   "note": ""
+  }
+ ]
+}

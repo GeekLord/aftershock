@@ -1,0 +1,117 @@
+[
+ {
+  "id": "R1",
+  "lang": "en",
+  "audio": "radio/R1.wav",
+  "script": "Base, this is Unit two at Sector C1. Two people trapped under a collapsed house, one of them injured. The street is covered in debris. We need a crane and medics.",
+  "intake": {
+   "transcript": "base, this is unit two at sector C1 two people trapped under a collapsed house one of them injured the street is covered in debris we need a crane and medics",
+   "duration_ms": 12480,
+   "extracted": {
+    "people_trapped": 2,
+    "people_trapped_quote": "two",
+    "injured": 1,
+    "injured_quote": "one",
+    "location": "sector C1",
+    "need": "crane",
+    "english": "Base, this is unit two at sector C1. Two people trapped under a collapsed house, one of them injured. The street is covered in debris. We need a crane and medics."
+   },
+   "confirm": [
+    "confirm all counts by read-back before dispatch"
+   ],
+   "calls": [
+    {
+     "id": "1793499359.409022-281473038623936",
+     "model": "muse-voice-transcribe-1.0",
+     "tag": "voice",
+     "ms": 2600,
+     "tokens_in": 0,
+     "tokens_out": 0,
+     "usd": 0.000624,
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "1793499362.012424-281473038623936",
+     "model": "muse-spark-1.3",
+     "tag": "spark_extract:radio",
+     "ms": 8567,
+     "tokens_in": 145,
+     "tokens_out": 2061,
+     "usd": 0.008941,
+     "ok": true,
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "id": "R2",
+  "lang": "es",
+  "audio": "radio/R2.wav",
+  "script": "Base, aquí el equipo cinco en el sector A2. Hay cuatro personas atrapadas en una casa derrumbada, dos heridos. Necesitamos una ambulancia.",
+  "intake": {
+   "transcript": "Base, aquí el equipo cinco en el sector a a dos. Hay cuatro personas atrapadas en una casa derrumbada, dos heridos. Necesitamos una ambulancia.",
+   "duration_ms": 11120,
+   "extracted": {
+    "people_trapped": 4,
+    "people_trapped_quote": "cuatro personas atrapadas",
+    "injured": 2,
+    "injured_quote": "dos heridos",
+    "location": "sector a a dos",
+    "need": "ambulance",
+    "english": "Base, this is team five in sector A A two. There are four people trapped in a collapsed house, two injured. We need an ambulance."
+   },
+   "confirm": [
+    "confirm all counts by read-back before dispatch"
+   ],
+   "calls": [
+    {
+     "id": "1793499375.316891-281473038623936",
+     "model": "muse-voice-transcribe-1.0",
+     "tag": "voice",
+     "ms": 2491,
+     "tokens_in": 0,
+     "tokens_out": 0,
+     "usd": 0.000556,
+     "ok": true,
+     "note": ""
+    },
+    {
+     "id": "1793499377.808237-281473038623936",
+     "model": "muse-spark-1.3",
+     "tag": "spark_extract:radio",
+     "ms": 6994,
+     "tokens_in": 146,
+     "tokens_out": 1885,
+     "usd": 0.008194,
+     "ok": true,
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "id": "R3",
+  "lang": "ar",
+  "audio": "radio/R3.wav",
+  "script": "(samples/radio_arabic.wav)",
+  "intake": {
+   "transcript": "القاعدة هنا الفريق تسعة عشرة اشخاص محاصرون في المسجد في شارع النيل ثلاثة مصابين نحتاج الى سيارة اسعاف",
+   "duration_ms": 12000,
+   "extracted": {
+    "people_trapped": 10,
+    "people_trapped_quote": "عشرة",
+    "injured": 3,
+    "injured_quote": "ثلاثة",
+    "location": "the mosque in Nile Street",
+    "need": "ambulance",
+    "english": "Base, this is Team Nine. Ten people trapped in the mosque in Nile Street. Three injured. We need an ambulance."
+   },
+   "confirm": [
+    "adjacent numbers: confirm counts by read-back",
+    "confirm all counts by read-back before dispatch"
+   ]
+  }
+ }
+]

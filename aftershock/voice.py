@@ -14,7 +14,7 @@ def intake(audio_path, languages=None):
     try: tr = meta.transcribe(wav, languages)
     finally: os.remove(wav)
     text = tr.get("transcript", "")
-    o, _ = meta.chat_json(P.RADIO_EXTRACT + text)
+    o, _ = meta.chat_json(P.RADIO_EXTRACT + text, tag="spark_extract:radio")
     flags = []
     for k in ("people_trapped", "injured"):
         q = (o.get(k + "_quote") or "").strip()

@@ -1,0 +1,591 @@
+{
+ "fid": "F04",
+ "sector": "A4",
+ "source": "RescueNet v1.0 test/11924.jpg",
+ "size": [
+  4000,
+  3000
+ ],
+ "display": [
+  1600,
+  1200
+ ],
+ "scale": 0.4,
+ "zones": [
+  {
+   "id": "F04-Z1",
+   "box": [
+    0,
+    0,
+    2000,
+    1500
+   ],
+   "destroyed_present": false,
+   "road_blocked": false,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Brick house standing with roof damage, scattered debris but no collapsed structure",
+    "road": "Paved road clearly visible, vehicle passing without obstruction",
+    "flood": "No standing water visible; ground dry with debris, road clear"
+   },
+   "sam_capped": false,
+   "review": [
+    "1 building assessment(s) need a human look"
+   ],
+   "cell_score": 2
+  },
+  {
+   "id": "F04-Z2",
+   "box": [
+    2000,
+    0,
+    4000,
+    1500
+   ],
+   "destroyed_present": true,
+   "road_blocked": true,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Bare platform with skeletal framing over water amid debris",
+    "road": "Road area buried under sand and scattered debris",
+    "flood": "Buildings on dry ground with debris; water at edge is waterway, roads dry"
+   },
+   "sam_capped": false,
+   "review": [],
+   "cell_score": 6
+  },
+  {
+   "id": "F04-Z3",
+   "box": [
+    0,
+    1500,
+    2000,
+    3000
+   ],
+   "destroyed_present": true,
+   "road_blocked": false,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Concrete slab with collapsed walls and debris pile where house stood",
+    "road": "Top road clear with parked white car passable",
+    "flood": "Ground muddy with debris but no standing water around buildings or road"
+   },
+   "sam_capped": false,
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "cell_score": 3
+  },
+  {
+   "id": "F04-Z4",
+   "box": [
+    2000,
+    1500,
+    4000,
+    3000
+   ],
+   "destroyed_present": false,
+   "road_blocked": false,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Both houses standing with intact roofs despite shingle loss and surrounding debris",
+    "road": "No roadway visible only houses and natural waterway",
+    "flood": "Brown water is channel, houses on dry land with debris"
+   },
+   "sam_capped": false,
+   "review": [],
+   "cell_score": 0
+  }
+ ],
+ "buildings": [
+  {
+   "box": [
+    0,
+    0,
+    712,
+    758
+   ],
+   "sam_conf": 0.883,
+   "grade": "major",
+   "grades": {
+    "spark_a": "major",
+    "spark_b": "major",
+    "wonder": null
+   },
+   "severe_votes": "2/2",
+   "evidence": "Roof shingles stripped patches exposing black felt and wood deck, plus lumber debris piled against wall",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F04-Z1",
+   "id": "F04-B01",
+   "agreement": "Spark A and B agree (major)"
+  },
+  {
+   "box": [
+    1082,
+    0,
+    1476,
+    74
+   ],
+   "sam_conf": 0.566,
+   "grade": "no_damage",
+   "grades": {
+    "spark_a": "no_damage",
+    "spark_b": "no_damage",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "white roof appears intact with no missing sections visible",
+   "review": true,
+   "review_reasons": [
+    "building small in frame"
+   ],
+   "zone": "F04-Z1",
+   "id": "F04-B02",
+   "agreement": "Spark A and B agree (no_damage)"
+  },
+  {
+   "box": [
+    3052,
+    0,
+    3570,
+    142
+   ],
+   "sam_conf": 0.855,
+   "grade": "no_damage",
+   "grades": {
+    "spark_a": "no_damage",
+    "spark_b": "no_damage",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "Metal roof intact, blue roof/walls undisturbed, bushes in place, no structural failure visible",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F04-Z2",
+   "id": "F04-B03",
+   "agreement": "Spark A and B agree (no_damage)"
+  },
+  {
+   "box": [
+    2310,
+    282,
+    3382,
+    1568
+   ],
+   "sam_conf": 0.871,
+   "grade": "minor",
+   "grades": {
+    "spark_a": "minor",
+    "spark_b": "minor",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "metal roof largely intact, minor east eave damage, debris piled against walls, structure standing",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F04-Z2",
+   "id": "F04-B04",
+   "agreement": "Spark A and B agree (minor)"
+  },
+  {
+   "box": [
+    3629,
+    759,
+    4000,
+    1170
+   ],
+   "sam_conf": 0.563,
+   "grade": "major",
+   "grades": {
+    "spark_a": "major",
+    "spark_b": "major",
+    "wonder": null
+   },
+   "severe_votes": "2/2",
+   "evidence": "Roof shingles completely stripped exposing wood deck, attached structure skeletal, debris scattered.",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F04-Z2",
+   "id": "F04-B05",
+   "agreement": "Spark A and B agree (major)"
+  },
+  {
+   "box": [
+    1192,
+    2552,
+    1598,
+    3000
+   ],
+   "sam_conf": 0.625,
+   "grade": "minor",
+   "grades": {
+    "spark_a": "minor",
+    "spark_b": "no_damage",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "Roof intact but debris on roof and rubble piled against sides, structure standing sound",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F04-Z3",
+   "id": "F04-B06",
+   "agreement": "Spark A=minor, Spark B=no_damage (same severity band)"
+  },
+  {
+   "box": [
+    3152,
+    2372,
+    3632,
+    2962
+   ],
+   "sam_conf": 0.793,
+   "grade": "minor",
+   "grades": {
+    "spark_a": "minor",
+    "spark_b": "minor",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "Narrow strip of missing shingles along ridge, roof otherwise intact, structure standing.",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F04-Z4",
+   "id": "F04-B07",
+   "agreement": "Spark A and B agree (minor)"
+  },
+  {
+   "box": [
+    1635,
+    1305,
+    2412,
+    2365
+   ],
+   "sam_conf": 0.91,
+   "grade": "minor",
+   "grades": {
+    "spark_a": "minor",
+    "spark_b": "minor",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "Roof intact overall with strips of missing shingles exposing underlayment, structure sound amid debris",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F04-Z4",
+   "id": "F04-B08",
+   "agreement": "Spark A and B agree (minor)"
+  }
+ ],
+ "seconds": 60.7,
+ "calls": [
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 4257,
+   "tokens_in": 1069,
+   "tokens_out": 434,
+   "usd": 0.003181,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 4654,
+   "tokens_in": 1069,
+   "tokens_out": 670,
+   "usd": 0.004184,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 5728,
+   "tokens_in": 1069,
+   "tokens_out": 841,
+   "usd": 0.00491,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 5829,
+   "tokens_in": 1047,
+   "tokens_out": 742,
+   "usd": 0.004462,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 7369,
+   "tokens_in": 1075,
+   "tokens_out": 1124,
+   "usd": 0.006121,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 8436,
+   "tokens_in": 1047,
+   "tokens_out": 1187,
+   "usd": 0.006353,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 8661,
+   "tokens_in": 1075,
+   "tokens_out": 1316,
+   "usd": 0.006937,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 9651,
+   "tokens_in": 1047,
+   "tokens_out": 1276,
+   "usd": 0.006732,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 9930,
+   "tokens_in": 1069,
+   "tokens_out": 1264,
+   "usd": 0.006708,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 12296,
+   "tokens_in": 1047,
+   "tokens_out": 1834,
+   "usd": 0.009103,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 12413,
+   "tokens_in": 1075,
+   "tokens_out": 2136,
+   "usd": 0.010422,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 16457,
+   "tokens_in": 1075,
+   "tokens_out": 2580,
+   "usd": 0.012309,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 35474,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 40009,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 40362,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:frame",
+   "ms": 41921,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 45856,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 2921,
+   "tokens_in": 306,
+   "tokens_out": 494,
+   "usd": 0.002482,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 3691,
+   "tokens_in": 872,
+   "tokens_out": 756,
+   "usd": 0.004303,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 3516,
+   "tokens_in": 207,
+   "tokens_out": 631,
+   "usd": 0.00294,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 5163,
+   "tokens_in": 366,
+   "tokens_out": 1178,
+   "usd": 0.005464,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 5121,
+   "tokens_in": 684,
+   "tokens_out": 884,
+   "usd": 0.004612,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 5448,
+   "tokens_in": 535,
+   "tokens_out": 1021,
+   "usd": 0.005008,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 5197,
+   "tokens_in": 267,
+   "tokens_out": 1170,
+   "usd": 0.005306,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 6002,
+   "tokens_in": 932,
+   "tokens_out": 1251,
+   "usd": 0.006482,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 6004,
+   "tokens_in": 872,
+   "tokens_out": 1083,
+   "usd": 0.005693,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 6809,
+   "tokens_in": 744,
+   "tokens_out": 1317,
+   "usd": 0.006527,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 7708,
+   "tokens_in": 765,
+   "tokens_out": 1286,
+   "usd": 0.006422,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 9556,
+   "tokens_in": 584,
+   "tokens_out": 1677,
+   "usd": 0.007857,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 10326,
+   "tokens_in": 932,
+   "tokens_out": 2024,
+   "usd": 0.009767,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 10199,
+   "tokens_in": 644,
+   "tokens_out": 1246,
+   "usd": 0.006101,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 11470,
+   "tokens_in": 825,
+   "tokens_out": 2202,
+   "usd": 0.01039,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 14161,
+   "tokens_in": 595,
+   "tokens_out": 2689,
+   "usd": 0.012172,
+   "ok": true
+  }
+ ],
+ "prompts_version": "2026-11-01",
+ "label_check": {
+  "severe_px_pct": 3.16,
+  "destroyed_px_pct": 3.16,
+  "building_px_pct": 18.8,
+  "severe_present": true
+ }
+}

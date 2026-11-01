@@ -1,0 +1,391 @@
+{
+ "fid": "F08",
+ "sector": "B4",
+ "source": "RescueNet v1.0 test/11955.jpg",
+ "size": [
+  4000,
+  3000
+ ],
+ "display": [
+  1600,
+  1200
+ ],
+ "scale": 0.4,
+ "zones": [
+  {
+   "id": "F08-Z1",
+   "box": [
+    0,
+    0,
+    2000,
+    1500
+   ],
+   "destroyed_present": true,
+   "road_blocked": false,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Large debris pile of lumber and building materials bottom right",
+    "road": "Both main and side roads clear, vehicle driving, debris only on shoulders",
+    "flood": "Roads dry and clear, ground muddy but no standing water, no buildings visible."
+   },
+   "sam_capped": false,
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "cell_score": 3
+  },
+  {
+   "id": "F08-Z2",
+   "box": [
+    2000,
+    0,
+    4000,
+    1500
+   ],
+   "destroyed_present": true,
+   "road_blocked": false,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Empty concrete slab and large debris pile where house stood",
+    "road": "Top asphalt road with yellow line clear and visible",
+    "flood": "Dry road, sidewalk and debris-covered ground, no standing water visible"
+   },
+   "sam_capped": false,
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "cell_score": 3
+  },
+  {
+   "id": "F08-Z3",
+   "box": [
+    0,
+    1500,
+    2000,
+    3000
+   ],
+   "destroyed_present": true,
+   "road_blocked": true,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "Massive lumber debris piles where houses stood",
+    "road": "Vertical road's pavement disappears under sand near top",
+    "flood": "No standing water; road dry and ground muddy with debris"
+   },
+   "sam_capped": false,
+   "review": [
+    "area scan sees destruction the building grader did not (SAM misses flattened buildings)"
+   ],
+   "cell_score": 4
+  },
+  {
+   "id": "F08-Z4",
+   "box": [
+    2000,
+    1500,
+    4000,
+    3000
+   ],
+   "destroyed_present": true,
+   "road_blocked": true,
+   "flooded_road": false,
+   "flooded_building": false,
+   "scan_evidence": {
+    "destroyed": "central structure flattened into large lumber debris pile",
+    "road": "No pavement visible, ground completely covered by debris and wreckage",
+    "flood": "No standing water visible, only debris and damaged roofs on dry ground"
+   },
+   "sam_capped": false,
+   "review": [],
+   "cell_score": 6
+  }
+ ],
+ "buildings": [
+  {
+   "box": [
+    3422,
+    2062,
+    4000,
+    2970
+   ],
+   "sam_conf": 0.789,
+   "grade": "minor",
+   "grades": {
+    "spark_a": "minor",
+    "spark_b": "minor",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "roof largely intact with scattered shingle loss and lumber debris on top",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F08-Z4",
+   "id": "F08-B01",
+   "agreement": "Spark A and B agree (minor)"
+  },
+  {
+   "box": [
+    1860,
+    1980,
+    2722,
+    3000
+   ],
+   "sam_conf": 0.785,
+   "grade": "minor",
+   "grades": {
+    "spark_a": "minor",
+    "spark_b": "no_damage",
+    "wonder": null
+   },
+   "severe_votes": "0/2",
+   "evidence": "Metal roof largely intact and structure sound, small flashing lift at ridge amid surrounding debris field",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F08-Z4",
+   "id": "F08-B02",
+   "agreement": "Spark A=minor, Spark B=no_damage (same severity band)"
+  },
+  {
+   "box": [
+    1582,
+    1442,
+    2425,
+    1988
+   ],
+   "sam_conf": 0.633,
+   "grade": "major",
+   "grades": {
+    "spark_a": "major",
+    "spark_b": "major",
+    "wonder": null
+   },
+   "severe_votes": "2/2",
+   "evidence": "Roof torn open exposing rafters, displaced panels, structure standing amid heavy debris",
+   "review": false,
+   "review_reasons": [],
+   "zone": "F08-Z4",
+   "id": "F08-B03",
+   "agreement": "Spark A and B agree (major)"
+  }
+ ],
+ "seconds": 25.3,
+ "calls": [
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 1874,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 2227,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 2202,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 2261,
+   "tokens_in": 1069,
+   "tokens_out": 404,
+   "usd": 0.003053,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 2937,
+   "tokens_in": 1069,
+   "tokens_out": 451,
+   "usd": 0.003253,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 3051,
+   "tokens_in": 1069,
+   "tokens_out": 437,
+   "usd": 0.003194,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 3511,
+   "tokens_in": 1075,
+   "tokens_out": 576,
+   "usd": 0.003792,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:flood",
+   "ms": 3644,
+   "tokens_in": 1069,
+   "tokens_out": 568,
+   "usd": 0.00375,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 3699,
+   "tokens_in": 1075,
+   "tokens_out": 571,
+   "usd": 0.003771,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 4340,
+   "tokens_in": 1047,
+   "tokens_out": 766,
+   "usd": 0.004564,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 5402,
+   "tokens_in": 1047,
+   "tokens_out": 941,
+   "usd": 0.005308,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 6270,
+   "tokens_in": 1047,
+   "tokens_out": 929,
+   "usd": 0.005257,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 6310,
+   "tokens_in": 1075,
+   "tokens_out": 1138,
+   "usd": 0.00618,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:frame",
+   "ms": 6730,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:destroyed",
+   "ms": 8233,
+   "tokens_in": 1047,
+   "tokens_out": 1524,
+   "usd": 0.007786,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_scan:road",
+   "ms": 9452,
+   "tokens_in": 1075,
+   "tokens_out": 1645,
+   "usd": 0.008335,
+   "ok": true
+  },
+  {
+   "model": "sam-3.1",
+   "tag": "sam:tile",
+   "ms": 14762,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "usd": 0.0025,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 4642,
+   "tokens_in": 603,
+   "tokens_out": 865,
+   "usd": 0.00443,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 5110,
+   "tokens_in": 708,
+   "tokens_out": 1038,
+   "usd": 0.005296,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 5714,
+   "tokens_in": 648,
+   "tokens_out": 884,
+   "usd": 0.004567,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 5736,
+   "tokens_in": 663,
+   "tokens_out": 1017,
+   "usd": 0.005151,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_b:grade",
+   "ms": 6803,
+   "tokens_in": 988,
+   "tokens_out": 1331,
+   "usd": 0.006892,
+   "ok": true
+  },
+  {
+   "model": "muse-spark-1.3",
+   "tag": "spark_a:grade",
+   "ms": 9622,
+   "tokens_in": 928,
+   "tokens_out": 1821,
+   "usd": 0.008899,
+   "ok": true
+  }
+ ],
+ "prompts_version": "2026-11-01",
+ "label_check": {
+  "severe_px_pct": 0.0,
+  "destroyed_px_pct": 0.0,
+  "building_px_pct": 10.55,
+  "severe_present": false
+ }
+}
