@@ -19,3 +19,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---------------------------------------------------------------------------
+Scope of this licence
+
+The MIT licence above applies to the source code in this repository.
+
+It does not apply to:
+- Audio files (missions/*/radio/*.wav, samples/*.wav). These are synthetic,
+  AI-generated speech from scripted, fictional text (not real emergency
+  calls) and remain under the terms of the text-to-speech providers that
+  generated them. See missions/michael-sortie/radio/LABEL.md.
+- Dataset imagery and labels, which keep their own licences: RescueNet v1.0
+  (figshare collection 6647354, CC0 1.0) and FloodNet (BinaLab,
+  CDLA-Permissive-1.0). See README.md, "Data and audio licences".

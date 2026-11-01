@@ -4,6 +4,12 @@ Usage (venv python):
   python tools/build_mission.py frame F01 [F02 ...] # survey frames (cached per frame; skips frames already done)
   python tools/build_mission.py radio               # synthesise + transcribe the demo radio calls
   python tools/build_mission.py assemble            # build queue + run the Wonder commander -> missions/<id>/mission.json
+Environment:
+  RESCUENET_DIR  folder holding the RescueNet v1.0 test images and labels, flat, named
+                 RescueNet__test__test-org-img__<n>.jpg and RescueNet__test__test-label-img__<n>_lab.png
+                 (default: <repo>/data/rescuenet; data/ is git-ignored)
+  MISSION        mission id under missions/ (default: michael-sortie)
+  AFTERSHOCK_BUDGET_USD  stop surveying frames once cached spend reaches this (default: 5)
 """
 import json, os, sys, glob, shutil, subprocess
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -12,12 +18,15 @@ from aftershock import meta, mission, voice
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MID = os.environ.get("MISSION", "michael-sortie"); MD = f"{HERE}/missions/{MID}"
-RN = os.environ.get("RESCUENET_DIR", "/workspace/work/aftershock/rn")
+RN = os.environ.get("RESCUENET_DIR", os.path.join(HERE, "data", "rescuenet"))
 BUDGET = float(os.environ.get("AFTERSHOCK_BUDGET_USD", "5"))
 # One sortie: consecutive RescueNet test-set frame numbers (capture order). Sector names are demo labels in flight order,
 # NOT georeferenced positions.
 FRAMES = [11914, 11916, 11918, 11924, 11939, 11943, 11946, 11955, 11959, 11961, 11965, 11979]
-RADIO = [  # synthetic demo calls (neural TTS + radio degradation); clearly labelled synthetic in the UI
+# TODO(audio): the committed R2/R3 audio (edge-tts) is being replaced; a decision on the R2/R3 TTS source is pending.
+#   R1 is Sarvam Bulbul v3. This radio() step still synthesises with edge-tts; update it when the R2/R3 source is decided.
+#   See missions/michael-sortie/radio/LABEL.md.
+RADIO = [  # synthetic demo calls (neural TTS + radio degradation) from scripted, fictional text; clearly labelled synthetic in the UI
     ("R1", "en", "en-US-GuyNeural", "Base, this is Unit two at Sector C1. Two people trapped under a collapsed house, one of them injured. The street is covered in debris. We need a crane and medics."),
     ("R2", "es", "es-MX-JorgeNeural", "Base, aquí el equipo cinco en el sector A2. Hay cuatro personas atrapadas en una casa derrumbada, dos heridos. Necesitamos una ambulancia."),
 ]
