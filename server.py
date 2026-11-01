@@ -129,6 +129,13 @@ def validate(body: dict = Body(...)):
     m = _mission(); clean, issues = mission.validate_plan(body.get("plan"), mission.evidence_registry(m["frames"], m["radio"]), m["queue"])
     return {"plan": clean, "issues": issues}
 
+def _frame_source(fr):
+    """Full-resolution RescueNet image if present (RESCUENET_DIR or data/rescuenet), else the committed 1600 px display frame."""
+    name = os.path.basename(fr["file"]); rn = os.environ.get("RESCUENET_DIR", f"{HERE}/data/rescuenet")
+    for p in (fr["file"] if os.path.isabs(fr["file"]) else f"{HERE}/{fr['file']}", f"{rn}/{name}"):
+        if os.path.exists(p): return p
+    return f"{MDIR}/frames/{fr['fid']}.jpg"
+
 def _live_job(job, fid, replan_only=False):
     calls = []
     def ev(e):
@@ -140,7 +147,7 @@ def _live_job(job, fid, replan_only=False):
         if not replan_only:
             man = json.load(open(f"{MDIR}/manifest.json")); fr = next(x for x in man["frames"] if x["fid"] == fid)
             ev({"event": "stage", "text": f"Surveying {fid} (Sector {fr['sector']}) live: SAM 3.1 segments, Spark scans 4 zones, Spark A + B grade each building"})
-            img = Image.open(fr["file"]).convert("RGB")
+            img = Image.open(_frame_source(fr)).convert("RGB")
             f = mission.survey_frame(fr, img, f"{MDIR}/live", max_buildings=int(os.environ.get("LIVE_MAX_BUILDINGS", "8")))
             f["live"] = True; f["t"] = time.time(); f["label_check"] = next(x for x in m["frames"] if x["fid"] == fid).get("label_check")
             m["frames"] = [f if x["fid"] == fid else x for x in m["frames"]]

@@ -19,6 +19,8 @@ from aftershock import meta, mission, voice
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MID = os.environ.get("MISSION", "michael-sortie"); MD = f"{HERE}/missions/{MID}"
 RN = os.environ.get("RESCUENET_DIR", os.path.join(HERE, "data", "rescuenet"))
+RN_REL = os.path.relpath(RN, HERE) if os.path.abspath(RN).startswith(HERE + os.sep) else RN  # stored in manifest.json
+def ds(p): return p if os.path.isabs(p) else os.path.join(HERE, p)
 BUDGET = float(os.environ.get("AFTERSHOCK_BUDGET_USD", "5"))
 # One sortie: consecutive RescueNet test-set frame numbers (capture order). Sector names are demo labels in flight order,
 # NOT georeferenced positions.
@@ -41,7 +43,7 @@ def manifest():
     rows = "ABC"; frames = []
     for i, n in enumerate(FRAMES):
         frames.append(dict(fid=f"F{i + 1:02d}", sector=f"{rows[i // 4]}{i % 4 + 1}", source=f"RescueNet v1.0 test/{n}.jpg",
-                           file=f"{RN}/RescueNet__test__test-org-img__{n}.jpg", label=f"{RN}/RescueNet__test__test-label-img__{n}_lab.png"))
+                           file=f"{RN_REL}/RescueNet__test__test-org-img__{n}.jpg", label=f"{RN_REL}/RescueNet__test__test-label-img__{n}_lab.png"))
     m = dict(id=MID, title="Hurricane Michael sortie (12 frames)", disaster="Hurricane Michael, Florida, Oct 2018",
              dataset="RescueNet v1.0 (Rahnemoonfar, Chowdhury, Murphy; Scientific Data 2023)", licence="CC0 1.0",
              dataset_url="https://doi.org/10.6084/m9.figshare.c.6647354",
@@ -64,9 +66,9 @@ def frame(fids):
         out = f"{MD}/cache/{fr['fid']}.json"
         if os.path.exists(out): print("cached", fr["fid"]); continue
         if spent_so_far() >= BUDGET: print("BUDGET reached", spent_so_far()); return
-        img = Image.open(fr["file"]).convert("RGB")
+        img = Image.open(ds(fr["file"])).convert("RGB")
         d = mission.survey_frame(fr, img, f"{MD}/frames", max_buildings=int(os.environ.get("MAX_BUILDINGS", "14")))
-        d["label_check"] = label_truth(fr["label"])
+        d["label_check"] = label_truth(ds(fr["label"]))
         json.dump(d, open(out, "w"), indent=1)
         print(fr["fid"], fr["sector"], "buildings", len(d["buildings"]), "secs", d["seconds"], "usd", round(sum(c["usd"] for c in d["calls"]), 4), "total", spent_so_far(), flush=True)
 

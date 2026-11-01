@@ -1,0 +1,9 @@
+.git
+.venv
+__pycache__
+*.pyc
+.env
+data/
+missions/*/live/
+eval/
+docs/screenshots/
