@@ -1,6 +1,6 @@
 # Aftershock
 
-**Live demo:** https://aftershock-1025808170979.us-central1.run.app (public link capped at $5 of API spend and 20 live runs; the cached mission always works) · **Code:** https://github.com/GeekLord/aftershock · **Licence:** MIT (code only)
+**Live demo:** https://aftershock.busy.one (public link capped at $50 of API spend, one live run per visitor every 2 minutes; the cached mission always works) · **Code:** https://github.com/GeekLord/aftershock · **Licence:** MIT (code only)
 
 **Find the worst first, with evidence.** Aftershock turns a post-disaster drone sortie and multilingual radio calls into **one mission-level priority queue** and a **draft team plan**, and it says plainly when a person needs to check.
 
