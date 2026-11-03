@@ -15,11 +15,31 @@ _LOCK = threading.Lock()
 LEDGER = []            # one dict per call: model, tag, ms, tokens_in, tokens_out, usd, ok
 LISTENERS = []         # callables receiving {"event": "start"|"end", ...}; used by the live-run SSE stream
 BUDGET_USD = float(os.environ.get("AFTERSHOCK_BUDGET_USD", "5"))
+# Optional persistent spend record (e.g. a Cloud Storage bucket mounted as a volume) so the cap survives
+# restarts and scale-to-zero. Without it the cap applies to this process only.
+SPEND_FILE = os.environ.get("AFTERSHOCK_SPEND_FILE", "")
 
 class BudgetExceeded(RuntimeError): pass
 
+def load_persisted():
+    try: return json.load(open(SPEND_FILE)) if SPEND_FILE and os.path.exists(SPEND_FILE) else {}
+    except Exception: return {}
+_BASE = load_persisted()            # spend and live runs recorded by earlier processes
+
+def save_persisted(**extra):
+    if not SPEND_FILE: return
+    with _LOCK:
+        d = {"usd": round(_BASE.get("usd", 0.0) + sum(c["usd"] for c in LEDGER), 6), "calls": _BASE.get("calls", 0) + len(LEDGER),
+             "live_runs": _BASE.get("live_runs", 0), "t": time.time()}
+        d.update(extra)
+    try:
+        os.makedirs(os.path.dirname(SPEND_FILE) or ".", exist_ok=True); tmp = SPEND_FILE + ".tmp"
+        json.dump(d, open(tmp, "w")); os.replace(tmp, SPEND_FILE)
+    except Exception: pass
+
 def spent():
-    with _LOCK: return round(sum(c["usd"] for c in LEDGER), 4)
+    """Spend counted against the cap: this process plus anything persisted by earlier processes."""
+    with _LOCK: return round(_BASE.get("usd", 0.0) + sum(c["usd"] for c in LEDGER), 4)
 
 def summary(calls=None):
     calls = LEDGER if calls is None else calls; out = {}
@@ -42,6 +62,7 @@ def _end(cid, t0, model, tag, ok, tokens_in=0, tokens_out=0, usd=0.0, note=""):
     rec = {"id": cid, "model": model, "tag": tag, "ms": int((time.time() - t0) * 1000), "tokens_in": tokens_in,
            "tokens_out": tokens_out, "usd": round(usd, 6), "ok": ok, "note": note}
     with _LOCK: LEDGER.append(rec)
+    save_persisted(live_runs=_BASE.get("live_runs", 0))
     _emit({"event": "end", **rec}); return rec
 
 def data_url(im, max_side=1280, q=85):

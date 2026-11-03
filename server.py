@@ -1,6 +1,6 @@
 """Aftershock web server. Run: uvicorn server:app --port 8000"""
 import asyncio, base64, copy, io, json, os, subprocess, tempfile, threading, time, uuid, glob
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body, Request
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image
@@ -71,7 +71,9 @@ def samples():
 
 # ------------------------------------------------------------------ Mission mode
 MISSION_ID = os.environ.get("MISSION", "michael-sortie"); MDIR = f"{HERE}/missions/{MISSION_ID}"
-STATE = {"m": None}; LIVE = {"busy": False, "runs": 0}; MAX_LIVE = int(os.environ.get("AFTERSHOCK_MAX_LIVE", "6"))
+STATE = {"m": None}; LIVE = {"busy": False, "runs": meta._BASE.get("live_runs", 0), "by_ip": {}}
+MAX_LIVE = int(os.environ.get("AFTERSHOCK_MAX_LIVE", "6"))             # total live runs (persisted when AFTERSHOCK_SPEND_FILE is set)
+IP_COOLDOWN_S = int(os.environ.get("AFTERSHOCK_IP_COOLDOWN_S", "0"))   # min seconds between live runs from one address
 RESULTS_FIGURES = [  # quoted from docs/RESULTS.md (zero-shot, held-out public data)
     {"k": "Severe-damage recall", "v": "90/100", "n": "Spark prompt A, RescueNet T5 crops"},
     {"k": "Severe-damage precision", "v": "90/118", "n": "76%; over-flags rather than misses"},
@@ -121,6 +123,7 @@ def confirm_radio(rid: str, body: dict = Body(default={})):
 def cost():
     """Model calls made by THIS server process (live runs, radio uploads), priced at list rates."""
     return {"session_usd": meta.spent(), "by_model": meta.summary(), "budget_usd": meta.BUDGET_USD,
+            "live_runs": LIVE["runs"], "max_live": MAX_LIVE, "live_enabled": bool(os.environ.get("MODEL_API_KEY")),
             "precomputed_mission": _mission().get("cost")}
 
 @app.post("/api/validate")
@@ -167,11 +170,17 @@ def _live_job(job, fid, replan_only=False):
         meta.LISTENERS.remove(ev); LIVE["busy"] = False
 
 @app.post("/api/live")
-def live(body: dict = Body(...)):
+def live(request: Request, body: dict = Body(...)):
     if not os.environ.get("MODEL_API_KEY"): raise HTTPException(503, "MODEL_API_KEY not set: the cached mission still works")
     if LIVE["busy"]: raise HTTPException(409, "a live run is already in progress")
-    if LIVE["runs"] >= MAX_LIVE: raise HTTPException(429, f"live-run cap ({MAX_LIVE}) reached for this server session")
-    LIVE.update(busy=True, runs=LIVE["runs"] + 1); jid = uuid.uuid4().hex[:10]
+    if LIVE["runs"] >= MAX_LIVE: raise HTTPException(429, f"public demo cap reached ({MAX_LIVE} live runs). The cached mission still works")
+    if meta.spent() >= meta.BUDGET_USD: raise HTTPException(429, f"public demo API budget (${meta.BUDGET_USD}) used up. The cached mission still works")
+    ip = (request.headers.get("x-forwarded-for") or (request.client.host if request.client else "?")).split(",")[0].strip()
+    last = LIVE["by_ip"].get(ip, 0)
+    if IP_COOLDOWN_S and time.time() - last < IP_COOLDOWN_S:
+        raise HTTPException(429, f"one live run per {IP_COOLDOWN_S // 60} min per visitor; try again in {int(IP_COOLDOWN_S - (time.time() - last))} s")
+    LIVE["by_ip"][ip] = time.time()
+    LIVE.update(busy=True, runs=LIVE["runs"] + 1); meta._BASE["live_runs"] = LIVE["runs"]; meta.save_persisted(live_runs=LIVE["runs"]); jid = uuid.uuid4().hex[:10]
     JOBS[jid] = {"status": "running", "events": [], "t0": time.time()}
     threading.Thread(target=_live_job, args=(JOBS[jid], body.get("fid", "F03"), bool(body.get("replan_only"))), daemon=True).start()
     return {"job": jid}
