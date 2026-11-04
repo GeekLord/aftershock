@@ -4,9 +4,9 @@
 - **Code:** https://github.com/GeekLord/aftershock
 - **Licence:** MIT (code only)
 
-**Test with your own data:** on the console, **Your data** (top bar) takes your own drone images, a short video or a radio call; Meta's models analyse them into a private copy of the mission (same caps as Run live).
+**Find the worst first, with evidence.** Aftershock turns a post-disaster drone sortie and multilingual radio calls into **one mission-level priority queue** and a **draft team plan**, and it says plainly when a person needs to check, Using Meta AI API.
 
-**Find the worst first, with evidence.** Aftershock turns a post-disaster drone sortie and multilingual radio calls into **one mission-level priority queue** and a **draft team plan**, and it says plainly when a person needs to check.
+**Test with your own data:** on the console, **Your data** (top bar) takes your own drone images, a short video or a radio call; Meta's models analyse them into a private copy of the mission (same caps as Run live).
 
 ## Demo video
 **Demo video (2:57):** https://youtu.be/2h6WUWHl3es
