@@ -124,6 +124,7 @@ Aftershock is a triage aid. It is not a structural assessment and does not make 
 - **Run-to-run variance**: re-running the same frame can change a grade (F09-B01 was "A and B agree (major)" cached and "A/B disagree → Wonder tie-break" live), and one of four tiles changed its area-scan answer on a re-survey.
 - **Planning is slow**: Wonder commander latency was 45–91 s per plan, so plans are drafted in the background, not per click.
 - The prompt-revision gain in T7 (severe precision 75.4% → 82.7%, n=100) is not statistically significant.
+- **Scene gate before any expensive work.** Every uploaded image (and the middle keyframe of a video) first gets a free size/aspect check and one Muse Spark look at a 640 px copy (`aftershock/gate.py`, ~4 s, ~$0.003). Ground-level photos, portraits, indoor scenes, documents and screenshots are reported back as "Not an aerial disaster image" with no SAM call and no live run used; **Analyse anyway** (`force=1`) skips the gate. It fails open on a model error or timeout (20 s), and it is not a validated classifier, so it can be wrong in both directions.
 
 ## License
 Code: MIT (see `LICENSE`). Datasets: under the licences above. Radio audio files: excluded from the MIT licence; they remain under their TTS providers' terms.

@@ -1,11 +1,11 @@
 """Aftershock web server. Run: uvicorn server:app --port 8000"""
-import asyncio, base64, copy, io, json, os, re, shutil, subprocess, tempfile, threading, time, uuid, glob
+import asyncio, base64, concurrent.futures as cf, copy, io, json, os, re, shutil, subprocess, tempfile, threading, time, uuid, glob
 from collections import OrderedDict
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body, Request
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image
-from aftershock import pipeline, render, voice, mission, meta
+from aftershock import pipeline, render, voice, mission, meta, gate
 
 app = FastAPI(title="Aftershock")
 JOBS = {}
@@ -24,6 +24,20 @@ def keyframes(path, n=3):
         outs.append((round(t, 1), o))
     return outs
 
+_TRUE = ("1", "true", "yes", "on")
+
+def _gate_public(g):
+    """A gate verdict as sent to the browser (without the raw ledger record)."""
+    return dict({k: v for k, v in g.items() if k != "call"}, line=gate.line(g))
+
+def _gate_events(ev, gates):
+    """Replay the scene-check calls (made before the job existed) into a job's stream, as its first step."""
+    for g in gates:
+        rec = g.get("call")
+        if rec:
+            ev({"event": "start", "id": rec["id"], "model": rec["model"], "tag": rec["tag"], "t": time.time()}); ev({"event": "end", **rec})
+        ev({"event": "stage", "text": gate.line(g)})
+
 def _run(job, frames, rows, cols, hazard):
     try:
         out = []
@@ -36,17 +50,25 @@ def _run(job, frames, rows, cols, hazard):
         job.update(status="error", error=repr(e)[:400])
 
 @app.post("/api/survey")
-async def survey(request: Request, file: UploadFile = File(...), rows: int = Form(2), cols: int = Form(2), hazard: str = Form("auto")):
+async def survey(request: Request, file: UploadFile = File(...), rows: int = Form(2), cols: int = Form(2), hazard: str = Form("auto"), force: str = Form("0")):
     if not os.environ.get("MODEL_API_KEY"): raise HTTPException(503, "MODEL_API_KEY not set; use the sample results")
-    _budget_and_cooldown(request)
-    data = await file.read(); jid = uuid.uuid4().hex[:10]; JOBS[jid] = {"status": "queued"}
+    _budget_and_cooldown(request, stamp=False)          # cheap refusals first, before the scene check spends anything
+    data = await file.read()
     if (file.content_type or "").startswith("video"):
         p = tempfile.mktemp(suffix=os.path.splitext(file.filename or ".mp4")[1]); open(p, "wb").write(data)
-        frames = [(t, Image.open(f).convert("RGB")) for t, f in keyframes(p)]
+        try: frames = [(t, Image.open(f).convert("RGB")) for t, f in keyframes(p)]
+        except Exception: raise HTTPException(400, f"could not read video {file.filename or ''}: try MP4 (H.264) or an image")
+        finally: os.remove(p)
     else:
         frames = [(None, _open_image(data, file.filename))]
+    # Scene gate: one Spark look at the whole image (the middle keyframe of a video) before any SAM or tiling. force=1 skips it.
+    g = gate.forced() if (force or "").lower() in _TRUE else await asyncio.to_thread(gate.scene_check, frames[len(frames) // 2][1], file.filename)
+    if g["verdict"] == "reject":                        # no job, no SAM, no cooldown stamp: only the check's own cost was spent
+        return {"job": None, "rejected": True, "gate": _gate_public(g)}
+    _budget_and_cooldown(request)
+    jid = uuid.uuid4().hex[:10]; JOBS[jid] = {"status": "queued", "gate": _gate_public(g), "gate_line": gate.line(g)}
     threading.Thread(target=_run, args=(JOBS[jid], frames, max(1, min(rows, 4)), max(1, min(cols, 4)), hazard), daemon=True).start()
-    return {"job": jid}
+    return {"job": jid, "gate": _gate_public(g)}
 
 @app.get("/api/jobs/{jid}")
 def job(jid: str):
@@ -196,19 +218,25 @@ def _frame_source(fr):
 def _ip(request):
     return (request.headers.get("x-forwarded-for") or (request.client.host if request.client else "?")).split(",")[0].strip()
 
-def _budget_and_cooldown(request, what="live run"):
-    """Budget and per-visitor cooldown. Used by Run live, uploads, and the single-frame /api/survey and /api/voice."""
+def _budget_and_cooldown(request, what="live run", stamp=True):
+    """Budget and per-visitor cooldown. Used by Run live, uploads, and the single-frame /api/survey and /api/voice.
+    stamp=False only checks (used before the scene gate, so an upload the gate rejects does not start the visitor's cooldown)."""
     if meta.spent() >= meta.BUDGET_USD: raise HTTPException(429, f"public demo API budget (${meta.BUDGET_USD}) used up. The cached mission still works")
     ip = _ip(request); last = LIVE["by_ip"].get(ip, 0)
     if IP_COOLDOWN_S and time.time() - last < IP_COOLDOWN_S:
         raise HTTPException(429, f"one {what} per {max(1, IP_COOLDOWN_S // 60)} min per visitor; try again in {int(IP_COOLDOWN_S - (time.time() - last))} s")
-    LIVE["by_ip"][ip] = time.time()
+    if stamp: LIVE["by_ip"][ip] = time.time()
 
-def _start_live(request, what="live run"):
-    """Gate one live run (Run live or one upload job): key, one at a time, total cap, budget, per-visitor cooldown."""
+def _live_precheck(request, what="live run"):
+    """Every refusal _start_live would give, without counting a run or starting the cooldown (used before the scene gate)."""
     if not os.environ.get("MODEL_API_KEY"): raise HTTPException(503, "MODEL_API_KEY not set: the cached mission still works")
     if LIVE["busy"]: raise HTTPException(409, "a live run or upload is already in progress; try again in a minute")
     if LIVE["runs"] >= MAX_LIVE: raise HTTPException(429, f"public demo cap reached ({MAX_LIVE} live runs or uploads). The cached mission still works")
+    _budget_and_cooldown(request, what, stamp=False)
+
+def _start_live(request, what="live run"):
+    """Gate one live run (Run live or one upload job): key, one at a time, total cap, budget, per-visitor cooldown."""
+    _live_precheck(request, what)
     _budget_and_cooldown(request, what)
     LIVE.update(busy=True, runs=LIVE["runs"] + 1); meta._BASE["live_runs"] = LIVE["runs"]; meta.save_persisted(live_runs=LIVE["runs"])
     jid = uuid.uuid4().hex[:10]; JOBS[jid] = {"status": "running", "events": [], "t0": time.time()}
@@ -308,7 +336,7 @@ def _check_request_size(request, limit):
     if n > limit + MB: raise HTTPException(413, f"upload too large ({n // MB} MB); limits: images {MAX_IMAGE_BYTES // MB} MB each, video {MAX_VIDEO_BYTES // MB} MB, audio {MAX_AUDIO_BYTES // MB} MB")
 
 @app.post("/api/upload/frames")
-async def upload_frames(request: Request, files: list[UploadFile] = File(...)):
+async def upload_frames(request: Request, files: list[UploadFile] = File(...), force: str = Form("0")):
     """Survey up to 4 drone images (or one video -> 3 keyframes) into the visitor's private mission, then re-plan. Streams like /api/live."""
     if not os.environ.get("MODEL_API_KEY"): raise HTTPException(503, _no_key_message())
     if not _sid(request): raise HTTPException(400, "missing X-Aftershock-Session header; reload the page")
@@ -317,13 +345,13 @@ async def upload_frames(request: Request, files: list[UploadFile] = File(...)):
     if len(files) > MAX_FILES_PER_UPLOAD: raise HTTPException(413, f"at most {MAX_FILES_PER_UPLOAD} images per upload")
     videos = [f for f in files if (f.content_type or "").startswith("video")]
     if videos and len(files) > 1: raise HTTPException(400, "upload one video on its own, or up to 4 images")
-    frames = []   # (name, PIL image)
+    frames = []   # (name, PIL image, index of the uploaded file)
     if videos:
         v = videos[0]; data = await _read_capped(v, MAX_VIDEO_BYTES, "video")
         p = tempfile.mktemp(suffix=os.path.splitext(v.filename or ".mp4")[1] or ".mp4"); open(p, "wb").write(data)
         try:
             kf = keyframes(p)
-            frames = [(f"{v.filename or 'video'} @ {t}s", Image.open(f).convert("RGB")) for t, f in kf]
+            frames = [(f"{v.filename or 'video'} @ {t}s", Image.open(f).convert("RGB"), 0) for t, f in kf]
             for _, f in kf: os.remove(f)
         except Exception:
             raise HTTPException(400, f"could not read video {v.filename or ''}: try MP4 (H.264) or upload images")
@@ -332,17 +360,33 @@ async def upload_frames(request: Request, files: list[UploadFile] = File(...)):
         for f in files:
             if f.content_type and not f.content_type.startswith("image") and f.content_type != "application/octet-stream":
                 raise HTTPException(400, f"{f.filename} is not an image or video")
-            frames.append((f.filename or "image", _open_image(await _read_capped(f, MAX_IMAGE_BYTES, "images"), f.filename)))
+            frames.append((f.filename or "image", _open_image(await _read_capped(f, MAX_IMAGE_BYTES, "images"), f.filename), len(frames)))
     ses0 = _session(request)
     have = sum(1 for f in (ses0["m"]["frames"] if ses0 else []) if f.get("upload"))
     if have + len(frames) > MAX_SESSION_FRAMES:
         raise HTTPException(413, f"at most {MAX_SESSION_FRAMES} of your own frames per visitor (you have {have}); use Reset to demo mission to start over")
     if ses0 and ses0["busy"]: raise HTTPException(409, "your previous upload is still being processed")
+    _live_precheck(request, "upload")        # refuse before the scene gate spends anything
+    # Scene gate: one Spark look per image (one for a video: its middle keyframe) before any SAM, tiling or per-building work.
+    if (force or "").lower() in _TRUE:
+        gates = [dict(gate.forced(), name=(videos[0].filename if videos else n), index=i) for (n, _, i) in (frames[:1] if videos else frames)]
+    elif videos:
+        g = await asyncio.to_thread(gate.scene_check, frames[len(frames) // 2][1], videos[0].filename or "video"); gates = [dict(g, index=0)]
+    else:
+        with cf.ThreadPoolExecutor(len(frames)) as ex:
+            gates = await asyncio.gather(*[asyncio.wrap_future(ex.submit(gate.scene_check, im, n)) for n, im, _ in frames])
+        gates = [dict(g, index=i) for g, (_, _, i) in zip(gates, frames)]
+    ok_idx = {g["index"] for g in gates if g["verdict"] == "proceed"}
+    rejected = [_gate_public(g) for g in gates if g["verdict"] == "reject"]
+    frames = [(n, im) for n, im, i in frames if i in ok_idx]
+    if not frames:   # nothing to survey: no job, no live run counted, no cooldown; only the scene check's own cost was spent
+        return {"job": None, "frames": 0, "rejected": rejected, "gate": [_gate_public(g) for g in gates]}
     jid = _start_live(request, "upload")
     ses = _session(request, create=True); ses["busy"] = True; os.makedirs(ses["dir"], exist_ok=True)
 
     def work(m, ev):
         n0 = sum(1 for f in m["frames"] if f.get("upload")); first = None
+        _gate_events(ev, gates)
         ev({"event": "stage", "text": f"Your data: {len(frames)} frame(s). Each one: SAM 3.1 segments buildings, Spark scans 4 zones, Spark A + B grade up to {LIVE_MAX_BUILDINGS()} buildings"})
         for k, (name, img) in enumerate(frames, 1):
             fid, sec = f"U{n0 + k:02d}", f"U{n0 + k}"; first = first or fid
@@ -356,7 +400,7 @@ async def upload_frames(request: Request, files: list[UploadFile] = File(...)):
         ev({"event": "stage", "text": "Rebuilding the mission queue with your frames"})
         return first
     threading.Thread(target=_job, args=(JOBS[jid], ses, work), daemon=True).start()
-    return {"job": jid, "frames": len(frames)}
+    return {"job": jid, "frames": len(frames), "rejected": rejected, "gate": [_gate_public(g) for g in gates]}
 
 def _audio_seconds(path):
     out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path], capture_output=True, text=True).stdout.strip()

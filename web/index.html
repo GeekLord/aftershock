@@ -179,7 +179,7 @@ span.flag{display:inline-flex}
 .ev{display:grid;grid-template-columns:94px 1fr 62px 70px 58px;gap:8px;align-items:center;padding:3px 4px;border-radius:5px}
 .ev.stage{display:block;color:#bae6fd;font-family:var(--sans);font-size:12px;padding:6px 4px;border-top:1px solid var(--line);margin-top:4px}
 .m{font:700 10.5px var(--mono);padding:2px 6px;border-radius:4px;text-align:center;color:#06101a}
-.m.sam{background:var(--acc)}.m.spark_a{background:var(--vio)}.m.spark_b{background:var(--pink)}.m.spark_scan{background:var(--teal)}.m.wonder{background:var(--gold)}.m.spark_extract{background:#94a3b8}.m.voice{background:#94a3b8}
+.m.sam{background:var(--acc)}.m.spark_a{background:var(--vio)}.m.spark_b{background:var(--pink)}.m.spark_scan{background:var(--teal)}.m.wonder{background:var(--gold)}.m.spark_extract{background:#94a3b8}.m.voice{background:#94a3b8}.m.spark_gate{background:#94a3b8}
 .spin{display:inline-block;width:10px;height:10px;border:2px solid #38bdf855;border-top-color:var(--acc);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .ev .t{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ev .d{color:var(--mute);text-align:right}
@@ -479,7 +479,7 @@ function streamJob(job,title,doneText,onDone,onEnd){
   const t0=Date.now(); const rows={}; const ctr={sam:0,spark_scan:0,spark_a:0,spark_b:0,wonder:0}; let usd=0;
   $('#drawer').classList.add('on'); $('#dlog').innerHTML=''; $('#dspin').style.display=''; $('#dtitle').textContent=title; $('#live').disabled=true; UBUSY(true);
   const clock=setInterval(()=>$('#dclock').textContent=((Date.now()-t0)/1000).toFixed(1)+'s',100);
-  const NM={sam:'SAM 3.1',spark_scan:'Spark scan',spark_a:'Spark A',spark_b:'Spark B',wonder:'Wonder',spark_extract:'Spark',voice:'Voice'};
+  const NM={sam:'SAM 3.1',spark_scan:'Spark scan',spark_a:'Spark A',spark_b:'Spark B',wonder:'Wonder',spark_extract:'Spark',voice:'Voice',spark_gate:'Scene check'};
   const drawCtr=()=>$('#dctr').innerHTML=Object.entries(ctr).map(([k,v])=>`<span><b class="m ${k}" style="padding:0 5px;margin-right:5px">${NM[k]}</b>${v}</span>`).join('')+`<span>$${usd.toFixed(3)}</span>`; drawCtr();
   const es=new EventSource(`/api/live/${job}/events`);
   const finish=()=>{es.close(); clearInterval(clock); $('#dspin').style.display='none'; $('#live').disabled=false; UBUSY(false);};
@@ -503,7 +503,7 @@ function uState(){
   $('#unokey').classList.toggle('on',UPL.enabled===false);
   const s=M&&M.session, n=s?(s.uploads||0)+(s.radio||0):0;
   $('#ureset').classList.toggle('on',n>0); if(n>0) $('#ureset-t').textContent=`Your data: ${s.uploads||0} frame(s), ${s.radio||0} radio call(s). Only you see them.`;
-  $('#ureset-b').disabled=UPL.busy;
+  $('#ureset-b').disabled=UPL.busy; if($('#ugforce')) $('#ugforce').disabled=UPL.busy||UPL.enabled===false;
   const ups=M?M.frames.filter(f=>f.upload):[]; $('#usec').placeholder=ups.length?`default ${ups[ups.length-1].sector}`:'e.g. C1';
 }
 async function uOpen(on){
@@ -518,17 +518,42 @@ $('#ufiles').onchange=()=>{const fs=[...$('#ufiles').files], v=fs.filter(f=>f.ty
   uMsg(); uState(); if((v.length&&fs.length>1)||fs.length>4) $('#ufgo').disabled=true;};
 $('#uaudio').onchange=()=>{uMsg(); uState()};
 async function uErr(r){const t=await r.json().catch(()=>({})); return typeof t.detail==='string'?t.detail:`server answered ${r.status}`}
-async function uSend(url,fd,title,doneText){
+// ---------- scene gate: one Muse Spark look at each whole image before any SAM or grading; "Analyse anyway" skips it ----------
+const usd4=x=>'$'+(+x||0).toFixed(4);
+function gateShow(rej,files,note){
+  const secs=rej.reduce((a,g)=>a+(+g.seconds||0),0), usd=rej.reduce((a,g)=>a+(+g.usd||0),0), who=rej.every(g=>g.stage==='local')?'local pre-check':'Muse Spark';
+  uMsg('warn',`${note?`<div style="margin-bottom:6px">${note}</div>`:''}<b>Not an aerial disaster image</b>`
+    +rej.map(g=>`<div style="margin-top:4px"><span class="mono">${esc(g.name||'image')}</span>: ${g.scene?esc(g.scene)+'. ':''}${esc(g.reason)}</div>`).join('')
+    +`<div style="margin-top:4px;opacity:.85">Scene check · ${who} · ${secs.toFixed(1)} s · ${usd4(usd)}. No segmentation or grading was run, and no live run was used.</div>`
+    +`<div class="row" style="margin-top:6px"><span style="opacity:.85">Wrong call? Run the full survey anyway.</span><button class="btn sm" id="ugforce">Analyse anyway</button></div>`);
+  const pick=files?rej.map(g=>files[g.index]).filter(Boolean):[];
+  $('#ugforce').disabled=!pick.length||UPL.busy;
+  $('#ugforce').onclick=()=>{const fd=new FormData(); pick.forEach(f=>fd.append('files',f)); fd.append('force','1');
+    uSend('/api/upload/frames',fd,`Your data · ${pick.length===1?pick[0].name:pick.length+' files'} · analysed anyway`,'✓ Done: your frames are in the sortie, queue and team plan.',pick);};
+}
+function gateDrawer(d,title){
+  const gs=d.gate||[], n=gs.filter(g=>g.stage==='model'||g.stage==='fail-open').length;
+  $('#drawer').classList.add('on'); $('#dspin').style.display='none'; $('#dtitle').textContent=title;
+  $('#dclock').textContent=Math.max(0,...gs.map(g=>+g.seconds||0)).toFixed(1)+'s';
+  $('#dctr').innerHTML=`<span><b class="m spark_gate" style="padding:0 5px;margin-right:5px">Scene check</b>${n}</span><span>${'$'+gs.reduce((a,g)=>a+(+g.usd||0),0).toFixed(3)}</span>`;
+  $('#dlog').innerHTML=gs.map(g=>`<div class="ev stage">▸ ${esc(g.line)}</div>`).join('')
+    +`<div class="ev stage" style="color:#fca5a5">✗ Stopped before SAM: not an aerial disaster image. Use Analyse anyway if this is wrong.</div>`;
+}
+async function uSend(url,fd,title,doneText,files){
   uMsg(); UBUSY(true);
   let r; try{ r=await fetch(url,{method:'POST',body:fd}); }catch{ UBUSY(false); uMsg('err','Could not reach the server. Check your connection and try again.'); return false }
   if(!r.ok){ UBUSY(false); const t=await uErr(r); uMsg('err',`${r.status===429?'Limit reached: ':r.status===413?'Too large: ':''}${esc(t)}`); return false }
-  const {job}=await r.json(); uOpen(false);
-  streamJob(job,title,doneText,async d=>{ await load(); if(d.focus){const q=M.queue.find(x=>x.frame===d.focus&&x.kind!=='radio'); jump(q?q.id:d.focus)} uMsg('ok','Done. Your data is in the console: look for the YOUR DATA tags.'); },
+  const res=await r.json(), rej=res.rejected||[];
+  if(!res.job){ UBUSY(false); gateDrawer(res,title); gateShow(rej,files); return false }   // nothing passed the scene check
+  const job=res.job; uOpen(false);
+  streamJob(job,title,doneText,async d=>{ await load(); if(d.focus){const q=M.queue.find(x=>x.frame===d.focus&&x.kind!=='radio'); jump(q?q.id:d.focus)}
+    if(rej.length){ gateShow(rej,files,'Done: the other frame(s) are in the console (YOUR DATA tags). These were not analysed:'); uOpen(true) }
+    else uMsg('ok','Done. Your data is in the console: look for the YOUR DATA tags.'); },
     d=>{ if(!d||d.event==='error'){ uMsg('err',esc(d?d.text:'Lost contact with the server while it was working.')); uOpen(true); load(); } uState(); });
   return true;
 }
 $('#ufgo').onclick=()=>{const fs=[...$('#ufiles').files]; if(!fs.length)return; const fd=new FormData(); fs.forEach(f=>fd.append('files',f));
-  uSend('/api/upload/frames',fd,`Your data · ${fs.length===1?fs[0].name:fs.length+' files'}`,'✓ Done: your frames are in the sortie, queue and team plan.').then(ok=>{if(ok){$('#ufiles').value='';$('#ufiles').onchange()}});};
+  uSend('/api/upload/frames',fd,`Your data · ${fs.length===1?fs[0].name:fs.length+' files'}`,'✓ Done: your frames are in the sortie, queue and team plan.',fs).then(ok=>{if(ok){$('#ufiles').value='';$('#ufiles').onchange()}});};
 $('#uago').onclick=()=>{const f=$('#uaudio').files[0]; if(!f)return; const ups=M.frames.filter(x=>x.upload);
   const sec=($('#usec').value.trim()||(ups.length?ups[ups.length-1].sector:'')).toUpperCase();
   const fd=new FormData(); fd.append('file',f); fd.append('languages',$('#ulang').value); fd.append('sector',sec);

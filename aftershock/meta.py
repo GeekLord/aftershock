@@ -70,24 +70,24 @@ def data_url(im, max_side=1280, q=85):
     b = io.BytesIO(); im.save(b, "JPEG", quality=q)
     return "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
 
-def chat_json(prompt, images=(), model="muse-spark-1.3", max_side=1024, retries=3, tag=None, timeout=90):
+def chat_json(prompt, images=(), model="muse-spark-1.3", max_side=1024, retries=3, tag=None, timeout=90, max_tokens=None):
     """Ask a Muse model for a JSON object. Returns (dict, usage). Every call is recorded in LEDGER under `tag`."""
     tag = tag or model
     cid, t0 = _start(model, tag)
-    res, usage = _chat_json(prompt, images, model, max_side, retries, timeout)
+    res, usage = _chat_json(prompt, images, model, max_side, retries, timeout, max_tokens)
     u = usage or {}; ti, to = u.get("prompt_tokens", 0), u.get("completion_tokens", 0); pi, po = PRICE.get(model, (0, 0))
     _end(cid, t0, model, tag, "error" not in res, ti, to, ti * pi + to * po, str(res.get("error", ""))[:120] if "error" in res else "")
     return res, usage
 
-def _chat_json(prompt, images, model, max_side, retries, timeout=90):
+def _chat_json(prompt, images, model, max_side, retries, timeout=90, max_tokens=None):
     content = [{"type": "text", "text": prompt}] + [
         {"type": "image_url", "image_url": {"url": data_url(i, max_side)}} for i in images]
     last = None
     for a in range(retries):
         try:
-            r = requests.post(f"{API}/chat/completions", headers=_h(), timeout=timeout, json={
-                "model": model, "messages": [{"role": "user", "content": content}],
-                "response_format": {"type": "json_object"}})
+            body = {"model": model, "messages": [{"role": "user", "content": content}], "response_format": {"type": "json_object"}}
+            if max_tokens: body["max_tokens"] = max_tokens
+            r = requests.post(f"{API}/chat/completions", headers=_h(), timeout=timeout, json=body)
             if r.status_code == 200:
                 t = r.json()["choices"][0]["message"]["content"]
                 return json.loads(t[t.find("{"):t.rfind("}") + 1]), r.json().get("usage")
