@@ -350,24 +350,34 @@ async function errText(r){if(r.status===503)return KEY_MSG;try{const j=await r.j
 function busy(btn,on,label){btn.disabled=on;btn.textContent=on?label:btn.dataset.idle||btn.textContent;if(!on&&btn===$('#go'))btn.disabled=!$('#file').files[0];if(!on&&btn===$('#vgo'))btn.disabled=!$('#audio').files[0]}
 $('#go').dataset.idle='Run survey';$('#vgo').dataset.idle='Transcribe call';
 
-$('#go').onclick=async()=>{
-  const f=$('#file').files[0];if(!f)return;
-  const fd=new FormData();fd.append('file',f);fd.append('rows',$('#grid').value);fd.append('cols',$('#grid').value);
-  busy($('#go'),true,'Surveying…');status('busy',`Uploading ${esc(f.name)}…`);
+function showReject(g,f){
+  $('#view').innerHTML=`<div class="empty"><h2>Not an aerial disaster image</h2>
+   <p>${g.scene?`<b style="color:var(--ink)">${esc(g.scene)}.</b> `:''}${esc(g.reason)}</p>
+   <p class="num" style="font-size:13px;color:var(--faint)">Scene check · ${g.stage==='local'?'local pre-check':'Muse Spark'} · ${esc(g.seconds)} s · $${(+g.usd||0).toFixed(4)}. Aftershock looked at the whole image once and stopped before segmenting, tiling or grading anything.</p>
+   <button class="primary" id="force">Analyse anyway</button></div>`;
+  $('#rank').innerHTML=`<div class="list-head"><h2>Where to look first</h2><div class="tag">Nothing ranked: the scene check found no aerial view of buildings or terrain. If it got this wrong, choose Analyse anyway.</div></div>`;
+  $('#force').onclick=()=>runSurvey(f,true);
+}
+async function runSurvey(f,force){
+  const fd=new FormData();fd.append('file',f);fd.append('rows',$('#grid').value);fd.append('cols',$('#grid').value);if(force)fd.append('force','1');
+  busy($('#go'),true,'Surveying…');status('busy',force?`Uploading ${esc(f.name)} (analysing anyway, scene check skipped)…`:`Checking the scene: one Muse Spark look at the whole of ${esc(f.name)}…`);
   try{
     const r=await fetch('/api/survey',{method:'POST',body:fd});
     if(!r.ok){status('error',`Survey did not start. ${await errText(r)}`);busy($('#go'),false);return}
-    const {job}=await r.json();
+    const d=await r.json();
+    if(d.rejected){status();busy($('#go'),false);$('#sample').value='';showReject(d.gate,f);return}
+    const job=d.job, gl=d.gate&&d.gate.line?esc(d.gate.line)+'<br>':'';
     const poll=async()=>{
       try{
         const j=await (await fetch('/api/jobs/'+job)).json();
         if(j.status==='done'){status();busy($('#go'),false);$('#sample').value='';showSurvey(j.result)}
         else if(j.status==='error'){status('error',`Survey failed while processing. ${esc(j.error)}`);busy($('#go'),false)}
-        else{status('busy',`${esc(j.status==='queued'?'Queued':j.status.charAt(0).toUpperCase()+j.status.slice(1))}…${j.progress?` <span class="num">${j.progress}</span> model calls done.`:''} Surveys usually take under a minute per frame.`);setTimeout(poll,1500)}
+        else{status('busy',`${gl}${esc(j.status==='queued'?'Queued':j.status.charAt(0).toUpperCase()+j.status.slice(1))}…${j.progress?` <span class="num">${j.progress}</span> model calls done.`:''} Surveys usually take under a minute per frame.`);setTimeout(poll,1500)}
       }catch{status('error','Lost contact with the server while the survey was running. Check the server, then run the survey again.');busy($('#go'),false)}
     };poll();
   }catch{status('error','Could not reach the server. Check that it is running, then try again.');busy($('#go'),false)}
-};
+}
+$('#go').onclick=()=>{const f=$('#file').files[0];if(f)runSurvey(f,false)};
 $('#vgo').onclick=async()=>{
   const f=$('#audio').files[0];if(!f)return;
   const fd=new FormData();fd.append('file',f);

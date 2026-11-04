@@ -53,12 +53,28 @@ def fake_intake(path, languages=None):
                            "people_trapped": 3, "people_trapped_quote": "Three", "injured": None, "injured_quote": None},
                 confirm=["confirm all counts by read-back before dispatch"])
 
+GATE_CALLS = []
+
+def fake_chat_json(prompt, images=(), model="muse-spark-1.3", max_side=1024, retries=3, tag=None, timeout=90, max_tokens=None):
+    """Stands in for Muse Spark in the scene gate (the only chat call these tests reach): a mostly-red image is "a portrait", anything else
+    is "an aerial view". Records a priced ledger entry like the real client."""
+    assert tag == "spark_gate:scene", tag
+    GATE_CALLS.append(images[0].size)
+    cid, t0 = meta._start(model, tag)
+    r, g, b = images[0].convert("RGB").resize((1, 1)).getpixel((0, 0))
+    res = ({"is_aerial": False, "shows_buildings_or_terrain": False, "disaster_damage_visible": "no", "scene": "close-up portrait of a person indoors",
+            "verdict": "reject", "reason": "ground-level photo of a person, not aerial imagery"} if r > 180 and g < 60 else
+           {"is_aerial": True, "shows_buildings_or_terrain": True, "disaster_damage_visible": "unclear", "scene": "aerial view of houses and roads",
+            "verdict": "proceed", "reason": "overhead drone view of buildings"})
+    meta._end(cid, t0, model, tag, True, 600, 300, 600 * 1.25e-6 + 300 * 4.25e-6); return res, {"prompt_tokens": 600, "completion_tokens": 300}
+
 @pytest.fixture
 def client(monkeypatch):
     monkeypatch.setenv("MODEL_API_KEY", "test-not-a-key")
     monkeypatch.setattr(mission, "survey_frame", fake_survey_frame)
     monkeypatch.setattr(mission, "run_commander", fake_commander)
     monkeypatch.setattr(server.voice, "intake", fake_intake)
+    monkeypatch.setattr(meta, "chat_json", fake_chat_json); GATE_CALLS.clear()
     monkeypatch.setattr(server, "MAX_LIVE", 100); monkeypatch.setattr(server, "IP_COOLDOWN_S", 0)
     monkeypatch.setattr(meta, "BUDGET_USD", 5.0)
     server.LIVE.update(busy=False, runs=0, by_ip={}); server.STATE["m"] = None
