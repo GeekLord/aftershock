@@ -193,6 +193,29 @@ span.flag{display:inline-flex}
 .modal .task.rej{border-radius:var(--r);margin:6px 0;border:1px solid var(--err-line)}
 .modal .rules{color:var(--mute);font-size:12px}
 .empty{color:var(--mute);padding:20px;text-align:center}
+/* ---------- your data (upload panel) ---------- */
+.upl{position:fixed;top:58px;right:16px;width:400px;max-width:calc(100vw - 24px);max-height:calc(100vh - 72px);overflow:auto;background:var(--p1);border:1px solid #1e4a66;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,.6);display:none;flex-direction:column;z-index:25}
+.upl.on{display:flex}
+.upl .dh{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-bottom:1px solid var(--line)}.upl .dh b{font-size:13px}
+.upl .bd{padding:10px 14px 12px;display:flex;flex-direction:column;gap:10px}
+.upl .lead{color:var(--ink2);font-size:12px;margin:0}.upl .lim{color:var(--faint);font-size:11.5px;margin:0}
+.upl fieldset{margin:0;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--p2);padding:9px 11px 10px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.upl legend{padding:0 4px;font-size:12.5px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.upl label{font-size:11.5px;color:var(--mute);display:flex;flex-direction:column;gap:3px;min-width:0}
+.upl input[type=file]{font:12px var(--sans);color:var(--ink2);max-width:100%}
+.upl input[type=file]::file-selector-button{font:500 12px var(--sans);color:var(--ink);background:var(--p3);border:1px solid var(--line2);border-radius:var(--r-sm);padding:4px 10px;margin-right:8px;cursor:pointer}
+.upl input[type=text]{font:12.5px var(--sans);color:var(--ink);background:var(--p1);border:1px solid var(--line2);border-radius:var(--r-sm);padding:5px 8px;min-height:30px;width:100%}
+.upl input[type=text]::placeholder{color:var(--faint)}
+.upl .two{display:grid;grid-template-columns:1fr 124px;gap:8px}
+.upl .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.upl .row .btn{margin-left:auto}
+.upl .hint{font-size:11.5px;color:var(--faint)}
+.upl .msg{font-size:12px;border-radius:var(--r);padding:7px 10px;display:none}.upl .msg.on{display:block}
+.upl .msg.err{background:var(--err-bg);border:1px solid var(--err-line);color:var(--err-ink)}
+.upl .msg.warn{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink)}
+.upl .msg.ok{background:var(--okb-bg);border:1px solid var(--okb-line);color:var(--okb-ink)}
+.upl .reset{display:none;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:10px}.upl .reset.on{display:flex}.upl .reset span{color:var(--mute);font-size:11.5px;flex:1}
+.yours{font:650 10px var(--sans);white-space:nowrap;color:var(--acc-ink);background:var(--acc);border-radius:4px;padding:0 5px;letter-spacing:.03em;line-height:1.6}
+.th .yours{position:absolute;left:4px;bottom:3px}
 /* ---------- responsive ---------- */
 @media (max-width:1360px){.grid{grid-template-columns:268px minmax(0,1fr) 380px}.drawer{right:392px}.brand span{display:none}.stat{padding:4px 9px}}
 @media (max-width:1100px){
@@ -213,6 +236,8 @@ span.flag{display:inline-flex}
   .rstrip{height:auto}.rc{flex-basis:min(440px,86vw)}
   .sheet{grid-template-columns:repeat(4,1fr)}
   .drawer{left:12px;right:12px;width:auto;bottom:12px}
+  .upl{top:12px;left:12px;right:12px;width:auto;max-height:calc(100vh - 24px)}
+  .top{position:relative}#updata{position:absolute;top:6px;right:12px}
 }
 @media (max-width:600px){.sheet{grid-template-columns:repeat(3,1fr)}.ev{grid-template-columns:72px 1fr 52px;}.ev>:nth-child(4),.ev>:nth-child(5){display:none}}
 </style></head><body>
@@ -226,6 +251,7 @@ span.flag{display:inline-flex}
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
   <symbol id="i-frame" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-4 4 3 3-2 6 4"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v3.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V15"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
 </svg>
 <header class="top">
@@ -233,6 +259,7 @@ span.flag{display:inline-flex}
   <div class="mtitle" id="mtitle">Loading mission…</div>
   <div class="stats" id="stats"></div>
   <div class="acts">
+    <button class="btn" id="updata" aria-expanded="false" aria-controls="upl" title="Test with your own drone images, video or radio call (Meta models; private to you)"><svg class="i" aria-hidden="true"><use href="#i-upload"/></svg>Your data</button>
     <a class="btn" href="/classic.html" title="Upload your own drone image or radio call"><svg class="i" aria-hidden="true"><use href="#i-frame"/></svg>Single frame</a>
     <button class="btn" id="tamper" title="Feed the validator a plan with invented evidence and see it rejected (no model call)"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Tamper test</button>
     <button class="btn go" id="live"><svg class="i f" aria-hidden="true"><use href="#i-play"/></svg>Run live</button>
@@ -274,20 +301,45 @@ span.flag{display:inline-flex}
   <div class="ctr" id="dctr"></div>
   <div class="log" id="dlog" aria-live="polite"></div>
 </div>
+<div class="upl" id="upl" role="dialog" aria-labelledby="upl-t">
+  <div class="dh"><svg class="i" aria-hidden="true"><use href="#i-upload"/></svg><b id="upl-t">Test with your own data</b><button class="x" id="uclose" aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="bd">
+    <p class="lead">Your files are analysed by Meta models (SAM 3.1, Muse Spark, Muse Wonder, Voice Transcribe) and added to this console: frames, priority queue, radio and team plan. You get a private copy of the mission; other visitors keep seeing the demo.</p>
+    <div class="msg warn" id="unokey">Uploads need the hosted demo or a server started with a Meta Model API key (<span class="mono">MODEL_API_KEY</span>). The demo mission works without one.</div>
+    <fieldset><legend><svg class="i" aria-hidden="true"><use href="#i-frame"/></svg>Drone images or video</legend>
+      <label>Up to 4 images, or one video (3 keyframes are taken)<input type="file" id="ufiles" accept="image/*,video/*" multiple></label>
+      <div class="row"><span class="hint" id="ufhint">Each frame becomes a new sector U1, U2, …</span><button class="btn go sm" id="ufgo" disabled>Survey frames</button></div>
+    </fieldset>
+    <fieldset><legend><svg class="i" aria-hidden="true"><use href="#i-radio"/></svg>Radio call audio</legend>
+      <label>One recording<input type="file" id="uaudio" accept="audio/*"></label>
+      <div class="two"><label>Language hints (optional)<input type="text" id="ulang" placeholder="e.g. en, es, ar" autocomplete="off"></label><label>Sector (optional)<input type="text" id="usec" placeholder="e.g. U1" autocomplete="off"></label></div>
+      <div class="row"><span class="hint">Counts still need a human read-back.</span><button class="btn go sm" id="uago" disabled>Transcribe call</button></div>
+    </fieldset>
+    <p class="lim" id="ulim">Limits: images 20 MB each, video 150 MB, audio 15 MB and 3 min. Up to 8 buildings graded per frame. Each upload counts as one live run against the public demo caps.</p>
+    <div class="msg" id="umsg" role="status" aria-live="polite"></div>
+    <div class="reset" id="ureset"><span id="ureset-t">Your data is in this console.</span><button class="btn sm" id="ureset-b">Reset to demo mission</button></div>
+  </div>
+</div>
 <div class="modal" id="modal"><div class="box" id="mbox" role="dialog" aria-modal="true" aria-labelledby="mtitle-d"></div></div>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const SEVC={destroyed:'#ef4444',major:'#f97316',minor:'#eab308',no_damage:'#22c55e',unknown:'#64748b'};
 const icon=(id,cls='')=>`<svg class="i ${cls}" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+// Per-visitor session: uploads go into a private copy of the mission on the server, keyed by this id.
+const SID=(()=>{try{let s=localStorage.getItem('aftershock-session');if(!s||!/^[A-Za-z0-9_-]{8,64}$/.test(s)){s=(crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36)).replace(/[^A-Za-z0-9_-]/g,'');localStorage.setItem('aftershock-session',s)}return s}catch{return 'anon'+Math.random().toString(36).slice(2,12)}})();
+const _fetch=window.fetch.bind(window);
+window.fetch=(u,o={})=>{if(String(u).startsWith('/api/')){o={...o,headers:{...(o.headers||{}),'X-Aftershock-Session':SID}}}return _fetch(u,o)};
+const isRadio=id=>/^(U-)?R\d/.test(id||'');
+const yours=x=>x&&x.upload?'<span class="yours">YOUR DATA</span>':'';
 let M=null, SEL={fid:null,item:null}, VIEW={masks:true,boxes:true,roads:true,zones:false}, FILT='all';
 
-async function load(){ M=await (await fetch('/api/mission')).json(); renderAll(); if(!SEL.fid) select(M.queue[0]?.frame||M.frames[0].fid, M.queue[0]?.id); }
+async function load(){ M=await (await fetch('/api/mission')).json(); renderAll(); uState(); if(!SEL.fid) select(M.queue[0]?.frame||M.frames[0].fid, M.queue[0]?.id); }
 function F(fid){return M.frames.find(f=>f.fid===fid)}
 function Q(id){return M.queue.find(q=>q.id===id)}
 function frameScore(fid){return Math.max(0,...M.queue.filter(q=>q.frame===fid).map(q=>q.score))}
 function heat(s){return s>=9?'#ef4444':s>=7?'#f97316':s>=5?'#f59e0b':s>=3?'#eab308':s>0?'#a3e635':'#22c55e'}
-function idChip(id){if(!id)return'';const k=/^R\d/.test(id)?'radio':/-Z\d/.test(id)?'zone':'';return `<button type="button" class="id ${k}" data-ev="${esc(id)}" title="Show ${esc(id)}">${esc(id)}</button>`}
+function idChip(id){if(!id)return'';const k=isRadio(id)?'radio':/-Z\d/.test(id)?'zone':'';return `<button type="button" class="id ${k}" data-ev="${esc(id)}" title="Show ${esc(id)}">${esc(id)}</button>`}
 function gChip(g){const k=g&&g.startsWith('destroyed (')?'zone':g==='radio report'?'radio':g;return `<span class="g ${esc(k)}">${esc(g==='destroyed (area scan)'?'area: destroyed':g==='radio report'?'radio':String(g).replace('_',' '))}</span>`}
 
 function renderAll(){ renderTop(); renderSheet(); renderPlan(); renderQueue(); renderRadio(); renderSide(); if(SEL.fid) renderFrame(); }
@@ -304,12 +356,12 @@ function renderSheet(){
     return `<div class="th ${SEL.fid===f.fid?'sel':''}" data-f="${f.fid}" style="border-color:${col}" title="${f.fid} · Sector ${f.sector} · worst ${s.worst} · top score ${sc}" role="button" tabindex="0" aria-pressed="${SEL.fid===f.fid}" aria-label="${f.fid}, Sector ${f.sector}, top score ${sc}">
       <img src="${f.thumb}" alt=""><div class="heat" style="box-shadow:inset 0 0 22px ${col}88"></div>
       <span class="lab">${f.sector}</span><span class="sc" style="background:${col}">${sc}</span>
-      <div class="ic">${s.n_severe?`<span style="color:#fca5a5">${s.n_severe}▲</span>`:''}${s.roads_blocked?`<span style="color:#fca5a5">${icon('block')}${s.roads_blocked}</span>`:''}${rad?`<span style="color:#ecc8ff">${icon('radio')}</span>`:''}${f.live?'<span style="color:var(--acc)">LIVE</span>':''}</div></div>`}).join('');
+      <div class="ic">${s.n_severe?`<span style="color:#fca5a5">${s.n_severe}▲</span>`:''}${s.roads_blocked?`<span style="color:#fca5a5">${icon('block')}${s.roads_blocked}</span>`:''}${rad?`<span style="color:#ecc8ff">${icon('radio')}</span>`:''}${f.live?'<span style="color:var(--acc)">LIVE</span>':''}</div>${yours(f)}</div>`}).join('');
   $$('#sheet .th').forEach(e=>e.onclick=()=>select(e.dataset.f)); keyActivate('#sheet .th');
   $('#framenote').textContent=M.manifest.note;
 }
 function renderSide(){
-  const lc=M.frames.map(f=>({f,ours:M.frame_summary[f.fid].n_severe>0||M.frame_summary[f.fid].destroyed_zones>0,lab:f.label_check?.severe_present}));
+  const lc=M.frames.filter(f=>f.label_check).map(f=>({f,ours:M.frame_summary[f.fid].n_severe>0||M.frame_summary[f.fid].destroyed_zones>0,lab:f.label_check?.severe_present}));
   const agree=lc.filter(x=>x.ours===x.lab).length, pos=lc.filter(x=>x.lab), tp=pos.filter(x=>x.ours).length, fp=lc.filter(x=>x.ours&&!x.lab).length;
   $('#labelcheck').innerHTML=`<h3>After-the-fact label check</h3>
    <div class="row"><span>Frames where RescueNet labels show major/destroyed buildings</span><b>${tp}/${pos.length} flagged</b></div>
@@ -320,7 +372,7 @@ function renderSide(){
 function select(fid,itemId){ SEL.fid=fid; SEL.item=itemId||null; renderSheet(); renderFrame(); renderQueue(); }
 function renderFrame(){
   const f=F(SEL.fid); if(!f)return; const [W,H]=f.size, s=M.frame_summary[f.fid];
-  $('#ftitle').innerHTML=`${f.fid} · Sector ${f.sector}<small>${esc(f.source)} · ${f.buildings.length} buildings · ${s.n_severe} severe · ${f.live?'surveyed live just now':'precomputed'} · ${f.seconds}s</small>`;
+  $('#ftitle').innerHTML=`${f.fid} · Sector ${f.sector}<small>${esc(f.source)} · ${f.buildings.length} buildings · ${s.n_severe} severe · ${f.upload?'surveyed live':f.live?'surveyed live just now':'precomputed'} · ${f.seconds}s</small>`;
   const rank={}; M.queue.forEach(q=>rank[q.id]=q.rank);
   let svg=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs>
    <pattern id="hatch" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="60" height="60" fill="rgba(239,68,68,.07)"/><line x1="0" y1="0" x2="0" y2="60" stroke="rgba(239,68,68,.55)" stroke-width="10"/></pattern>
@@ -337,7 +389,7 @@ function renderFrame(){
     svg+=`<g transform="translate(${Math.max(0,Math.min(W-w,x1))},${Math.max(0,y1-102)})" style="pointer-events:none"><rect width="${w}" height="96" rx="14" fill="${r?c:'rgba(5,10,18,.86)'}" stroke="${c}" stroke-width="4"/><text x="22" y="68" font-size="64" font-family="JetBrains Mono, ui-monospace, monospace" font-weight="700" fill="${tc}">${esc(lab)}</text>${b.review?`<use href="#i-flag" x="${lab.length*40+24}" y="18" width="60" height="60" fill="none" stroke="${tc}" stroke-width="2.6"/>`:''}</g>`;
   }
   svg+='</svg>';
-  $('#frame').innerHTML=`<img class="base" src="${f.img}" alt="Drone frame ${f.fid}, Sector ${f.sector}"><img class="mask" src="${f.mask}" style="display:${VIEW.masks?'block':'none'}" alt="">${svg}${f.live?'<span class="livechip">LIVE</span>':''}`;
+  $('#frame').innerHTML=`<img class="base" src="${f.img}" alt="Drone frame ${f.fid}, Sector ${f.sector}"><img class="mask" src="${f.mask}" style="display:${VIEW.masks?'block':'none'}" alt="">${svg}${f.live?'<span class="livechip">LIVE</span>':f.upload?'<span class="livechip">YOUR DATA</span>':''}`;
   $$('#frame [data-ev]').forEach(e=>e.onclick=ev=>{ev.stopPropagation();SEL.item=e.dataset.ev;renderFrame();renderQueue();});
   renderDetail();
 }
@@ -352,7 +404,7 @@ function renderDetail(){
   else if(zone){a=zoneCard(zone,'Area scan'); b=q?queueCard(q):`<div>No queue item for this zone.</div>`;}
   else if(q){a=queueCard(q);}
   else {const s=M.frame_summary[f.fid]; a=`<h5>Sector ${f.sector}: ${s.n_buildings} SAM buildings, ${s.n_severe} graded severe, ${s.destroyed_zones}/4 zones with destruction</h5><div>Click a box, zone or queue item. Masks come from SAM 3.1; colours are Spark grades; zone outlines and road hatching come from the Spark area scan.</div>`;
-    b=`<h5>Label check (hidden from models)</h5><div>RescueNet pixels: buildings ${f.label_check?.building_px_pct}% of frame, major/destroyed ${f.label_check?.severe_px_pct}%.</div>`;}
+    b=f.label_check?`<h5>Label check (hidden from models)</h5><div>RescueNet pixels: buildings ${f.label_check?.building_px_pct}% of frame, major/destroyed ${f.label_check?.severe_px_pct}%.</div>`:`<h5>Your data ${yours(f)}</h5><div>No ground-truth labels for this frame, so there is no label check. Treat every grade as a triage hint for a person to verify.</div>`;}
   $('#detail').innerHTML=`<div class="dcard">${a}</div><div class="dcard">${b||queueCard(q)}</div>`; bindEv('#detail');
 }
 function zoneCard(z,t){ if(!z)return''; const ev=z.scan_evidence||{};
@@ -363,7 +415,7 @@ function queueCard(q){ if(!q)return'<div style="color:var(--mute)">Not in the pr
    <div>${q.access==='blocked'?`<span class="acc-b">${icon('block')}access: ${esc(q.access_why)}</span> ${idChip(q.access_evidence)}`:q.access==='open'?'<span class="acc-o">access open</span>':''}</div>`}
 function bindEv(root){ $$(root+' [data-ev]').forEach(e=>e.onclick=ev=>{ev.stopPropagation();jump(e.dataset.ev)}); }
 function jump(id){
-  if(/^R\d/.test(id)){const r=M.radio.find(x=>x.id===id); $$('.rc').forEach(c=>c.classList.toggle('hl',c.dataset.r===id)); document.querySelector(`.rc[data-r="${id}"]`)?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}); if(r?.frame) select(r.frame,id); return;}
+  if(isRadio(id)){const r=M.radio.find(x=>x.id===id); $$('.rc').forEach(c=>c.classList.toggle('hl',c.dataset.r===id)); document.querySelector(`.rc[data-r="${id}"]`)?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}); if(r?.frame) select(r.frame,id); return;}
   const fid=id.split('-')[0]; if(F(fid)) select(fid,id);
   document.querySelector(`.qi[data-q="${id}"]`)?.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
@@ -396,7 +448,7 @@ function hlQuote(text,quote){ if(!quote||!text)return esc(text); const i=text.to
   return esc(text.slice(0,i))+`<span class="quote">${esc(text.slice(i,i+quote.length))}</span>`+esc(text.slice(i+quote.length)); }
 function renderRadio(){
   $('#radio').innerHTML=M.radio.map(r=>`<div class="rc" data-r="${r.id}">
-   <div class="l1">${idChip(r.id)} <span class="syn">${esc((r.lang||'').toUpperCase())}</span> ${r.synthetic?'<span class="syn">SYNTHETIC TTS</span>':''}
+   <div class="l1">${idChip(r.id)} ${r.lang?`<span class="syn">${esc(r.lang.toUpperCase())}</span>`:''} ${r.synthetic?'<span class="syn">SYNTHETIC TTS</span>':''}${yours(r)}
      ${r.sector?`<span class="to">${icon('arrow')}Sector ${r.sector} ${idChip(r.frame)}${r.sector_exact?'':' <span class="flag">(inexact)</span>'}</span>`:`<span class="to flag">${icon('flag')}no sector match</span>`}
      <audio controls preload="none" src="/missions/${M.manifest.id}/${r.audio}" aria-label="Play radio call ${esc(r.id)}"></audio></div>
    <div class="tr" dir="auto">${hlQuote(r.transcript,r.people_trapped_quote)}</div>
@@ -413,27 +465,76 @@ function renderRadio(){
 $$('#toggles button').forEach(b=>b.onclick=()=>{VIEW[b.dataset.k]=!VIEW[b.dataset.k];b.classList.toggle('on');b.setAttribute('aria-pressed',VIEW[b.dataset.k]);renderFrame()});
 $$('#filt button').forEach(b=>b.onclick=()=>{FILT=b.dataset.f;$$('#filt button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});renderQueue()});
 function keyActivate(sel){$$(sel).forEach(e=>e.onkeydown=ev=>{if((ev.key==='Enter'||ev.key===' ')&&ev.target===e){ev.preventDefault();e.click()}})}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal()} if(e.target.closest&&e.target.closest('audio,input,select,textarea'))return; if(['ArrowDown','ArrowUp'].includes(e.key)&&M){const i=M.queue.findIndex(q=>q.id===SEL.item);const n=M.queue[Math.max(0,Math.min(M.queue.length-1,i+(e.key==='ArrowDown'?1:-1)))];if(n){e.preventDefault();jump(n.id)}}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();if($('#upl').classList.contains('on'))uOpen(false)} if(e.target.closest&&e.target.closest('audio,input,select,textarea'))return; if(['ArrowDown','ArrowUp'].includes(e.key)&&M){const i=M.queue.findIndex(q=>q.id===SEL.item);const n=M.queue[Math.max(0,Math.min(M.queue.length-1,i+(e.key==='ArrowDown'?1:-1)))];if(n){e.preventDefault();jump(n.id)}}});
 // ---------- live run with streamed model calls ----------
 $('#dclose').onclick=()=>$('#drawer').classList.remove('on');
 $('#live').onclick=async()=>{
   const fid=SEL.fid; const r=await fetch('/api/live',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fid})});
   if(!r.ok){const t=await r.json().catch(()=>({}));alert('Live run unavailable: '+(t.detail||r.status));return}
-  const {job}=await r.json(); const t0=Date.now(); const rows={}; const ctr={sam:0,spark_scan:0,spark_a:0,spark_b:0,wonder:0}; let usd=0;
-  $('#drawer').classList.add('on'); $('#dlog').innerHTML=''; $('#dspin').style.display=''; $('#dtitle').textContent=`Live run · ${fid} · Sector ${F(fid).sector}`; $('#live').disabled=true;
+  const {job}=await r.json();
+  streamJob(job,`Live run · ${fid} · Sector ${F(fid).sector}`,'✓ Done: frame, queue and team plan updated.',()=>load());
+};
+// Streams a job's model calls into the live-run drawer (Run live and uploads share it). onDone(doneEvent) runs on success.
+function streamJob(job,title,doneText,onDone,onEnd){
+  const t0=Date.now(); const rows={}; const ctr={sam:0,spark_scan:0,spark_a:0,spark_b:0,wonder:0}; let usd=0;
+  $('#drawer').classList.add('on'); $('#dlog').innerHTML=''; $('#dspin').style.display=''; $('#dtitle').textContent=title; $('#live').disabled=true; UBUSY(true);
   const clock=setInterval(()=>$('#dclock').textContent=((Date.now()-t0)/1000).toFixed(1)+'s',100);
   const NM={sam:'SAM 3.1',spark_scan:'Spark scan',spark_a:'Spark A',spark_b:'Spark B',wonder:'Wonder',spark_extract:'Spark',voice:'Voice'};
   const drawCtr=()=>$('#dctr').innerHTML=Object.entries(ctr).map(([k,v])=>`<span><b class="m ${k}" style="padding:0 5px;margin-right:5px">${NM[k]}</b>${v}</span>`).join('')+`<span>$${usd.toFixed(3)}</span>`; drawCtr();
   const es=new EventSource(`/api/live/${job}/events`);
+  const finish=()=>{es.close(); clearInterval(clock); $('#dspin').style.display='none'; $('#live').disabled=false; UBUSY(false);};
+  es.onerror=()=>{if(es.readyState===EventSource.CLOSED){finish(); onEnd&&onEnd(null)}};
   es.onmessage=e=>{const d=JSON.parse(e.data), log=$('#dlog');
     if(d.event==='stage'){log.insertAdjacentHTML('beforeend',`<div class="ev stage">▸ ${esc(d.text)}</div>`)}
     else if(d.event==='start'){const k=d.tag.split(':')[0]; log.insertAdjacentHTML('beforeend',`<div class="ev" id="e${d.id.replace(/\W/g,'')}"><span class="m ${k}">${NM[k]||k}</span><span class="t">${esc(d.tag.split(':')[1]||d.model)} · ${esc(d.model)}</span><span class="d"><span class="spin"></span></span><span class="d"></span><span class="d"></span></div>`)}
     else if(d.event==='end'){const k=d.tag.split(':')[0]; ctr[k]=(ctr[k]||0)+1; usd+=d.usd; drawCtr(); const el=document.getElementById('e'+d.id.replace(/\W/g,''));
       if(el){const c=el.children; c[2].innerHTML=d.ok?`<span style="color:#86efac">${(d.ms/1000).toFixed(1)}s</span>`:'<span style="color:#fca5a5">fail</span>'; c[3].textContent=d.tokens_out?`${d.tokens_in}→${d.tokens_out}t`:(d.note||''); c[4].textContent='$'+d.usd.toFixed(4)}}
-    else if(d.event==='done'||d.event==='error'){es.close(); clearInterval(clock); $('#dspin').style.display='none'; $('#live').disabled=false;
-      log.insertAdjacentHTML('beforeend',`<div class="ev stage" style="color:${d.event==='done'?'#86efac':'#fca5a5'}">${d.event==='done'?'✓ Done: frame, queue and team plan updated.':'✗ '+esc(d.text)}</div>`); if(d.event==='done') load();}
+    else if(d.event==='done'||d.event==='error'){finish();
+      log.insertAdjacentHTML('beforeend',`<div class="ev stage" style="color:${d.event==='done'?'#86efac':'#fca5a5'}">${d.event==='done'?esc(doneText):'✗ '+esc(d.text)}</div>`); if(d.event==='done') onDone(d); onEnd&&onEnd(d);}
     log.scrollTop=log.scrollHeight;};
-};
+}
+// ---------- your data: uploads into a private copy of the mission ----------
+let UPL={busy:false,enabled:null};
+function UBUSY(on){UPL.busy=on; uState()}
+function uMsg(kind,html){const m=$('#umsg'); m.className='msg'+(kind?' on '+kind:''); m.innerHTML=html||''}
+function uState(){
+  const off=UPL.enabled===false||UPL.busy;
+  $('#ufgo').disabled=off||!$('#ufiles').files.length; $('#uago').disabled=off||!$('#uaudio').files[0];
+  $('#unokey').classList.toggle('on',UPL.enabled===false);
+  const s=M&&M.session, n=s?(s.uploads||0)+(s.radio||0):0;
+  $('#ureset').classList.toggle('on',n>0); if(n>0) $('#ureset-t').textContent=`Your data: ${s.uploads||0} frame(s), ${s.radio||0} radio call(s). Only you see them.`;
+  $('#ureset-b').disabled=UPL.busy;
+  const ups=M?M.frames.filter(f=>f.upload):[]; $('#usec').placeholder=ups.length?`default ${ups[ups.length-1].sector}`:'e.g. C1';
+}
+async function uOpen(on){
+  const p=$('#upl'); on=on??!p.classList.contains('on'); p.classList.toggle('on',on); $('#updata').setAttribute('aria-expanded',on);
+  if(on){ uState(); if(UPL.enabled===null){ try{const c=await (await fetch('/api/cost')).json(); UPL.enabled=!!c.live_enabled; const L=c.upload_limits;
+      if(L) $('#ulim').textContent=`Limits: images ${L.image_mb} MB each (up to ${L.images_per_upload} per upload), video ${L.video_mb} MB, audio ${L.audio_mb} MB and ${Math.round(L.audio_s/60)} min. Up to ${L.buildings_graded_per_frame} buildings graded per frame. Each upload counts as one live run against the public demo caps.`;
+    }catch{UPL.enabled=true} uState(); } }
+}
+$('#updata').onclick=()=>uOpen(); $('#uclose').onclick=()=>uOpen(false);
+$('#ufiles').onchange=()=>{const fs=[...$('#ufiles').files], v=fs.filter(f=>f.type.startsWith('video'));
+  $('#ufhint').textContent=!fs.length?'Each frame becomes a new sector U1, U2, …':v.length&&fs.length>1?'Upload one video on its own, or up to 4 images':fs.length>4?'At most 4 images per upload':v.length?'1 video → 3 keyframes':`${fs.length} image${fs.length>1?'s':''}`;
+  uMsg(); uState(); if((v.length&&fs.length>1)||fs.length>4) $('#ufgo').disabled=true;};
+$('#uaudio').onchange=()=>{uMsg(); uState()};
+async function uErr(r){const t=await r.json().catch(()=>({})); return typeof t.detail==='string'?t.detail:`server answered ${r.status}`}
+async function uSend(url,fd,title,doneText){
+  uMsg(); UBUSY(true);
+  let r; try{ r=await fetch(url,{method:'POST',body:fd}); }catch{ UBUSY(false); uMsg('err','Could not reach the server. Check your connection and try again.'); return false }
+  if(!r.ok){ UBUSY(false); const t=await uErr(r); uMsg('err',`${r.status===429?'Limit reached: ':r.status===413?'Too large: ':''}${esc(t)}`); return false }
+  const {job}=await r.json(); uOpen(false);
+  streamJob(job,title,doneText,async d=>{ await load(); if(d.focus){const q=M.queue.find(x=>x.frame===d.focus&&x.kind!=='radio'); jump(q?q.id:d.focus)} uMsg('ok','Done. Your data is in the console: look for the YOUR DATA tags.'); },
+    d=>{ if(!d||d.event==='error'){ uMsg('err',esc(d?d.text:'Lost contact with the server while it was working.')); uOpen(true); load(); } uState(); });
+  return true;
+}
+$('#ufgo').onclick=()=>{const fs=[...$('#ufiles').files]; if(!fs.length)return; const fd=new FormData(); fs.forEach(f=>fd.append('files',f));
+  uSend('/api/upload/frames',fd,`Your data · ${fs.length===1?fs[0].name:fs.length+' files'}`,'✓ Done: your frames are in the sortie, queue and team plan.').then(ok=>{if(ok){$('#ufiles').value='';$('#ufiles').onchange()}});};
+$('#uago').onclick=()=>{const f=$('#uaudio').files[0]; if(!f)return; const ups=M.frames.filter(x=>x.upload);
+  const sec=($('#usec').value.trim()||(ups.length?ups[ups.length-1].sector:'')).toUpperCase();
+  const fd=new FormData(); fd.append('file',f); fd.append('languages',$('#ulang').value); fd.append('sector',sec);
+  uSend('/api/upload/radio',fd,`Your radio call · ${f.name}`,'✓ Done: your radio call is in the radio strip, queue and team plan.').then(ok=>{if(ok){$('#uaudio').value='';uState()}});};
+$('#ureset-b').onclick=async()=>{ const r=await fetch('/api/mission/reset',{method:'POST'}); if(!r.ok){uMsg('err',esc(await uErr(r)));return}
+  M=await r.json(); SEL={fid:null,item:null}; renderAll(); select(M.queue[0]?.frame||M.frames[0].fid, M.queue[0]?.id); uMsg('ok','Back to the demo mission. Your uploads were deleted.'); uState(); };
 // ---------- tamper test: the validator rejects invented evidence (no model call) ----------
 $('#tamper').onclick=async()=>{
   const plan=JSON.parse(JSON.stringify(M.commander.plan)); const a=plan.assignments[0]; const r=M.radio.find(x=>x.frame&&x.people_trapped)||M.radio[0];
