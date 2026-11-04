@@ -1,8 +1,8 @@
 # Aftershock
 
-**Live demo:** https://aftershock.busy.one
-**Code:** https://github.com/GeekLord/aftershock
-**Licence:** MIT (code only)
+- **Live demo:** https://aftershock.busy.one
+- **Code:** https://github.com/GeekLord/aftershock
+- **Licence:** MIT (code only)
 
 **Test with your own data:** on the console, **Your data** (top bar) takes your own drone images, a short video or a radio call; Meta's models analyse them into a private copy of the mission (same caps as Run live).
 
