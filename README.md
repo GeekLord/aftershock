@@ -4,6 +4,11 @@
 
 **Find the worst first, with evidence.** Aftershock turns a post-disaster drone sortie and multilingual radio calls into **one mission-level priority queue** and a **draft team plan**, and it says plainly when a person needs to check.
 
+## Demo video
+**Demo video (2:57):** https://youtu.be/2h6WUWHl3es
+
+[![Aftershock demo video: the mission console](docs/screenshots/video_thumb.jpg)](https://youtu.be/2h6WUWHl3es)
+
 ![Mission mode](docs/screenshots/mission_overview.png)
 
 **Meta models at the core.** Built for the Meta Global AI Developer Hackathon (2026), with every perception, reasoning and speech step running on Meta's models:
@@ -11,6 +16,9 @@
 - **Muse Spark 1.3** grades each building twice with two independent frozen prompts (A and B), and scans every zone for destroyed structures, blocked roads and floodwater.
 - **Muse Wonder 1.0** does two jobs: breaks ties when Spark A and B disagree on severity, and acts as the **incident-commander planner**. It sees only structured tool outputs (IDs, grades, flags, road access, radio facts), never pixels, and every claim it makes must cite evidence IDs that a validator checks.
 - **Muse Voice Transcribe** turns radio calls (25 languages) into text; Spark extracts head-counts *with the exact source words*, so a person can read them back.
+
+## Meta models and API usage
+SAM 3.1, Muse Spark 1.3, Muse Wonder 1.0 and Muse Voice Transcribe each have a documented role, caller, endpoint, frozen prompt set and measured result in **[docs/META_MODELS.md](docs/META_MODELS.md)**, together with the per-model calls, tokens, latency and cost of the precomputed mission (304 recorded calls, about $1.91 at list prices), the call ledger and spending caps, the plan-validator rules, and the fallback used when Wonder fails.
 
 ## What was built during the hackathon
 1. **Survey pipeline** (`aftershock/pipeline.py`): tiling, SAM merge, two-prompt grading, disagreement flag, Wonder tie-break, area scans. Prompts are frozen and validated (`aftershock/prompts.py`, `docs/RESULTS.md`).
@@ -23,6 +31,19 @@
 3. **Precomputed demo mission** (`missions/michael-sortie/mission.json`) so the demo is instant, plus **Run live**: re-surveys the selected frame and re-plans with Wonder, streaming every model call (SAM, Spark scan, Spark A, Spark B, Wonder) with latency, tokens and cost over Server-Sent Events.
 4. **Operations-console UI** (`web/index.html`, vanilla JS, no build step): sortie contact sheet with heat colouring, frame viewer with SAM-mask / box / road / zone toggles, team plan and queue with evidence links that jump to the frame and building, radio strip with transcript, quote, count and Confirm, a persistent honesty banner, and a measured-accuracy panel. The layout also works on a phone-sized screen. The single-frame view (upload one drone image, video or radio call) is at `/classic.html`, linked from the console as **Single frame**.
 5. **Call ledger** (`aftershock/meta.py`): every model call is counted and priced at list rates; a per-process budget cap (`AFTERSHOCK_BUDGET_USD`, default 5) stops calls when reached.
+
+## Screenshots
+All captured from the precomputed mission running locally (no live model calls). Panel shots of the team plan and radio strip are expanded to show their full scrollable content.
+
+| | |
+|---|---|
+| ![Mission overview](docs/screenshots/mission_overview.png)<br>**Mission overview**: contact sheet, frame viewer, team plan, priority queue, radio intake | ![Frame viewer with SAM masks](docs/screenshots/frame_sam_masks.png)<br>**Frame viewer, SAM masks on** (F03), coloured by Spark grade, with ranks |
+| ![Zones and roads](docs/screenshots/frame_zones_roads.png)<br>**Zone scan + blocked roads overlay** | ![Queue item with disagreement flag](docs/screenshots/queue_disagreement.png)<br>**Queue item with evidence and ⚑ disagreement flag** (F02-B03: Spark A minor, B major, Wonder tie-break) |
+| ![Radio cards](docs/screenshots/radio_quote_confirm.png)<br>**Radio cards**: transcript, highlighted source quote, count, "Needs human confirmation", Confirm | ![Radio confirmed](docs/screenshots/radio_confirmed.png)<br>**After Confirm on R1**: read back, F09 items move up the queue |
+| ![Team plan](docs/screenshots/team_plan.png)<br>**Team plan** drafted by Muse Wonder 1.0, every task citing evidence IDs (10 grounded, 0 rejected) | ![Tamper test](docs/screenshots/tamper_test.png)<br>**Tamper test**: injected claims rejected by the validator (no model call) |
+| ![Single-frame view](docs/screenshots/classic_single_frame.png)<br>**Single-frame view** (`/classic.html`) with the Hurricane Michael sample | ![Measured accuracy](docs/screenshots/measured_accuracy.png)<br>**Label check and measured-accuracy panel** |
+
+Earlier captures of a live run (streamed model calls): [in progress](docs/screenshots/live_run_progress.png), [done](docs/screenshots/live_run_done.png).
 
 ## Why it is built this way
 Every design choice comes from a measured result (full details in [docs/RESULTS.md](docs/RESULTS.md)):
@@ -74,7 +95,7 @@ API: `GET /api/mission`, `POST /api/radio/{id}/confirm`, `POST /api/live {fid, r
 - `missions/michael-sortie/`: cached demo mission (frames, masks, synthetic radio audio with `radio/LABEL.md`, `mission.json`)
 - `server.py`, `web/`: API and UI (`web/index.html` mission console, `web/classic.html` single-frame view)
 - `eval/`, `tests/`: evaluation scripts behind every number, and offline tests
-- `docs/`: results, mission-mode notes, screenshots
+- `docs/`: results, mission-mode notes, Meta model usage (`META_MODELS.md`), screenshots
 
 ## Data and audio licences
 - **RescueNet v1.0** (Hurricane Michael, 2018): Rahnemoonfar, Chowdhury, Murphy, *RescueNet: a high resolution UAV semantic segmentation dataset for natural disaster damage assessment*, Scientific Data 10, 913 (2023). Figshare collection 6647354, https://doi.org/10.6084/m9.figshare.c.6647354, **CC0 1.0**. The CC BY-NC-ND notice in the RescueNet GitHub README does not apply to this figshare release, which is the copy used here. The demo mission uses 12 test-set frames (11914, 11916, 11918, 11924, 11939, 11943, 11946, 11955, 11959, 11961, 11965, 11979), resized. Their pixel labels are used only for an after-the-fact check and are never shown to a model.
